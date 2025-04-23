@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الدخول الفاخر</title>
+    <title>تسجيل الدخول الدائري</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
         
         * {
             margin: 0;
@@ -19,234 +19,186 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background: #f5f5f5;
             overflow: hidden;
         }
         
-        .container {
+        .login-container {
             position: relative;
-            width: 400px;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-            transition: all 0.5s ease;
+            width: 380px;
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        .container:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 35px 55px rgba(0, 0, 0, 0.2);
-        }
-        
-        .form {
+        .color-border {
             position: absolute;
             width: 100%;
             height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff3366, 
+                #ff6b6b, 
+                #ffa502, 
+                #feca57, 
+                #2ecc71, 
+                #1dd1a1, 
+                #54a0ff, 
+                #5f27cd, 
+                #ff3366
+            );
+            padding: 8px;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-form {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: white;
             padding: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
         }
         
-        .form h2 {
-            color: #fff;
-            font-size: 32px;
-            font-weight: 700;
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 30px;
             text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
-        .input-box {
+        .input-group {
             position: relative;
-            margin-bottom: 30px;
+            width: 100%;
+            margin-bottom: 25px;
         }
         
-        .input-box input {
+        .input-group input {
             width: 100%;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
+            padding: 12px 20px;
+            border: 1px solid #e0e0e0;
             outline: none;
-            border-radius: 35px;
-            color: #fff;
+            background: #f9f9f9;
+            border-radius: 30px;
+            color: #333;
             font-size: 16px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
         
-        .input-box input:focus {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .input-box input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .input-box i {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 15px;
+        .input-group input:focus {
+            border-color: #5f27cd;
             background: #fff;
-            color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(95, 39, 205, 0.1);
+        }
+        
+        .input-group input::placeholder {
+            color: #aaa;
+        }
+        
+        .input-group label {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            font-size: 12px;
+            color: #fff;
+            background: #5f27cd;
+            padding: 0 8px;
+            border-radius: 10px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
             border: none;
             outline: none;
-            border-radius: 35px;
-            font-size: 18px;
-            font-weight: 700;
+            background: #5f27cd;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(95, 39, 205, 0.2);
         }
         
-        .btn:hover {
-            background: #ff6b6b;
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        button:hover {
+            background: #4a1da8;
+            transform: translateY(-2px);
         }
         
-        .links {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+        .forgot-pass {
+            margin-top: 15px;
+            text-align: center;
         }
         
-        .links a {
-            color: #fff;
-            text-decoration: none;
+        .forgot-pass a {
+            color: #666;
             font-size: 14px;
-            transition: all 0.3s ease;
+            text-decoration: none;
+            transition: 0.3s;
         }
         
-        .links a:hover {
-            text-decoration: underline;
-            color: #ff6b6b;
+        .forgot-pass a:hover {
+            color: #5f27cd;
         }
         
-        /* تأثيرات الفقاعات */
-        .bubbles {
+        .dots {
             position: absolute;
-            bottom: -100px;
-            display: flex;
-            width: 100%;
-            justify-content: space-around;
-        }
-        
-        .bubbles span {
-            height: 60px;
-            width: 60px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(2px);
-            animation: animate 15s linear infinite;
-            animation-duration: calc(125s / var(--i));
-        }
-        
-        .bubbles span:nth-child(even) {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        @keyframes animate {
-            0% {
-                transform: translateY(0) scale(0);
-            }
-            100% {
-                transform: translateY(-1000px) scale(1);
-            }
-        }
-        
-        /* تأثير الإضاءة */
-        .light {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 70%);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            border-radius: 50%;
+            z-index: -1;
         }
         
-        .container:hover .light {
-            opacity: 1;
+        .dots span {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(95, 39, 205, 0.1);
+            border-radius: 50%;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="light"></div>
-        <form class="form">
-            <h2>تسجيل الدخول</h2>
-            <div class="input-box">
-                <input type="text" placeholder="اسم المستخدم" required>
-                <i class="fas fa-user"></i>
+    <div class="login-container">
+        <div class="color-border"></div>
+        
+        <div class="dots">
+            <span style="top: 15%; left: 20%;"></span>
+            <span style="top: 25%; right: 10%;"></span>
+            <span style="bottom: 15%; left: 25%;"></span>
+            <span style="bottom: 30%; right: 20%;"></span>
+        </div>
+        
+        <form class="login-form">
+            <h2>Login</h2>
+            
+            <div class="input-group">
+                <label for="username">Useremail</label>
+                <input type="text" id="username" placeholder="Username or Email">
             </div>
-            <div class="input-box">
-                <input type="password" placeholder="كلمة المرور" required>
-                <i class="fas fa-lock"></i>
+            
+            <div class="input-group">
+                <label for="password">Your Password </label>
+                <input type="password" id="password" placeholder="Password">
             </div>
-            <button type="submit" class="btn">دخول</button>
-            <div class="links">
-                <a href="#">نسيت كلمة المرور؟</a>
-                <a href="#">إنشاء حساب جديد</a>
+            
+            <button type="submit">Sign</button>
+            
+            <div class="forgot-pass">
+                <a href="#"> ? Forget password </a>
             </div>
         </form>
-        <div class="bubbles">
-            <span style="--i:11;"></span>
-            <span style="--i:12;"></span>
-            <span style="--i:24;"></span>
-            <span style="--i:10;"></span>
-            <span style="--i:14;"></span>
-            <span style="--i:23;"></span>
-            <span style="--i:18;"></span>
-            <span style="--i:16;"></span>
-            <span style="--i:19;"></span>
-            <span style="--i:20;"></span>
-        </div>
     </div>
-
-    <script>
-        // تأثيرات إضافية عند النقر على زر الدخول
-        const btn = document.querySelector('.btn');
-        const container = document.querySelector('.container');
-        
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            // تأثير اهتزاز
-            container.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-                container.style.animation = '';
-            }, 500);
-            
-            // يمكنك هنا إضافة التحقق من صحة البيانات وإعادة التوجيه
-            console.log('تم النقر على زر الدخول');
-        });
-        
-        // إضافة تأثير اهتزاز إلى CSS
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0) translateY(-10px); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) translateY(-10px); }
-                20%, 40%, 60%, 80% { transform: translateX(10px) translateY(-10px); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
 </body>
 </html>
