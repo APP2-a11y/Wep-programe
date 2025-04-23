@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الدخول الفاخر</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 55px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .form h2 {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .input-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .input-box input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            outline: none;
+            border-radius: 35px;
+            color: #fff;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .input-box input:focus {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .input-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .input-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #fff;
+            color: #ff6b6b;
+            border: none;
+            outline: none;
+            border-radius: 35px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background: #ff6b6b;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+            color: #ff6b6b;
+        }
+        
+        /* تأثيرات الفقاعات */
+        .bubbles {
+            position: absolute;
+            bottom: -100px;
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+        }
+        
+        .bubbles span {
+            height: 60px;
+            width: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(2px);
+            animation: animate 15s linear infinite;
+            animation-duration: calc(125s / var(--i));
+        }
+        
+        .bubbles span:nth-child(even) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes animate {
+            0% {
+                transform: translateY(0) scale(0);
+            }
+            100% {
+                transform: translateY(-1000px) scale(1);
+            }
+        }
+        
+        /* تأثير الإضاءة */
+        .light {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .container:hover .light {
+            opacity: 1;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="light"></div>
+        <form class="form">
+            <h2>تسجيل الدخول</h2>
+            <div class="input-box">
+                <input type="text" placeholder="اسم المستخدم" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="كلمة المرور" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <button type="submit" class="btn">دخول</button>
+            <div class="links">
+                <a href="#">نسيت كلمة المرور؟</a>
+                <a href="#">إنشاء حساب جديد</a>
+            </div>
+        </form>
+        <div class="bubbles">
+            <span style="--i:11;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:14;"></span>
+            <span style="--i:23;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:16;"></span>
+            <span style="--i:19;"></span>
+            <span style="--i:20;"></span>
+        </div>
+    </div>
+
+    <script>
+        // تأثيرات إضافية عند النقر على زر الدخول
+        const btn = document.querySelector('.btn');
+        const container = document.querySelector('.container');
+        
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // تأثير اهتزاز
+            container.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                container.style.animation = '';
+            }, 500);
+            
+            // يمكنك هنا إضافة التحقق من صحة البيانات وإعادة التوجيه
+            console.log('تم النقر على زر الدخول');
+        });
+        
+        // إضافة تأثير اهتزاز إلى CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0) translateY(-10px); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px) translateY(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px) translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
