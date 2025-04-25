@@ -1,152 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_6af9de7ec4ddc558401450b8119d38f6 {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-                .leaflet-container { font-size: 1rem; }
-            </style>
-        
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تنزيل الفيديوهات والصور</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 80%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-videos {
+            background-color: #ff4757;
+            color: white;
+        }
+        .btn-videos:hover {
+            background-color: #ff6b81;
+        }
+        .btn-photos {
+            background-color: #2ed573;
+            color: white;
+        }
+        .btn-photos:hover {
+            background-color: #7bed9f;
+        }
+        .download-section {
+            display: none;
+            margin-top: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .download-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
 </head>
 <body>
-    
-    
-            <div class="folium-map" id="map_6af9de7ec4ddc558401450b8119d38f6" ></div>
+    <div class="container">
+        <h1>أداة تنزيل الفيديوهات والصور</h1>
         
-</body>
-<script>
-    
-    
-            var map_6af9de7ec4ddc558401450b8119d38f6 = L.map(
-                "map_6af9de7ec4ddc558401450b8119d38f6",
-                {
-                    center: [30.533352, 31.492982],
-                    crs: L.CRS.EPSG3857,
-                    ...{
-  "zoom": 15,
-  "zoomControl": true,
-  "preferCanvas": false,
-}
+        <div class="btn-group">
+            <button class="btn btn-videos" onclick="showSection('videos')">تنزيل الفيديوهات</button>
+            <button class="btn btn-photos" onclick="showSection('photos')">تنزيل الصور</button>
+        </div>
+        
+        <div id="videos-section" class="download-section">
+            <h2>تنزيل الفيديوهات</h2>
+            <div class="input-group">
+                <input type="url" id="video-url" placeholder="أدخل رابط الفيديو هنا..." required>
+            </div>
+            <button class="download-btn" onclick="downloadVideo()">تنزيل الفيديو</button>
+            <div id="video-message" class="message"></div>
+        </div>
+        
+        <div id="photos-section" class="download-section">
+            <h2>تنزيل الصور</h2>
+            <div class="input-group">
+                <input type="url" id="photo-url" placeholder="أدخل رابط الصورة هنا..." required>
+            </div>
+            <button class="download-btn" onclick="downloadPhoto()">تنزيل الصورة</button>
+            <div id="photo-message" class="message"></div>
+        </div>
+    </div>
 
+    <script>
+        function showSection(section) {
+            // إخفاء جميع الأقسام أولاً
+            document.getElementById('videos-section').style.display = 'none';
+            document.getElementById('photos-section').style.display = 'none';
+            
+            // إظهار القسم المطلوب
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            // إخفاء أي رسائل ظاهرة
+            document.getElementById('video-message').style.display = 'none';
+            document.getElementById('photo-message').style.display = 'none';
+        }
+        
+        function downloadVideo() {
+            const videoUrl = document.getElementById('video-url').value.trim();
+            const messageElement = document.getElementById('video-message');
+            
+            if (!videoUrl) {
+                showMessage(messageElement, 'error', 'الرجاء إدخال رابط الفيديو');
+                return;
+            }
+            
+            // هذه وظيفة افتراضية - في الواقع تحتاج إلى خدمة خلفية لتنزيل الفيديو
+            // هذا مثال مبسط للتوضيح فقط
+            try {
+                // إنشاء عنصر <a> خفي للتنزيل
+                const a = document.createElement('a');
+                a.href = videoUrl;
+                a.download = 'video_' + Date.now() + '.mp4';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                showMessage(messageElement, 'success', 'جاري تنزيل الفيديو...');
+            } catch (error) {
+                showMessage(messageElement, 'error', 'حدث خطأ أثناء محاولة تنزيل الفيديو');
+            }
+        }
+        
+        function downloadPhoto() {
+            const photoUrl = document.getElementById('photo-url').value.trim();
+            const messageElement = document.getElementById('photo-message');
+            
+            if (!photoUrl) {
+                showMessage(messageElement, 'error', 'الرجاء إدخال رابط الصورة');
+                return;
+            }
+            
+            try {
+                // إنشاء عنصر <a> خفي للتنزيل
+                const a = document.createElement('a');
+                a.href = photoUrl;
+                
+                // تحديد امتداد الصورة من الرابط
+                const extension = photoUrl.split('.').pop().split('?')[0].toLowerCase();
+                const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                
+                if (validExtensions.includes(extension)) {
+                    a.download = 'image_' + Date.now() + '.' + extension;
+                } else {
+                    a.download = 'image_' + Date.now() + '.jpg';
                 }
-            );
-            L.control.scale().addTo(map_6af9de7ec4ddc558401450b8119d38f6);
-
+                
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                showMessage(messageElement, 'success', 'جاري تنزيل الصورة...');
+            } catch (error) {
+                showMessage(messageElement, 'error', 'حدث خطأ أثناء محاولة تنزيل الصورة');
+            }
+        }
+        
+        function showMessage(element, type, text) {
+            element.textContent = text;
+            element.className = 'message ' + type;
+            element.style.display = 'block';
             
-
-        
-    
-            var tile_layer_e31a8bab53b00a1ceddb31b2d5c69970 = L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 19,
-  "maxNativeZoom": 19,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_e31a8bab53b00a1ceddb31b2d5c69970.addTo(map_6af9de7ec4ddc558401450b8119d38f6);
-        
-    
-            var marker_275dee7e2db0052b0e57ceb68729ab17 = L.marker(
-                [30.533352, 31.492982],
-                {
-}
-            ).addTo(map_6af9de7ec4ddc558401450b8119d38f6);
-        
-    
-            var icon_3ea9519d38b03e9042d3c5b79046b390 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "map-marker",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_441115dc9eaefb9e3fd3bb3a31ccc067 = L.popup({
-  "maxWidth": 300,
-});
-
-        
-            
-                var html_e01efe93b2af9edbd7d8c277fb82fe3d = $(`<div id="html_e01efe93b2af9edbd7d8c277fb82fe3d" style="width: 100.0%; height: 100.0%;"> <div style="font-family: Arial; font-size: 14px; width: 250px">     <h4 style="color: #d63384; margin: 0 0 5px 0">الموقع الدقيق</h4>     <div style="background: #f8f9fa; padding: 8px; border-radius: 5px">         <b style="color: #0d6efd">الإحداثيات:</b><br>         <span style="color: #333">• خط العرض:</span> 30.533352°<br>         <span style="color: #333">• خط الطول:</span> 31.492982°<br>         <hr style="margin: 5px 0; border-color: #eee">         <i style="font-size: 12px">نظام WGS84 - دقة عالية</i>     </div> </div> </div>`)[0];
-                popup_441115dc9eaefb9e3fd3bb3a31ccc067.setContent(html_e01efe93b2af9edbd7d8c277fb82fe3d);
-            
-        
-
-        marker_275dee7e2db0052b0e57ceb68729ab17.bindPopup(popup_441115dc9eaefb9e3fd3bb3a31ccc067)
-        ;
-
-        
-    
-    
-            marker_275dee7e2db0052b0e57ceb68729ab17.bindTooltip(
-                `<div>
-                     انقر لعرض التفاصيل
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
-        
-    
-                marker_275dee7e2db0052b0e57ceb68729ab17.setIcon(icon_3ea9519d38b03e9042d3c5b79046b390);
-            
-    
-            var circle_58571de1fc3131141fd8c0431dc0b36c = L.circle(
-                [30.533352, 31.492982],
-                {"bubblingMouseEvents": true, "color": "#3186cc", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3186cc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 500, "stroke": true, "weight": 2}
-            ).addTo(map_6af9de7ec4ddc558401450b8119d38f6);
-        
-    
-                var lat_lng_popup_b08bec73341b1552c5a096674c60ef3e = L.popup();
-                function latLngPop(e) {
-                    lat_lng_popup_b08bec73341b1552c5a096674c60ef3e
-                        .setLatLng(e.latlng)
-                        .setContent("Latitude: " + e.latlng.lat.toFixed(4) +
-                                    "<br>Longitude: " + e.latlng.lng.toFixed(4))
-                        .openOn(map_6af9de7ec4ddc558401450b8119d38f6);
-                    }
-                map_6af9de7ec4ddc558401450b8119d38f6.on('click', latLngPop);
-            
-</script>
+            // إخفاء الرسالة بعد 5 ثواني
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
 </html>
