@@ -1,75 +1,70 @@
-import requests
 import folium
-import webbrowser
-from geocoder import ip
 
-def get_ip_location(ip_address=None):
-    """الحصول على معلومات الموقع من عنوان IP"""
-    try:
-        if ip_address:
-            g = ip(ip_address)
-        else:
-            g = ip('me')  # الحصول على موقع الجهاز الحالي
-        
-        if g.ok:
-            return {
-                'ip': g.ip,
-                'city': g.city,
-                'country': g.country,
-                'latitude': g.lat,
-                'longitude': g.lng
-            }
-        else:
-            return None
-    except Exception as e:
-        print(f"حدث خطأ: {e}")
-        return None
+# الإحداثيات الجغرافية المحدثة
+latitude = 30.533352
+longitude = 31.492982
 
-def show_on_map(latitude, longitude, ip_address):
-    """عرض الموقع على الخريطة"""
-    try:
-        # إنشاء خريطة مركزة على الموقع
-        m = folium.Map(location=[latitude, longitude], zoom_start=12)
-        
-        # إضافة علامة للموقع
-        folium.Marker(
-            [latitude, longitude],
-            popup=f"IP: {ip_address}",
-            tooltip="انقر لعرض التفاصيل"
-        ).add_to(m)
-        
-        # حفظ الخريطة في ملف HTML
-        map_file = "ip_location_map.html"
-        m.save(map_file)
-        
-        # فتح الخريطة في المتصفح الافتراضي
-        webbrowser.open(map_file)
-        return True
-    except Exception as e:
-        print(f"حدث خطأ في إنشاء الخريطة: {e}")
-        return False
+# إنشاء الخريطة مع إعدادات محسنة
+m = folium.Map(
+    location=[latitude, longitude],
+    zoom_start=15,  # زيادة مستوى التكبير
+    tiles="OpenStreetMap",  # نوع الخريطة
+    control_scale=True  # إضافة مقياس الرسم
+)
 
-def main():
-    print("═══ أداة تحديد الموقع على الخريطة من IP ═══")
-    user_ip = input("أدخل عنوان IP (أو اضغط Enter لموقعك الحالي): ").strip()
-    
-    location = get_ip_location(user_ip if user_ip else None)
-    
-    if location:
-        print("\n╔════════════════════════════╗")
-        print("║        معلومات الموقع      ║")
-        print("╚════════════════════════════╝")
-        print(f"IP: {location['ip']}")
-        print(f"المدينة: {location['city']}")
-        print(f"الدولة: {location['country']}")
-        print(f"الإحداثيات: {location['latitude']}, {location['longitude']}")
-        
-        if show_on_map(location['latitude'], location['longitude'], location['ip']):
-            print("\nتم فتح الخريطة في متصفح الويب.")
-        else:
-            print("\nفشل في عرض الخريطة.")
-    else:
-        print("\nلا يمكن تحديد الموقع لـ IP المحدد.")
+# نص متطور لعرض الإحداثيات
+coordinates_html = f"""
+<div style="font-family: Arial; font-size: 14px; width: 250px">
+    <h4 style="color: #d63384; margin: 0 0 5px 0">الموقع الدقيق</h4>
+    <div style="background: #f8f9fa; padding: 8px; border-radius: 5px">
+        <b style="color: #0d6efd">الإحداثيات:</b><br>
+        <span style="color: #333">• خط العرض:</span> {latitude:.6f}°<br>
+        <span style="color: #333">• خط الطول:</span> {longitude:.6f}°<br>
+        <hr style="margin: 5px 0; border-color: #eee">
+        <i style="font-size: 12px">نظام WGS84 - دقة عالية</i>
+    </div>
+</div>
+"""
 
-if __name__ == "__main__":
-    main()
+# إضافة علامة محسنة
+folium.Marker(
+    location=[latitude, longitude],
+    popup=folium.Popup(coordinates_html, max_width=300),
+    tooltip="انقر لعرض التفاصيل",
+    icon=folium.Icon(
+        color="red",
+        icon="map-marker",
+        prefix="fa",
+        icon_color="white"
+    )
+).add_to(m)
+
+# إضافة دائرة دقة (500 متر)
+folium.Circle(
+    radius=500,
+    location=[latitude, longitude],
+    color="#3186cc",
+    fill=True,
+    fill_opacity=0.2,
+    weight=2,
+    stroke=True
+).add_to(m)
+
+# إضافة إمكانية رؤية إحداثيات أي نقطة
+m.add_child(folium.LatLngPopup())
+
+# حفظ الخريطة
+map_file = "precise_location_map.html"
+m.save(map_file)
+
+# طباعة تقرير مفصل
+print(f"""
+تم إنشاء الخريطة بنجاح 🗺️
+---------------------------------
+• الإحداثيات المحددة:
+  - خط العرض: {latitude:.8f}°
+  - خط الطول: {longitude:.8f}°
+• مستوى التكبير: 15
+• نصف قطر الدائرة: 500 متر
+• تم حفظ الخريطة في: {map_file}
+""")
