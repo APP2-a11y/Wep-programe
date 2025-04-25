@@ -99,6 +99,10 @@
             background-color: #f8d7da;
             color: #721c24;
         }
+        .loading {
+            display: none;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -113,18 +117,20 @@
         <div id="videos-section" class="download-section">
             <h2>تنزيل الفيديوهات</h2>
             <div class="input-group">
-                <input type="url" id="video-url" placeholder="أدخل رابط الفيديو هنا..." required>
+                <input type="url" id="video-url" placeholder="أدخل رابط الفيديو المباشر هنا (مثال: https://example.com/video.mp4)" required>
             </div>
-            <button class="download-btn" onclick="downloadVideo()">تنزيل الفيديو</button>
+            <button class="download-btn" onclick="downloadMedia('video')">تنزيل الفيديو</button>
+            <div class="loading" id="video-loading">جاري التحميل، الرجاء الانتظار...</div>
             <div id="video-message" class="message"></div>
         </div>
         
         <div id="photos-section" class="download-section">
             <h2>تنزيل الصور</h2>
             <div class="input-group">
-                <input type="url" id="photo-url" placeholder="أدخل رابط الصورة هنا..." required>
+                <input type="url" id="photo-url" placeholder="أدخل رابط الصورة المباشر هنا (مثال: https://example.com/image.jpg)" required>
             </div>
-            <button class="download-btn" onclick="downloadPhoto()">تنزيل الصورة</button>
+            <button class="download-btn" onclick="downloadMedia('photo')">تنزيل الصورة</button>
+            <div class="loading" id="photo-loading">جاري التحميل، الرجاء الانتظار...</div>
             <div id="photo-message" class="message"></div>
         </div>
     </div>
@@ -143,63 +149,70 @@
             document.getElementById('photo-message').style.display = 'none';
         }
         
-        function downloadVideo() {
-            const videoUrl = document.getElementById('video-url').value.trim();
-            const messageElement = document.getElementById('video-message');
+        async function downloadMedia(type) {
+            const urlInput = document.getElementById(`${type}-url`).value.trim();
+            const messageElement = document.getElementById(`${type}-message`);
+            const loadingElement = document.getElementById(`${type}-loading`);
             
-            if (!videoUrl) {
-                showMessage(messageElement, 'error', 'الرجاء إدخال رابط الفيديو');
-                return;
-            }
-            
-            // هذه وظيفة افتراضية - في الواقع تحتاج إلى خدمة خلفية لتنزيل الفيديو
-            // هذا مثال مبسط للتوضيح فقط
-            try {
-                // إنشاء عنصر <a> خفي للتنزيل
-                const a = document.createElement('a');
-                a.href = videoUrl;
-                a.download = 'video_' + Date.now() + '.mp4';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                showMessage(messageElement, 'success', 'جاري تنزيل الفيديو...');
-            } catch (error) {
-                showMessage(messageElement, 'error', 'حدث خطأ أثناء محاولة تنزيل الفيديو');
-            }
-        }
-        
-        function downloadPhoto() {
-            const photoUrl = document.getElementById('photo-url').value.trim();
-            const messageElement = document.getElementById('photo-message');
-            
-            if (!photoUrl) {
-                showMessage(messageElement, 'error', 'الرجاء إدخال رابط الصورة');
+            if (!urlInput) {
+                showMessage(messageElement, 'error', `الرجاء إدخال رابط ${type === 'video' ? 'الفيديو' : 'الصورة'}`);
                 return;
             }
             
             try {
-                // إنشاء عنصر <a> خفي للتنزيل
-                const a = document.createElement('a');
-                a.href = photoUrl;
+                // إظهار رسالة التحميل
+                loadingElement.style.display = 'block';
+                messageElement.style.display = 'none';
                 
-                // تحديد امتداد الصورة من الرابط
-                const extension = photoUrl.split('.').pop().split('?')[0].toLowerCase();
-                const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                // جلب الملف من الرابط
+                const response = await fetch(urlInput);
                 
-                if (validExtensions.includes(extension)) {
-                    a.download = 'image_' + Date.now() + '.' + extension;
-                } else {
-                    a.download = 'image_' + Date.now() + '.jpg';
+                if (!response.ok) {
+                    throw new Error('تعذر جلب الملف من الرابط المقدم');
                 }
                 
+                // الحصول على بيانات الملف
+                const blob = await response.blob();
+                
+                // إنشاء رابط مؤقت للتنزيل
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                // إنشاء عنصر <a> خفي للتنزيل
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                
+                // تحديد اسم الملف
+                let filename = `${type}_${Date.now()}`;
+                
+                // محاولة الحصول على امتداد الملف من الرابط
+                const urlObj = new URL(urlInput);
+                const pathParts = urlObj.pathname.split('/');
+                const lastPart = pathParts[pathParts.length - 1];
+                
+                if (lastPart.includes('.')) {
+                    const ext = lastPart.split('.').pop().toLowerCase();
+                    if (ext.length <= 5) { // تأكد أن الامتداد منطقي (لا يزيد عن 5 أحرف)
+                        filename += '.' + ext;
+                    }
+                } else {
+                    // إذا لم يتم العثور على امتداد، نستخدم امتداد افتراضي
+                    filename += type === 'video' ? '.mp4' : '.jpg';
+                }
+                
+                a.download = filename;
                 document.body.appendChild(a);
                 a.click();
+                
+                // التنظيف
+                window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
                 
-                showMessage(messageElement, 'success', 'جاري تنزيل الصورة...');
+                showMessage(messageElement, 'success', `تم بدء تنزيل ${type === 'video' ? 'الفيديو' : 'الصورة'} بنجاح`);
             } catch (error) {
-                showMessage(messageElement, 'error', 'حدث خطأ أثناء محاولة تنزيل الصورة');
+                showMessage(messageElement, 'error', `حدث خطأ: ${error.message}`);
+                console.error('Error downloading file:', error);
+            } finally {
+                loadingElement.style.display = 'none';
             }
         }
         
