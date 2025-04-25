@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_fc7a260e1dd3ada32ba0d6aa927431e2 {
+                #map_6345f810ed8443b0241c9473e3094af6 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,16 +39,16 @@
 <body>
     
     
-            <div class="folium-map" id="map_fc7a260e1dd3ada32ba0d6aa927431e2" ></div>
+            <div class="folium-map" id="map_6345f810ed8443b0241c9473e3094af6" ></div>
         
 </body>
 <script>
     
     
-            var map_fc7a260e1dd3ada32ba0d6aa927431e2 = L.map(
-                "map_fc7a260e1dd3ada32ba0d6aa927431e2",
+            var map_6345f810ed8443b0241c9473e3094af6 = L.map(
+                "map_6345f810ed8443b0241c9473e3094af6",
                 {
-                    center: [31.2018, 29.9158],
+                    center: [30.533667267497073, 31.49788303641695],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 12,
@@ -63,7 +63,7 @@
 
         
     
-            var tile_layer_91448cc6706dbfe1c8a13451d0984439 = L.tileLayer(
+            var tile_layer_b44e050438b45d982a37bd62643dca5a = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -80,41 +80,61 @@
             );
         
     
-            tile_layer_91448cc6706dbfe1c8a13451d0984439.addTo(map_fc7a260e1dd3ada32ba0d6aa927431e2);
+            tile_layer_b44e050438b45d982a37bd62643dca5a.addTo(map_6345f810ed8443b0241c9473e3094af6);
         
     
-            var marker_05825d59a57729e9a74d93be93cad580 = L.marker(
-                [31.2018, 29.9158],
+            var marker_780bb500dc15e393d516144c66d140a4 = L.marker(
+                [30.533667267497073, 31.49788303641695],
                 {
 }
-            ).addTo(map_fc7a260e1dd3ada32ba0d6aa927431e2);
+            ).addTo(map_6345f810ed8443b0241c9473e3094af6);
         
     
-        var popup_d5819b8c3008eeba84d84fc895bbe478 = L.popup({
+            var icon_d494c9d38d10a9d5f54c2829edd74951 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5a24d3973c630d5045b072df7a6feaca = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_5252a994457f8c93843ad2f00fd4fdf0 = $(`<div id="html_5252a994457f8c93843ad2f00fd4fdf0" style="width: 100.0%; height: 100.0%;">IP: 41.234.22.123</div>`)[0];
-                popup_d5819b8c3008eeba84d84fc895bbe478.setContent(html_5252a994457f8c93843ad2f00fd4fdf0);
+                var html_0c05f2b49125cce0ed3d2d0e5d3e352b = $(`<div id="html_0c05f2b49125cce0ed3d2d0e5d3e352b" style="width: 100.0%; height: 100.0%;"><b>الموقع المحدد</b></div>`)[0];
+                popup_5a24d3973c630d5045b072df7a6feaca.setContent(html_0c05f2b49125cce0ed3d2d0e5d3e352b);
             
         
 
-        marker_05825d59a57729e9a74d93be93cad580.bindPopup(popup_d5819b8c3008eeba84d84fc895bbe478)
+        marker_780bb500dc15e393d516144c66d140a4.bindPopup(popup_5a24d3973c630d5045b072df7a6feaca)
         ;
 
         
     
     
-            marker_05825d59a57729e9a74d93be93cad580.bindTooltip(
+            marker_780bb500dc15e393d516144c66d140a4.bindTooltip(
                 `<div>
-                     انقر لعرض التفاصيل
+                     انقر هنا
                  </div>`,
                 {
   "sticky": true,
 }
             );
+        
+    
+                marker_780bb500dc15e393d516144c66d140a4.setIcon(icon_d494c9d38d10a9d5f54c2829edd74951);
+            
+    
+            var circle_87d05763e56e9e64beede855dc6edb6d = L.circle(
+                [30.533667267497073, 31.49788303641695],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1000, "stroke": true, "weight": 3}
+            ).addTo(map_6345f810ed8443b0241c9473e3094af6);
         
 </script>
 </html>
