@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_9151a636fae16c1e2cad617c168a4dc8 {
+                #map_fc7a260e1dd3ada32ba0d6aa927431e2 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,19 +39,19 @@
 <body>
     
     
-            <div class="folium-map" id="map_9151a636fae16c1e2cad617c168a4dc8" ></div>
+            <div class="folium-map" id="map_fc7a260e1dd3ada32ba0d6aa927431e2" ></div>
         
 </body>
 <script>
     
     
-            var map_9151a636fae16c1e2cad617c168a4dc8 = L.map(
-                "map_9151a636fae16c1e2cad617c168a4dc8",
+            var map_fc7a260e1dd3ada32ba0d6aa927431e2 = L.map(
+                "map_fc7a260e1dd3ada32ba0d6aa927431e2",
                 {
-                    center: [26.2540493, 29.2675469],
+                    center: [31.2018, 29.9158],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 10,
+  "zoom": 12,
   "zoomControl": true,
   "preferCanvas": false,
 }
@@ -63,7 +63,7 @@
 
         
     
-            var tile_layer_05510b49e1e981ed402fd1172538abd5 = L.tileLayer(
+            var tile_layer_91448cc6706dbfe1c8a13451d0984439 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -80,36 +80,36 @@
             );
         
     
-            tile_layer_05510b49e1e981ed402fd1172538abd5.addTo(map_9151a636fae16c1e2cad617c168a4dc8);
+            tile_layer_91448cc6706dbfe1c8a13451d0984439.addTo(map_fc7a260e1dd3ada32ba0d6aa927431e2);
         
     
-            var marker_7dea2159690ebdca6377f563f82b1338 = L.marker(
-                [26.2540493, 29.2675469],
+            var marker_05825d59a57729e9a74d93be93cad580 = L.marker(
+                [31.2018, 29.9158],
                 {
 }
-            ).addTo(map_9151a636fae16c1e2cad617c168a4dc8);
+            ).addTo(map_fc7a260e1dd3ada32ba0d6aa927431e2);
         
     
-        var popup_76b147c8bfef3ad64cc4bb9adfe59ae9 = L.popup({
+        var popup_d5819b8c3008eeba84d84fc895bbe478 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_a2c93a30901c02331c699f0dfbdd5e15 = $(`<div id="html_a2c93a30901c02331c699f0dfbdd5e15" style="width: 100.0%; height: 100.0%;">             <b>Phone Info:</b><br>             Country: Egypt<br>             Region: Egypt<br>             Carrier: Vodafone<br>             Coordinates: 26.2540, 29.2675             </div>`)[0];
-                popup_76b147c8bfef3ad64cc4bb9adfe59ae9.setContent(html_a2c93a30901c02331c699f0dfbdd5e15);
+                var html_5252a994457f8c93843ad2f00fd4fdf0 = $(`<div id="html_5252a994457f8c93843ad2f00fd4fdf0" style="width: 100.0%; height: 100.0%;">IP: 41.234.22.123</div>`)[0];
+                popup_d5819b8c3008eeba84d84fc895bbe478.setContent(html_5252a994457f8c93843ad2f00fd4fdf0);
             
         
 
-        marker_7dea2159690ebdca6377f563f82b1338.bindPopup(popup_76b147c8bfef3ad64cc4bb9adfe59ae9)
+        marker_05825d59a57729e9a74d93be93cad580.bindPopup(popup_d5819b8c3008eeba84d84fc895bbe478)
         ;
 
         
     
     
-            marker_7dea2159690ebdca6377f563f82b1338.bindTooltip(
+            marker_05825d59a57729e9a74d93be93cad580.bindTooltip(
                 `<div>
-                     Click for details
+                     انقر لعرض التفاصيل
                  </div>`,
                 {
   "sticky": true,
