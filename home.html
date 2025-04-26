@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ياسين حمادة - مهندس معماري</title>
+    <style>
+        :root {
+            --dark-green: #1e3f20;
+            --light-green: #8ba888;
+            --blue: #4a6fa5;
+            --beige: #f5e9d9;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--beige);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark-green), var(--light-green));
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--dark-green);
+            border-bottom: 2px solid var(--light-green);
+            padding-bottom: 0.5rem;
+        }
+        
+        nav {
+            background-color: var(--dark-green);
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--light-green);
+        }
+        
+        .hero {
+            background-color: var(--blue);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .portfolio {
+            padding: 3rem 0;
+            background-color: var(--white);
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .project {
+            border: 1px solid var(--light-green);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .project:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .project-info {
+            padding: 1rem;
+            background-color: var(--beige);
+        }
+        
+        .about {
+            padding: 3rem 0;
+            background-color: var(--beige);
+        }
+        
+        .contact {
+            padding: 3rem 0;
+            background-color: var(--white);
+        }
+        
+        form {
+            display: grid;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--light-green);
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--blue);
+        }
+        
+        footer {
+            background-color: var(--dark-green);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ياسين حمادة</h1>
+            <p>مهندس معماري محترف</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#portfolio">أعمالي</a></li>
+                <li><a href="#about">عن ياسين</a></li>
+                <li><a href="#contact">اتصل بي</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>تصميمات معمارية إبداعية تلبي احتياجاتك</h2>
+            <p>أجمع بين الجماليات والوظيفية لإنشاء مساحات تلهم وتخدم</p>
+        </div>
+    </section>
+    
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2>أحدث المشاريع</h2>
+            <div class="projects">
+                <div class="project">
+                    <img src="https://via.placeholder.com/400x300?text=مشروع+1" alt="مشروع معماري 1">
+                    <div class="project-info">
+                        <h3>فيلا حديثة</h3>
+                        <p>تصميم فيلا عصرية بلمسات تقليدية في الضاحية الشمالية</p>
+                    </div>
+                </div>
+                
+                <div class="project">
+                    <img src="https://via.placeholder.com/400x300?text=مشروع+2" alt="مشروع معماري 2">
+                    <div class="project-info">
+                        <h3>مجمع سكني</h3>
+                        <p>تصميم مجمع سكني مستدام مع مساحات خضراء مشتركة</p>
+                    </div>
+                </div>
+                
+                <div class="project">
+                    <img src="https://via.placeholder.com/400x300?text=مشروع+3" alt="مشروع معماري 3">
+                    <div class="project-info">
+                        <h3>مبنى تجاري</h3>
+                        <p>تصميم مبنى مكتبي عصري مع التركيز على كفاءة الطاقة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <h2>عن ياسين حمادة</h2>
+            <div class="about-content">
+                <p>مهندس معماري مع أكثر من 15 عامًا من الخبرة في تصميم المشاريع السكنية والتجارية. تخرجت من جامعة دمشق بتخصص في الهندسة المعمارية عام 2005.</p>
+                <p>أؤمن بالتصميم المستدام الذي يحترم البيئة ويواكب احتياجات المجتمع. أعمل على دمج العناصر التقليدية مع المفاهيم الحديثة لخلق مساحات فريدة.</p>
+                <p>حاصل على عدة جوائز محلية ودولية في التصميم المعماري، بما في ذلك جائزة التصميم العربي لعام 2018.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>اتصل بي</h2>
+            <form>
+                <input type="text" placeholder="اسمك" required>
+                <input type="email" placeholder="بريدك الإلكتروني" required>
+                <input type="tel" placeholder="رقم هاتفك">
+                <textarea rows="5" placeholder="رسالتك" required></textarea>
+                <button type="submit">إرسال الرسالة</button>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ياسين حمادة - جميع الحقوق محفوظة</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook">f</i></a>
+                <a href="#"><i class="fab fa-instagram">i</i></a>
+                <a href="#"><i class="fab fa-linkedin">l</i></a>
+                <a href="#"><i class="fab fa-behance">b</i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
