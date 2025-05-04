@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const encodedMessage = encodeURIComponent(whatsappMessage);
             
             // Replace with your WhatsApp number (with country code but without + or 00)
-            const whatsappNumber = '1234567890';
+            const whatsappNumber = '+201123961290';
             
             // Open WhatsApp with the message
             window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
