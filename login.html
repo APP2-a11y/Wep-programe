@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Every One - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #fff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      color: #3498db;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.3s;
+      transform: rotate(180deg);
+    }
+    .container {
+      text-align: center;
+    }
+    .logo {
+      font-size: 100px;
+      color: #2c3e50;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.5s;
+    }
+    .logo::before {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border: 2px solid #3498db;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: circleFade 1s forwards 0.7s;
+    }
+    .logo::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border: 2px dotted #3498db;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: dottedFade 1s forwards 0.9s;
+    }
+    .title {
+      font-size: 48px;
+      color: #2c3e50;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.2s;
+    }
+    .login-form {
+      margin-top: 30px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.5s;
+    }
+    .login-form input {
+      display: block;
+      width: 250px;
+      padding: 12px;
+      margin: 10px auto;
+      border: 1px solid #3498db;
+      border-radius: 25px;
+      font-size: 16px;
+      text-align: center;
+      background: #fff;
+      color: #2c3e50;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .login-form input:focus {
+      outline: none;
+      border-color: #2c3e50;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .login-form input::placeholder {
+      color: #7f8c8d;
+    }
+    .login-form button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      background: linear-gradient(to right, #2c3e50, #3498db);
+      color: white;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.8s;
+    }
+    .forgot-password {
+      display: block;
+      margin: 10px auto;
+      font-size: 14px;
+      color: #3498db;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeIn 1s forwards 2.1s;
+    }
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+    .social-login {
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 2.4s;
+    }
+    .social-login button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      margin: 0 10px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 2.7s;
+    }
+    .social-login img {
+      width: 40px;
+      height: 40px;
+    }
+    .social-login i {
+      font-size: 40px;
+      color: #2c3e50;
+    }
+    .error-message {
+      color: #e74c3c;
+      margin-top: 10px;
+      display: none;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes circleFade {
+      to { opacity: 0.7; }
+    }
+    @keyframes dottedFade {
+      to { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <a href="start.html" class="back-btn">></a>
+  <div class="container">
+    <div class="logo">∞</div>
+    <div class="title">Every One</div>
+    <div class="login-form">
+      <input type="text" id="loginUsername" placeholder="Username" />
+      <input type="password" id="loginPassword" placeholder="Password" />
+      <div class="error-message" id="loginErrorMessage"></div>
+      <a href="#" class="forgot-password">هل نسيت كلمة السر؟</a>
+      <button id="loginBtn">Log In</button>
+    </div>
+    <div class="social-login">
+      <button>
+        <img src="https://www.google.com/favicon.ico" alt="Google" />
+      </button>
+      <button>
+        <i class="fab fa-twitter"></i>
+      </button>
+      <button>
+        <img src="https://www.facebook.com/favicon.ico" alt="Facebook" />
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      const errorMessage = document.getElementById('loginErrorMessage');
+      
+      // استرجاع البيانات من localStorage
+      const savedUserData = localStorage.getItem('userData');
+      
+      if (!savedUserData) {
+        errorMessage.textContent = 'لا يوجد حساب مسجل، يرجى التسجيل أولاً';
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = 'signup.html';
+        }, 2000);
+        return;
+      }
+      
+      const userData = JSON.parse(savedUserData);
+      
+      // التحقق من صحة البيانات
+      if (username === userData.username && password === userData.password) {
+        // تسجيل الدخول ناجح - التوجيه إلى home.html
+        window.location.href = 'home.html';
+      } else {
+        errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = 'signup.html';
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

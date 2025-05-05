@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every One</title>
+  <title>Every One - Start</title>
   <style>
     body {
       margin: 0;
@@ -11,7 +11,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(to bottom, #2c3e50, #3498db);
+      background-color: #fff;
       font-family: Arial, sans-serif;
       overflow: hidden;
     }
@@ -20,7 +20,7 @@
     }
     .logo {
       font-size: 100px;
-      color: #fff;
+      color: #2c3e50;
       position: relative;
       opacity: 0;
       animation: fadeIn 1s forwards 0.5s;
@@ -30,7 +30,7 @@
       position: absolute;
       width: 150px;
       height: 150px;
-      border: 2px solid #fff;
+      border: 2px solid #3498db;
       border-radius: 50%;
       top: 50%;
       left: 50%;
@@ -43,7 +43,7 @@
       position: absolute;
       width: 160px;
       height: 160px;
-      border: 2px dotted #fff;
+      border: 2px dotted #3498db;
       border-radius: 50%;
       top: 50%;
       left: 50%;
@@ -53,10 +53,37 @@
     }
     .title {
       font-size: 48px;
-      color: #fff;
+      color: #2c3e50;
       margin-top: 20px;
       opacity: 0;
       animation: fadeIn 1s forwards 1.2s;
+    }
+    .welcome {
+      font-size: 18px;
+      color: #7f8c8d;
+      margin-top: 10px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.5s;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 20px 10px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      opacity: 0;
+    }
+    #loginBtn {
+      background: linear-gradient(to right, #2c3e50, #3498db);
+      color: white;
+      animation: fadeIn 1s forwards 1.8s;
+    }
+    #signupBtn {
+      background: linear-gradient(to right, #3498db, #ffffff);
+      color: #2c3e50;
+      animation: fadeIn 1s forwards 2.1s;
     }
     @keyframes fadeIn {
       to { opacity: 1; }
@@ -73,12 +100,9 @@
   <div class="container">
     <div class="logo">∞</div>
     <div class="title">Every One</div>
+    <div class="welcome">It's a pleasure to welcome you.</div>
+    <button id="loginBtn" class="btn" onclick="window.location.href='login.html'">Log In</button>
+    <button id="signupBtn" class="btn" onclick="window.location.href='sign.html'">Sign Up</button>
   </div>
-
-  <script>
-    setTimeout(function() {
-      window.location.href = "start.html";
-    }, 2000); // 2000 ميلي ثانية = 2 ثانية
-  </script>
 </body>
 </html>
