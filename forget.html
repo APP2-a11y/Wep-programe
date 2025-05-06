@@ -134,8 +134,6 @@
     @keyframes dottedFade {
       to { opacity: 0.5; }
     }
-    
-    /* مراحل استعادة كلمة المرور */
     .step {
       display: none;
     }
@@ -164,9 +162,10 @@
     <div id="step2" class="step">
       <div class="reset-form">
         <div class="success-message" id="codeSentMessage">
-          تم إرسال رمز التحقق إلى بريدك الإلكتروني
+          رمز التحقق الخاص بك هو:
         </div>
-        <input type="text" id="verificationCode" placeholder="رمز التحقق" maxlength="6" />
+        <div id="verificationCodeDisplay" style="font-size: 24px; color: #3498db; margin: 10px 0;"></div>
+        <input type="text" id="verificationCode" placeholder="أدخل رمز التحقق" maxlength="6" />
         <div class="timer" id="timer">02:00</div>
         <div class="error-message" id="codeError"></div>
         <button id="verifyCodeBtn">تحقق من الرمز</button>
@@ -198,6 +197,7 @@
     const emailInput = document.getElementById('email');
     const emailError = document.getElementById('emailError');
     const codeSentMessage = document.getElementById('codeSentMessage');
+    const verificationCodeDisplay = document.getElementById('verificationCodeDisplay');
     const verificationCodeInput = document.getElementById('verificationCode');
     const codeError = document.getElementById('codeError');
     const timerElement = document.getElementById('timer');
@@ -235,17 +235,18 @@
         return;
       }
       
-      // في الواقع، هنا يتم إرسال الرمز إلى البريد الإلكتروني
-      // ولكننا سننشئ رمز عشوائي لأغراض العرض
+      // إنشاء رمز التحقق
       verificationCode = generateRandomCode(6);
-      console.log('رمز التحقق (لأغراض الاختبار):', verificationCode);
+      
+      // عرض الرمز في الواجهة
+      verificationCodeDisplay.textContent = verificationCode;
       
       // بدء المؤقت
       startTimer();
       
       // الانتقال إلى المرحلة 2
       goToStep(2);
-      codeSentMessage.textContent = `تم إرسال رمز التحقق إلى ${email}`;
+      codeSentMessage.textContent = `رمز التحقق الخاص بك هو:`;
       codeSentMessage.style.display = 'block';
     });
     
@@ -273,7 +274,9 @@
     // إعادة إرسال رمز التحقق
     resendCodeBtn.addEventListener('click', function() {
       verificationCode = generateRandomCode(6);
-      console.log('رمز التحقق الجديد (لأغراض الاختبار):', verificationCode);
+      
+      // تحديث الرمز في الواجهة
+      verificationCodeDisplay.textContent = verificationCode;
       
       // إعادة تعيين المؤقت
       clearInterval(timerInterval);
@@ -281,7 +284,7 @@
       startTimer();
       
       codeError.style.display = 'none';
-      codeSentMessage.textContent = `تم إعادة إرسال رمز التحقق إلى ${emailInput.value.trim()}`;
+      codeSentMessage.textContent = `رمز التحقق الجديد الخاص بك هو:`;
     });
     
     // تغيير كلمة المرور
@@ -307,15 +310,14 @@
         return;
       }
       
-      // في الواقع، هنا يتم تحديث كلمة المرور في قاعدة البيانات
-      // ولكننا سنستخدم localStorage لأغراض العرض
+      // تحديث كلمة المرور في localStorage لأغراض العرض
       const userData = JSON.parse(localStorage.getItem('userData'));
       if (userData && userData.email === emailInput.value.trim()) {
         userData.password = newPassword;
         localStorage.setItem('userData', JSON.stringify(userData));
       }
       
-      //-------
+      // عرض رسالة النجاح
       passwordError.style.display = 'none';
       passwordError.textContent = '';
       
