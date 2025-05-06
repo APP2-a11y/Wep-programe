@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Every One - Sign Up</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
-    body {
+    /* الاحتفاظ بكل أنماط CSS السابقة */
+    /* إضافة أنماط جديدة */
+     body {
       margin: 0;
       display: flex;
       justify-content: center;
@@ -146,6 +148,28 @@
     @keyframes dottedFade {
       to { opacity: 0.5; }
     }
+    .success-message {
+      color: #2ecc71;
+      margin-top: 10px;
+      display: none;
+      font-size: 18px;
+    }
+    
+    .login-link {
+      display: block;
+      margin-top: 15px;
+      color: #3498db;
+      text-decoration: none;
+    }
+    
+    .login-link:hover {
+      text-decoration: underline;
+    }
+    
+    .account-exists {
+      display: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -153,17 +177,38 @@
   <div class="container">
     <div class="logo">∞</div>
     <div class="title">Every One</div>
-      <h4>Sign Up</h4>
-    <div class="signup-form">
-      <input type="text" id="username" placeholder="Username" />
-      <input type="email" id="email" placeholder="Email" />
-      <input type="password" id="password" placeholder="Password" />
-      <input type="password" id="confirmPassword" placeholder="Confirm Password" />
-      <div class="error-message" id="errorMessage"></div>
-      <button id="signupBtn">Sign Up</button>
+    
+    <!-- قسم إنشاء الحساب (يظهر لغير المسجلين) -->
+    <div id="signupSection">
+      <h4>إنشاء حساب جديد</h4>
+      <div class="signup-form">
+        <input type="text" id="username" placeholder="Username " />
+        <input type="email" id="email" placeholder="Useremail " />
+        <input type="password" id="password" placeholder="password " />
+        <input type="password" id="confirmPassword" placeholder="Confirm Password  " />
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+        <button id="signupBtn">Sign Up </button>
+        <a href="login.html" class="login-link">Do you have an email? Login</a>
+      </div>
     </div>
+    
+    <!-- قسم الرسالة للمستخدم المسجل -->
+    <div id="accountExists" class="account-exists">
+      <div class="success-message">
+        أنت مسجل بالفعل! <span id="existingUsername"></span>
+      </div>
+      <button id="goToHomeBtn" style="background: #2ecc71; margin-top: 20px;">
+        الانتقال إلى الصفحة الرئيسية
+      </button>
+      <button id="logoutFromSignupBtn" style="background: #e74c3c; margin-top: 10px;">
+        تسجيل الخروج
+      </button>
+    </div>
+    
     <div class="social-login">
-      <button>
+      <!-- إبقاء أزرار التواصل الاجتماعي كما هي -->
+        <button>
         <img src="https://www.google.com/favicon.ico" alt="Google" />
       </button>
       <button>
@@ -176,12 +221,36 @@
   </div>
 
   <script>
+    // عند تحميل الصفحة، نتحقق من حالة تسجيل الدخول
+    document.addEventListener('DOMContentLoaded', function() {
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const signupSection = document.getElementById('signupSection');
+      const accountExists = document.getElementById('accountExists');
+      
+      if (loggedInUser) {
+        // إذا كان المستخدم مسجل الدخول بالفعل
+        signupSection.style.display = 'none';
+        accountExists.style.display = 'block';
+        document.getElementById('existingUsername').textContent = loggedInUser;
+      } else {
+        // إذا لم يكن المستخدم مسجل الدخول
+        signupSection.style.display = 'block';
+        accountExists.style.display = 'none';
+      }
+    });
+
+    // معالجة إنشاء الحساب
     document.getElementById('signupBtn').addEventListener('click', function() {
       const username = document.getElementById('username').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
       const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      
+      // إخفاء الرسائل السابقة
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
       
       // التحقق من صحة البيانات
       if (!username || !email || !password || !confirmPassword) {
@@ -196,6 +265,20 @@
         return;
       }
       
+      // التحقق من صحة البريد الإلكتروني
+      if (!validateEmail(email)) {
+        errorMessage.textContent = 'البريد الإلكتروني غير صالح';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      // التحقق من قوة كلمة المرور
+      if (password.length < 6) {
+        errorMessage.textContent = 'كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
       // حفظ البيانات في localStorage
       const userData = {
         username: username,
@@ -205,9 +288,35 @@
       
       localStorage.setItem('userData', JSON.stringify(userData));
       
-      // توجيه المستخدم إلى صفحة Login
-      window.location.href = 'login.html';
+      // تسجيل الدخول تلقائياً بعد إنشاء الحساب
+      localStorage.setItem('loggedInUser', username);
+      
+      // عرض رسالة النجاح
+      successMessage.textContent = 'تم إنشاء الحساب بنجاح! يتم توجيهك الآن...';
+      successMessage.style.display = 'block';
+      
+      // التوجيه إلى الصفحة الرئيسية بعد ثانيتين
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 2000);
     });
+    
+    // الانتقال إلى الصفحة الرئيسية للمستخدم المسجل
+    document.getElementById('goToHomeBtn').addEventListener('click', function() {
+      window.location.href = 'home.html';
+    });
+    
+    // تسجيل الخروج من صفحة التسجيل
+    document.getElementById('logoutFromSignupBtn').addEventListener('click', function() {
+      localStorage.removeItem('loggedInUser');
+      window.location.reload();
+    });
+    
+    // دالة للتحقق من صحة البريد الإلكتروني
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
   </script>
 </body>
 </html>

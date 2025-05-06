@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Every One - Login</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
-    body {
+    /* إبقاء كل أنماط CSS كما هي */
+    /* يمكن إضافة أنماط إضافية إذا لزم الأمر */
+        body {
       margin: 0;
       display: flex;
       justify-content: center;
@@ -158,6 +160,22 @@
     @keyframes dottedFade {
       to { opacity: 0.5; }
     }
+    .welcome-message {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .user-actions {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    .user-actions button {
+      margin: 5px;
+      padding: 8px 15px;
+    }
   </style>
 </head>
 <body>
@@ -165,16 +183,33 @@
   <div class="container">
     <div class="logo">∞</div>
     <div class="title">Every One</div>
-      <h4>Login</h4>
-    <div class="login-form">
-      <input type="text" id="loginUsername" placeholder="Username" />
-      <input type="password" id="loginPassword" placeholder="Password" />
-      <div class="error-message" id="loginErrorMessage"></div>
-      <a href="password.html" class="forgot-password">هل نسيت كلمة السر؟</a>
-      <button id="loginBtn">Log In</button>
+    
+    <!-- قسم الترحيب بالمستخدم المسجل -->
+    <div id="welcomeSection" class="welcome-message">
+      مرحبًا بك مرة أخرى، <span id="loggedInUser"></span>!
     </div>
+    
+    <!-- قسم تسجيل الدخول (يظهر فقط لغير المسجلين) -->
+    <div id="loginSection">
+      <h4>Login</h4>
+      <div class="login-form">
+        <input type="text" id="loginUsername" placeholder="Username" />
+        <input type="password" id="loginPassword" placeholder="Password" />
+        <div class="error-message" id="loginErrorMessage"></div>
+        <a href="password.html" class="forgot-password">هل نسيت كلمة السر؟</a>
+        <button id="loginBtn">Log In</button>
+      </div>
+    </div>
+    
+    <!-- قسم الإجراءات للمستخدم المسجل -->
+    <div id="userActions" class="user-actions">
+      <button id="continueBtn" style="background: #2ecc71;">متابعة إلى الصفحة الرئيسية</button>
+      <button id="logoutBtn" style="background: #e74c3c;">تسجيل الخروج</button>
+    </div>
+    
     <div class="social-login">
-      <button onclick="window.location.href='home.html'">
+      <!-- إبقاء أزرار التواصل الاجتماعي كما هي -->
+        <button onclick="window.location.href='home.html'">
         <img src="https://www.google.com/favicon.ico" alt="Google" />
       </button>
       <button onclick="window.location.href='home.html'">
@@ -187,6 +222,28 @@
   </div>
 
   <script>
+    // عند تحميل الصفحة، نتحقق من حالة تسجيل الدخول
+    document.addEventListener('DOMContentLoaded', function() {
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const welcomeSection = document.getElementById('welcomeSection');
+      const loginSection = document.getElementById('loginSection');
+      const userActions = document.getElementById('userActions');
+      
+      if (loggedInUser) {
+        // إذا كان المستخدم مسجل الدخول
+        welcomeSection.style.display = 'block';
+        loginSection.style.display = 'none';
+        userActions.style.display = 'block';
+        document.getElementById('loggedInUser').textContent = loggedInUser;
+      } else {
+        // إذا لم يكن المستخدم مسجل الدخول
+        welcomeSection.style.display = 'none';
+        loginSection.style.display = 'block';
+        userActions.style.display = 'none';
+      }
+    });
+
+    // معالجة تسجيل الدخول
     document.getElementById('loginBtn').addEventListener('click', function() {
       const username = document.getElementById('loginUsername').value;
       const password = document.getElementById('loginPassword').value;
@@ -208,15 +265,24 @@
       
       // التحقق من صحة البيانات
       if (username === userData.username && password === userData.password) {
-        // تسجيل الدخول ناجح - التوجيه إلى home.html
+        // تسجيل الدخول ناجح
+        localStorage.setItem('loggedInUser', username);
         window.location.href = 'home.html';
       } else {
         errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
         errorMessage.style.display = 'block';
-        setTimeout(() => {
-          window.location.href = 'signup.html';
-        }, 2000);
       }
+    });
+
+    // معالجة متابعة الدخول للمستخدم المسجل
+    document.getElementById('continueBtn').addEventListener('click', function() {
+      window.location.href = 'home.html';
+    });
+
+    // معالجة تسجيل الخروج
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'login.html';
     });
   </script>
 </body>
