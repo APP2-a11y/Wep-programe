@@ -165,21 +165,22 @@
   <div class="container">
     <div class="logo">∞</div>
     <div class="title">Every One</div>
+      <h4>Login</h4>
     <div class="login-form">
       <input type="text" id="loginUsername" placeholder="Username" />
       <input type="password" id="loginPassword" placeholder="Password" />
       <div class="error-message" id="loginErrorMessage"></div>
-      <a href="#" class="forgot-password">هل نسيت كلمة السر؟</a>
+      <a href="password.html" class="forgot-password">هل نسيت كلمة السر؟</a>
       <button id="loginBtn">Log In</button>
     </div>
     <div class="social-login">
-      <button>
+      <button onclick="window.location.href='home.html'">
         <img src="https://www.google.com/favicon.ico" alt="Google" />
       </button>
-      <button>
+      <button onclick="window.location.href='home.html'">
         <i class="fab fa-twitter"></i>
       </button>
-      <button>
+      <button onclick="window.location.href='home.html'">
         <img src="https://www.facebook.com/favicon.ico" alt="Facebook" />
       </button>
     </div>
@@ -210,10 +211,10 @@
         // تسجيل الدخول ناجح - التوجيه إلى home.html
         window.location.href = 'home.html';
       } else {
-        errorMessage.textContent = ' Erro !  ';
+        errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
         errorMessage.style.display = 'block';
         setTimeout(() => {
-          window.location.href = 'sign.html';
+          window.location.href = 'signup.html';
         }, 2000);
       }
     });
