@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Every One - استعادة كلمة المرور</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #fff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 30px;
+      color: #3498db;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.3s;
+      transform: rotate(180deg);
+    }
+    .container {
+      text-align: center;
+    }
+    .logo {
+      font-size: 100px;
+      color: #2c3e50;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.5s;
+    }
+    .logo::before {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border: 2px solid #3498db;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: circleFade 1s forwards 0.7s;
+    }
+    .logo::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border: 2px dotted #3498db;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: dottedFade 1s forwards 0.9s;
+    }
+    .title {
+      font-size: 48px;
+      color: #2c3e50;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.2s;
+    }
+    .reset-form {
+      margin-top: 30px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.5s;
+    }
+    .reset-form input {
+      display: block;
+      width: 250px;
+      padding: 12px;
+      margin: 10px auto;
+      border: 1px solid #3498db;
+      border-radius: 25px;
+      font-size: 16px;
+      text-align: center;
+      background: #fff;
+      color: #2c3e50;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .reset-form input:focus {
+      outline: none;
+      border-color: #2c3e50;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .reset-form input::placeholder {
+      color: #7f8c8d;
+    }
+    .reset-form button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      background: linear-gradient(to right, #2c3e50, #3498db);
+      color: white;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.8s;
+    }
+    .error-message {
+      color: #e74c3c;
+      margin-top: 10px;
+      display: none;
+    }
+    .success-message {
+      color: #2ecc71;
+      margin-top: 10px;
+      display: none;
+    }
+    .timer {
+      color: #7f8c8d;
+      margin-top: 10px;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes circleFade {
+      to { opacity: 0.7; }
+    }
+    @keyframes dottedFade {
+      to { opacity: 0.5; }
+    }
+    
+    /* مراحل استعادة كلمة المرور */
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <a href="login.html" class="back-btn">></a>
+  <div class="container">
+    <div class="logo">∞</div>
+    <div class="title">Every One</div>
+    <h4>استعادة كلمة المرور</h4>
+    
+    <!-- المرحلة 1: إدخال البريد الإلكتروني -->
+    <div id="step1" class="step active">
+      <div class="reset-form">
+        <input type="email" id="email" placeholder="البريد الإلكتروني المسجل" />
+        <div class="error-message" id="emailError"></div>
+        <button id="sendCodeBtn">إرسال رمز التحقق</button>
+      </div>
+    </div>
+    
+    <!-- المرحلة 2: إدخال رمز التحقق -->
+    <div id="step2" class="step">
+      <div class="reset-form">
+        <div class="success-message" id="codeSentMessage">
+          تم إرسال رمز التحقق إلى بريدك الإلكتروني
+        </div>
+        <input type="text" id="verificationCode" placeholder="رمز التحقق" maxlength="6" />
+        <div class="timer" id="timer">02:00</div>
+        <div class="error-message" id="codeError"></div>
+        <button id="verifyCodeBtn">تحقق من الرمز</button>
+        <button id="resendCodeBtn" style="background: #7f8c8d;">إعادة إرسال الرمز</button>
+      </div>
+    </div>
+    
+    <!-- المرحلة 3: إدخال كلمة المرور الجديدة -->
+    <div id="step3" class="step">
+      <div class="reset-form">
+        <div class="success-message">
+          يمكنك الآن إدخال كلمة المرور الجديدة
+        </div>
+        <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة" />
+        <input type="password" id="confirmNewPassword" placeholder="تأكيد كلمة المرور الجديدة" />
+        <div class="error-message" id="passwordError"></div>
+        <button id="resetPasswordBtn">تغيير كلمة المرور</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // متغيرات النظام
+    let verificationCode = '';
+    let timerInterval;
+    let timeLeft = 120; // 2 دقيقة بالثواني
+    
+    // عناصر DOM
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const codeSentMessage = document.getElementById('codeSentMessage');
+    const verificationCodeInput = document.getElementById('verificationCode');
+    const codeError = document.getElementById('codeError');
+    const timerElement = document.getElementById('timer');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+    const passwordError = document.getElementById('passwordError');
+    
+    // أزرار التحكم
+    const sendCodeBtn = document.getElementById('sendCodeBtn');
+    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+    const resendCodeBtn = document.getElementById('resendCodeBtn');
+    const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+    
+    // الانتقال بين المراحل
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+      });
+      document.getElementById(`step${stepNumber}`).classList.add('active');
+    }
+    
+    // إرسال رمز التحقق
+    sendCodeBtn.addEventListener('click', function() {
+      const email = emailInput.value.trim();
+      
+      if (!email) {
+        emailError.textContent = 'الرجاء إدخال البريد الإلكتروني';
+        emailError.style.display = 'block';
+        return;
+      }
+      
+      if (!validateEmail(email)) {
+        emailError.textContent = 'البريد الإلكتروني غير صالح';
+        emailError.style.display = 'block';
+        return;
+      }
+      
+      // في الواقع، هنا يتم إرسال الرمز إلى البريد الإلكتروني
+      // ولكننا سننشئ رمز عشوائي لأغراض العرض
+      verificationCode = generateRandomCode(6);
+      console.log('رمز التحقق (لأغراض الاختبار):', verificationCode);
+      
+      // بدء المؤقت
+      startTimer();
+      
+      // الانتقال إلى المرحلة 2
+      goToStep(2);
+      codeSentMessage.textContent = `تم إرسال رمز التحقق إلى ${email}`;
+      codeSentMessage.style.display = 'block';
+    });
+    
+    // التحقق من رمز التحقق
+    verifyCodeBtn.addEventListener('click', function() {
+      const enteredCode = verificationCodeInput.value.trim();
+      
+      if (!enteredCode || enteredCode.length !== 6) {
+        codeError.textContent = 'الرجاء إدخال رمز التحقق المكون من 6 أرقام';
+        codeError.style.display = 'block';
+        return;
+      }
+      
+      if (enteredCode !== verificationCode) {
+        codeError.textContent = 'رمز التحقق غير صحيح';
+        codeError.style.display = 'block';
+        return;
+      }
+      
+      // إذا كان الرمز صحيحاً، الانتقال إلى المرحلة 3
+      goToStep(3);
+      clearInterval(timerInterval);
+    });
+    
+    // إعادة إرسال رمز التحقق
+    resendCodeBtn.addEventListener('click', function() {
+      verificationCode = generateRandomCode(6);
+      console.log('رمز التحقق الجديد (لأغراض الاختبار):', verificationCode);
+      
+      // إعادة تعيين المؤقت
+      clearInterval(timerInterval);
+      timeLeft = 120;
+      startTimer();
+      
+      codeError.style.display = 'none';
+      codeSentMessage.textContent = `تم إعادة إرسال رمز التحقق إلى ${emailInput.value.trim()}`;
+    });
+    
+    // تغيير كلمة المرور
+    resetPasswordBtn.addEventListener('click', function() {
+      const newPassword = newPasswordInput.value;
+      const confirmPassword = confirmNewPasswordInput.value;
+      
+      if (!newPassword || !confirmPassword) {
+        passwordError.textContent = 'الرجاء ملء جميع الحقول';
+        passwordError.style.display = 'block';
+        return;
+      }
+      
+      if (newPassword.length < 6) {
+        passwordError.textContent = 'كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل';
+        passwordError.style.display = 'block';
+        return;
+      }
+      
+      if (newPassword !== confirmPassword) {
+        passwordError.textContent = 'كلمة المرور غير متطابقة';
+        passwordError.style.display = 'block';
+        return;
+      }
+      
+      // في الواقع، هنا يتم تحديث كلمة المرور في قاعدة البيانات
+      // ولكننا سنستخدم localStorage لأغراض العرض
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      if (userData && userData.email === emailInput.value.trim()) {
+        userData.password = newPassword;
+        localStorage.setItem('userData', JSON.stringify(userData));
+      }
+      
+      //-------
+      passwordError.style.display = 'none';
+      passwordError.textContent = '';
+      
+      const successMessage = document.createElement('div');
+      successMessage.className = 'success-message';
+      successMessage.textContent = 'تم تغيير كلمة المرور بنجاح! يتم توجيهك الآن...';
+      resetPasswordBtn.insertAdjacentElement('beforebegin', successMessage);
+      successMessage.style.display = 'block';
+      
+      // التوجيه إلى صفحة تسجيل الدخول بعد ثانيتين
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 2000);
+    });
+    
+    // دالة لإنشاء رمز عشوائي
+    function generateRandomCode(length) {
+      const chars = '0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+    
+    // دالة للتحقق من صحة البريد الإلكتروني
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+    
+    // دالة لبدء المؤقت
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          codeError.textContent = 'انتهت صلاحية رمز التحقق، يرجى طلب رمز جديد';
+          codeError.style.display = 'block';
+          verificationCode = '';
+        }
+      }, 1000);
+    }
+    
+    // دالة لتحديث عرض المؤقت
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+  </script>
+</body>
+</html>
