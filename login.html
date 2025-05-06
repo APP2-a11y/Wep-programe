@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every One - Login</title>
+  <title>Every One - تسجيل الدخول</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
-    /* إبقاء كل أنماط CSS كما هي */
-    /* يمكن إضافة أنماط إضافية إذا لزم الأمر */
-        body {
+    body {
       margin: 0;
       display: flex;
       justify-content: center;
@@ -138,10 +136,6 @@
       opacity: 0;
       animation: fadeIn 1s forwards 2.7s;
     }
-    .social-login img {
-      width: 40px;
-      height: 40px;
-    }
     .social-login i {
       font-size: 40px;
       color: #2c3e50;
@@ -151,6 +145,34 @@
       margin-top: 10px;
       display: none;
     }
+    .success-message {
+      color: #2ecc71;
+      margin-top: 10px;
+      display: none;
+    }
+    .welcome-message {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      display: none;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.5s;
+    }
+    .user-actions {
+      display: none;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.8s;
+    }
+    .user-actions button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      color: white;
+    }
     @keyframes fadeIn {
       to { opacity: 1; }
     }
@@ -159,22 +181,6 @@
     }
     @keyframes dottedFade {
       to { opacity: 0.5; }
-    }
-    .welcome-message {
-      font-size: 24px;
-      color: #2c3e50;
-      margin-bottom: 20px;
-      display: none;
-    }
-    
-    .user-actions {
-      display: none;
-      margin-top: 20px;
-    }
-    
-    .user-actions button {
-      margin: 5px;
-      padding: 8px 15px;
     }
   </style>
 </head>
@@ -191,34 +197,31 @@
     
     <!-- قسم تسجيل الدخول (يظهر فقط لغير المسجلين) -->
     <div id="loginSection">
-      <h4>Login</h4>
+      <h4>تسجيل الدخول</h4>
       <div class="login-form">
-        <input type="text" id="loginUsername" placeholder="Username" />
-        <input type="password" id="loginPassword" placeholder="Password" />
+        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" />
+        <input type="password" id="loginPassword" placeholder="كلمة المرور" />
         <div class="error-message" id="loginErrorMessage"></div>
-        <a href="forget.html" class="forgot-password">هل نسيت كلمة السر؟</a>
-        <button id="loginBtn">Log In</button>
+        <a href="reset_password.html" class="forgot-password">هل نسيت كلمة المرور؟</a>
+        <button id="loginBtn">تسجيل الدخول</button>
       </div>
     </div>
     
     <!-- قسم الإجراءات للمستخدم المسجل -->
     <div id="userActions" class="user-actions">
-      <button id="continueBtn" style="background: #00ff6a; border: none;
-      border-radius: 25px;" >متابعة إلى الصفحة الرئيسية</button>
-      <button id="logoutBtn" style="background: #e74c3c; border: none;
-      border-radius: 25px;" >تسجيل الخروج</button>
+      <button id="continueBtn" style="background: linear-gradient(to right, #2c3e50, #3498db);">متابعة إلى الصفحة الرئيسية</button>
+      <button id="logoutBtn" style="background: #e74c3c;">تسجيل الخروج</button>
     </div>
     
     <div class="social-login">
-      <!-- إبقاء أزرار التواصل الاجتماعي كما هي -->
-        <button onclick="window.location.href='home.html'">
-        <img src="https://www.google.com/favicon.ico" alt="Google" />
+      <button onclick="socialLogin('google')">
+        <i class="fab fa-google"></i>
       </button>
-      <button onclick="window.location.href='home.html'">
+      <button onclick="socialLogin('twitter')">
         <i class="fab fa-twitter"></i>
       </button>
-      <button onclick="window.location.href='home.html'">
-        <img src="https://www.facebook.com/favicon.ico" alt="Facebook" />
+      <button onclick="socialLogin('facebook')">
+        <i class="fab fa-facebook-f"></i>
       </button>
     </div>
   </div>
@@ -232,13 +235,11 @@
       const userActions = document.getElementById('userActions');
       
       if (loggedInUser) {
-        // إذا كان المستخدم مسجل الدخول
         welcomeSection.style.display = 'block';
         loginSection.style.display = 'none';
         userActions.style.display = 'block';
         document.getElementById('loggedInUser').textContent = loggedInUser;
       } else {
-        // إذا لم يكن المستخدم مسجل الدخول
         welcomeSection.style.display = 'none';
         loginSection.style.display = 'block';
         userActions.style.display = 'none';
@@ -247,7 +248,7 @@
 
     // معالجة تسجيل الدخول
     document.getElementById('loginBtn').addEventListener('click', function() {
-      const username = document.getElementById('loginUsername').value;
+      const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
       const errorMessage = document.getElementById('loginErrorMessage');
       
@@ -266,17 +267,30 @@
       const userData = JSON.parse(savedUserData);
       
       // التحقق من صحة البيانات
-      if (username === userData.username && password === userData.password) {
-        // تسجيل الدخول ناجح
-        localStorage.setItem('loggedInUser', username);
-        window.location.href = 'home.html';
+      if (email === userData.email && password === userData.password) {
+        localStorage.setItem('loggedInUser', email);
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.textContent = 'تم تسجيل الدخول بنجاح! يتم توجيهك الآن...';
+        document.getElementById('loginBtn').insertAdjacentElement('beforebegin', successMessage);
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 2000);
       } else {
-        errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+        errorMessage.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
         errorMessage.style.display = 'block';
       }
     });
 
-    // معالجة متابعة الدخول للمستخدم المسجل
+    // معالجة تسجيل الدخول عبر التواصل الاجتماعي
+    function socialLogin(platform) {
+      // هنا يمكن إضافة منطق تسجيل الدخول عبر التواصل الاجتماعي
+      console.log(`تسجيل الدخول عبر ${platform}`);
+      window.location.href = 'home.html';
+    }
+
+    // معالجة متابعة الدخول
     document.getElementById('continueBtn').addEventListener('click', function() {
       window.location.href = 'home.html';
     });
