@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إيجاد الطبيب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 375px;
+            height: 100vh;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            position: relative;
+        }
+        .header {
+            background: linear-gradient(90deg, #00b4db, #0083b0);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .search-bar {
+            padding: 15px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            font-size: 16px;
+            color: #666;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 0 15px 15px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+        }
+        .profile img.profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #d3d3d3;
+            margin-left: 15px;
+        }
+        .profile-info {
+            flex-grow: 1;
+        }
+        .profile-info p {
+            margin: 3px 0;
+            color: #34495e;
+        }
+        .profile-info .name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .profile-info .phone {
+            font-size: 16px;
+            color: #3498db;
+        }
+        .icons {
+            display: flex;
+            gap: 10px;
+        }
+        .icons i {
+            font-size: 20px;
+            color: #3498db;
+            cursor: pointer;
+        }
+        .icons .fa-heart {
+            color: #e91e63;
+        }
+        .add-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 28px;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(52,152,219,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 350px;
+        }
+        .form-content input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-content button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .form-content #preview {
+            display: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 10px auto;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 375px;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .bottom-nav i {
+            font-size: 24px;
+            color: #3498db;
+        }
+        .bottom-nav :hover {
+            background-color: #f55b5b;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>إيجاد الطبيب</h1>
+            <p>Find Your Doctor</p>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="ابحث...">
+        </div>
+        <div class="profile" id="profile1">
+            <img class="profile-pic" src="https://ui-avatars.com/api/?name=إيجاد+الطبيب&size=60" alt="Profile">
+            <div class="profile-info">
+                <p class="name">إيجاد الطبيب</p>
+                <p class="phone">07506636644</p>
+            </div>
+            <div class="icons">
+                <i class="fas fa-phone"></i>
+                <i class="fab fa-whatsapp"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+    </div>
+    <button class="add-btn" onclick="showForm()">+</button>
+    <div class="form-container" id="formContainer">
+        <div class="form-content">
+            <input type="text" id="name" placeholder="الاسم">
+            <input type="text" id="phone" placeholder="رقم الهاتف">
+            <input type="file" id="image" accept="image/*" onchange="previewImage()">
+            <img id="preview" src="#" alt="Preview">
+            <input type="text" id="facebook" placeholder="رابط فيسبوك">
+            <input type="text" id="whatsapp" placeholder="رابط واتساب">
+            <input type="text" id="instagram" placeholder="رابط إنستغرام">
+            <button onclick="saveProfile()">نعم</button>
+        </div>
+    </div>
+    <div class="bottom-nav" onclick="window.location.href='home.html'"> 
+        <i class="fas fa-home"></i>
+    </div>
+
+    <script>
+        let profiles = [document.getElementById('profile1')];
+
+        function showForm() {
+            document.getElementById('formContainer').style.display = 'flex';
+        }
+
+        function previewImage() {
+            const file = document.getElementById('image').files[0];
+            const preview = document.getElementById('preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const imageFile = document.getElementById('image').files[0];
+            const facebook = document.getElementById('facebook').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const instagram = document.getElementById('instagram').value;
+
+            let imageSrc;
+            if (imageFile) {
+                imageSrc = document.getElementById('preview').src;
+            } else {
+                imageSrc = name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=60` : 'https://ui-avatars.com/api/?name=User&size=60';
+            }
+
+            if (phone) {
+                const container = document.querySelector('.app-container');
+                const newProfile = document.createElement('div');
+                newProfile.className = 'profile';
+                newProfile.innerHTML = `
+                    <img class="profile-pic" src="${imageSrc}" alt="Profile">
+                    <div class="profile-info">
+                        <p class="name">${name || 'إيجاد الطبيب'}</p>
+                        <p class="phone">${phone}</p>
+                    </div>
+                    <div class="icons">
+                        <i class="fas fa-phone"></i>
+                        <i class="fab fa-whatsapp"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-facebook"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                `;
+                container.appendChild(newProfile);
+                profiles.push(newProfile);
+
+                document.getElementById('formContainer').style.display = 'none';
+                document.getElementById('name').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('image').value = '';
+                document.getElementById('preview').style.display = 'none';
+                document.getElementById('facebook').value = '';
+                document.getElementById('whatsapp').value = '';
+                document.getElementById('instagram').value = '';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!document.querySelector('.form-content').contains(e.target) && e.target.className !== 'add-btn') {
+                document.getElementById('formContainer').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

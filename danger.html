@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طوارئ</title>
+    <!-- رابط Font Awesome 4.7 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            background-color: #f0f0f0;
+        }
+        .header {
+            background-color: #e63946;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            position: relative;
+        }
+        .header .back-arrow {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .search-bar {
+            width: 80%;
+            margin: 15px auto;
+            padding: 10px;
+            align-items: center;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+        }
+        .emergency-btn {
+            background-color: #e63946;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .emergency-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background-color: #d32f3b;
+        }
+        .emergency-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .emergency-btn:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        .emergency-btn i {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #e5f0fa;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .footer i {
+            font-size: 24px;
+            color: #e63946;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer :hover {
+            background-color: #d0e1f9;
+            color:rgb(221, 43, 43)
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span class="back-arrow" onclick="window.location.href='home.html'">←</span>
+      حالة  طوارئ 
+    </div>
+    <input type="text" class="search-bar" placeholder="  Search..." oninput="searchServices()">
+    <div class="container" id="emergencyContainer">
+        <div class="emergency-btn" data-name="إسعاف" onclick="window.location.href='tel:122'">
+            <i class="fa fa-ambulance"></i>
+            122<br>إسعاف
+        </div>
+        <div class="emergency-btn" data-name="إطفاء" onclick="window.location.href='tel:911'">
+            <i class="fa fa-fire-extinguisher"></i>
+            911<br>إطفاء
+        </div>
+        <div class="emergency-btn" data-name="شرطة" onclick="window.location.href='tel:119'">
+            <i class="fa fa-gavel"></i>
+            119<br>شرطة
+        </div>
+        <div class="emergency-btn" data-name="مرور" onclick="window.location.href='tel:118'">
+            <i class="fa fa-car"></i>
+            118<br>مرور
+        </div>
+    </div>
+    <div class="footer" onclick="window.location.href='home.html'">
+        <i class="fa fa-home"></i>
+    </div>
+
+    <script>
+        function searchServices() {
+            const input = document.querySelector('.search-bar').value.toLowerCase();
+            const buttons = document.querySelectorAll('.emergency-btn');
+
+            buttons.forEach(button => {
+                const name = button.getAttribute('data-name').toLowerCase();
+                if (name.includes(input)) {
+                    button.classList.remove('hidden');
+                } else {
+                    button.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
