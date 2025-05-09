@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every One - الرئيسية</title>
+  <title>Every One - السجل</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body {
@@ -33,96 +33,30 @@
       left: 20px;
       font-size: 20px;
     }
-    .search-bar {
-      margin: 60px 20px 20px;
-      position: relative;
-    }
-    .search-bar input {
-      width: 95%;
-      padding: 10px;
-      border: 1px solid #3498db;
-      border-radius: 25px;
-      font-size: 16px;
+    .content {
+      margin: 80px 20px 100px;
       text-align: center;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    .carousel {
-      margin: 20px;
-      overflow: hidden;
-      position: relative;
-      height: 150px;
-      border: 2px solid #3498db;
-      border-radius: 10px;
+    .content h3 {
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-    .carousel-inner {
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.5s ease;
-      height: 2000px;
+    .content p {
+      font-size: 18px;
+      margin: 10px 0;
     }
-    .carousel-item {
-      min-height: 150px;
-      box-sizing: border-box;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .carousel-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      display: block;
-    }
-    .phone-icon {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 10px 12px;
-    }
-    .phone-icon i {
-      font-size: 30px;
-      color: #ff0000;
-    }
-    .phone-icon i:hover {
-      color: #ff6666;
-    }
-    .phone-icon p {
-      margin: 0;
-      font-size: 16px;
-      color: #2c3e50;
-    }
-    .phone-icon p:hover {
-      color: #db3434;
-      cursor: pointer;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-    .btn {
+    .content button {
       background: linear-gradient(to right, #1a70cc, #2344a0);
       border: none;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
+      border-radius: 25px;
+      padding: 10px 20px;
       color: white;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       transition: transform 0.2s;
     }
-    .btn i {
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-    .btn:hover {
-      transform: rotate(1deg);
+    .content button:hover {
+      transform: scale(1.05);
     }
     .navbar {
       position: fixed;
@@ -257,19 +191,11 @@
     body.dark-mode .header {
       background: linear-gradient(to right, #34495e, #2c3e50);
     }
-    body.dark-mode .btn {
-      background: #34495e;
-    }
     body.dark-mode .navbar {
       background: #34495e;
     }
     body.dark-mode .sidebar {
       background: linear-gradient(to bottom, #34495e, #2c3e50);
-    }
-    body.dark-mode .search-bar input {
-      background: #34495e;
-      color: #ecf0f1;
-      border-color: #ecf0f1;
     }
     body.dark-mode .popup {
       background: #34495e;
@@ -280,87 +206,23 @@
       color: #ecf0f1;
       border-color: #ecf0f1;
     }
-    body.dark-mode .carousel {
-      border-color: #ecf0f1;
-    }
-    body.dark-mode .carousel-item img {
-      border: 2px solid #ecf0f1;
-    }
-    body.dark-mode .phone-icon i {
-      color: #ff6666;
-    }
-    body.dark-mode .phone-icon p {
-      color: #ecf0f1;
-    }
-    .mor p:hover {
-      color: #3498db;
-      cursor: pointer;
+    body.dark-mode .content button {
+      background: #34495e;
     }
   </style>
 </head>
 <body>
   <div class="header">
     <i class="fas fa-bell bell"></i>
-    <h2 id="headerTitle">أبحث هنا</h2>
+    <h2 id="headerTitle">السجل</h2>
   </div>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="ابحث...">
-  </div>
-  <div class="carousel">
-    <div class="carousel-inner" id="carouselInner">
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Snowy Mountains" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cultural Festival" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Lake Reflection" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Urban Night" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Mountain Landscape" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="City Skyline" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Beach Sunset" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Forest Path" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Desert Dunes" loading="eager">
-      </div>
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Autumn Leaves" loading="eager">
-      </div>
-    </div>
-  </div>
-  <div class="phone-icon">
-    <p class="mor" onclick="window.location.href='more.html'">المزيد</p>
-    <i class="fas fa-phone" onclick="window.location.href='danger.html'"></i>
-  </div>
-  <div class="buttons">
-    <button class="btn" onclick="window.location.href='doctor.html'"><i class="fas fa-user-md"></i> الصحة</button>
-    <button class="btn" onclick="window.location.href='doc.html'"><i class="fas fa-wheat-awn"></i> الأعشاب</button>
-    <button class="btn" onclick="window.location.href='cc.html'"><i class="fas fa-cogs"></i> الصيانة</button>
-    <button class="btn" onclick="window.location.href='hhp.html'"><i class="fas fa-truck"></i> التوصيل</button>
-    <button class="btn" onclick="window.location.href='cfa.html'"><i class="fas fa-tools"></i> الأعمال</button>
-    <button class="btn" onclick="window.location.href='ple.html'"><i class="fas fa-hard-hat"></i> المأكولات</button>
-    <button class="btn" onclick="window.location.href='cpp.html'"><i class="fas fa-store"></i> المتاجر</button>
-    <button class="btn" onclick="window.location.href='pph.html'"><i class="fas fa-home"></i> العقارات</button>
-    <button class="btn" onclick="window.location.href='cpc.html'"><i class="fas fa-ring"></i> قاعة الأفراح</button>
-    <button class="btn" onclick="window.location.href='ph.html'"><i class="fas fa-scissors"></i> الكوافير</button>
-    <button class="btn" onclick="window.location.href='sps.html'"><i class="fas fa-female"></i> الألبسة</button>
-    <button class="btn" onclick="window.location.href='cpp.html'"><i class="fas fa-tint"></i> العطور</button>
+  <div class="content">
+    <h3 id="historyTitle">سجل الزيارات</h3>
+    <p id="visitCountText">لقد قمت بزيارة التطبيق <span id="visitCount">0</span> مرة</p>
+    <button onclick="window.location.href='index.html'" id="backButton">العودة إلى الرئيسية</button>
   </div>
   <div class="navbar">
     <i class="fas fa-exchange-alt" id="darkModeBtn"></i>
-    <i class="fas fa-search" id="searchBtn"></i>
     <i class="fas fa-home" id="homeBtn"></i>
     <i class="fas fa-list" id="menuBtn"></i>
   </div>
@@ -370,7 +232,7 @@
     <ul>
       <li><a href="#" id="profileBtn"><i class="fas fa-user"></i> <span id="profileText">الملف الشخصي</span></a></li>
       <li><a href="#" id="settingsBtn"><i class="fas fa-cog"></i> <span id="settingsText">الإعدادات</span></a></li>
-      <li><a href="#"><i class="fas fa-heart"></i> <span id="favoritesText">المفضلة</span></a></li>
+      <li><a href="favorites.html"><i class="fas fa-heart"></i> <span id="favoritesText">المفضلة</span></a></li>
       <li><a href="history.html"><i class="fas fa-history"></i> <span id="historyText">السجل</span></a></li>
       <li><a href="#" id="supportBtn"><i class="fas fa-headset"></i> <span id="supportText">الدعم</span></a></li>
       <li><a href="#" id="sendMessageBtn"><i class="fas fa-envelope"></i> <span id="sendMessageText">إرسال رسالة</span></a></li>
@@ -380,10 +242,6 @@
     </ul>
   </div>
   <div class="overlay" id="overlay"></div>
-  <div class="popup" id="searchPopup">
-    <input type="text" id="popupSearchInput" placeholder="ابحث هنا...">
-    <button onclick="searchItems()">ابحث</button>
-  </div>
   <div class="popup" id="profilePopup">
     <input type="text" id="profileName" placeholder="الاسم">
     <input type="text" id="profileAddress" placeholder="العنوان">
@@ -426,7 +284,7 @@
   <script>
     const translations = {
       ar: {
-        headerTitle: "أبحث هنا",
+        headerTitle: "السجل",
         sidebarTitle: "القائمة",
         profileText: "الملف الشخصي",
         settingsText: "الإعدادات",
@@ -437,7 +295,6 @@
         shareAppText: "مشاركة التطبيق",
         aboutText: "حول التطبيق",
         whatsappText: "تواصل معنا",
-        searchPlaceholder: "ابحث...",
         profileName: "الاسم",
         profileAddress: "العنوان",
         profilePhone: "رقم الهاتف",
@@ -453,10 +310,13 @@
         sendButton: "إرسال",
         supportContent: "للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.",
         aboutContent: "تطبيق Everyone يوفر خدمات متنوعة بسهولة وسرعة.",
-        closeButton: "إغلاق"
+        closeButton: "إغلاق",
+        historyTitle: "سجل الزيارات",
+        visitCountText: "لقد قمت بزيارة التطبيق {count} مرة",
+        backButton: "العودة إلى الرئيسية"
       },
       en: {
-        headerTitle: "Search Here",
+        headerTitle: "History",
         sidebarTitle: "Menu",
         profileText: "Profile",
         settingsText: "Settings",
@@ -467,7 +327,6 @@
         shareAppText: "Share App",
         aboutText: "About the App",
         whatsappText: "Contact Us",
-        searchPlaceholder: "Search...",
         profileName: "Name",
         profileAddress: "Address",
         profilePhone: "Phone Number",
@@ -483,10 +342,13 @@
         sendButton: "Send",
         supportContent: "For support, please contact us via WhatsApp or send a help message.",
         aboutContent: "The Everyone app provides various services easily and quickly.",
-        closeButton: "Close"
+        closeButton: "Close",
+        historyTitle: "Visit History",
+        visitCountText: "You have visited the app {count} times",
+        backButton: "Back to Home"
       },
       ku: {
-        headerTitle: "Lê bigere",
+        headerTitle: "Dîrok",
         sidebarTitle: "Pêşek",
         profileText: "Profil",
         settingsText: "Mîhengan",
@@ -497,7 +359,6 @@
         shareAppText: "Sepanê parve bike",
         aboutText: "Derbarê Sepanê",
         whatsappText: "Peywendî bi me re bike",
-        searchPlaceholder: "Lê bigere...",
         profileName: "Nav",
         profileAddress: "Navnîşan",
         profilePhone: "Hejmara Telefonê",
@@ -513,10 +374,13 @@
         sendButton: "Bişîne",
         supportContent: "Ji bo piştgiriyê, ji kerema xwe bi WhatsAppê re têkilî daynin an peyamek alîkariyê bişînin.",
         aboutContent: "Sepana Everyone xizmetên cûrbecûr bi hêsanî û zû peyda dike.",
-        closeButton: "Girtin"
+        closeButton: "Girtin",
+        historyTitle: "Dîroka Serdanê",
+        visitCountText: "Te {count} caran sepan ziyaret kir",
+        backButton: "Vegere Malperê"
       },
       fr: {
-        headerTitle: "Rechercher ici",
+        headerTitle: "Historique",
         sidebarTitle: "Menu",
         profileText: "Profil",
         settingsText: "Paramètres",
@@ -527,7 +391,6 @@
         shareAppText: "Partager l'application",
         aboutText: "À propos de l'application",
         whatsappText: "Contactez-nous",
-        searchPlaceholder: "Rechercher...",
         profileName: "Nom",
         profileAddress: "Adresse",
         profilePhone: "Numéro de téléphone",
@@ -543,37 +406,22 @@
         sendButton: "Envoyer",
         supportContent: "Pour le support, veuillez nous contacter via WhatsApp ou envoyer un message d'aide.",
         aboutContent: "L'application Everyone offre divers services facilement et rapidement.",
-        closeButton: "Fermer"
+        closeButton: "Fermer",
+        historyTitle: "Historique des visites",
+        visitCountText: "Vous avez visité l'application {count} fois",
+        backButton: "Retour à l'accueil"
       }
     };
 
-    let slideIndex = 0;
-    const images = [
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      "https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      "https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    ];
-
-    images.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
-
-    const slideInterval = setInterval(nextSlide, 2000);
-
-    function nextSlide() {
-      const carouselInner = document.getElementById('carouselInner');
-      slideIndex = (slideIndex + 1) % 10;
-      carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`;
+    // Display visit count
+    function displayVisitCount() {
+      const visitCount = parseInt(localStorage.getItem('visitCount') || '0');
+      const lang = document.getElementById('languageSelect').value || 'ar';
+      const text = translations[lang].visitCountText.replace('{count}', visitCount);
+      document.getElementById('visitCountText').innerHTML = text.replace(/\d+/, `<span id="visitCount">${visitCount}</span>`);
     }
 
+    // Navbar interactions
     const navbarIcons = document.querySelectorAll('.navbar i');
     navbarIcons.forEach(icon => {
       icon.addEventListener('click', function() {
@@ -583,25 +431,7 @@
     });
 
     document.getElementById('homeBtn').addEventListener('click', function() {
-      window.location.href = 'start.html';
-    });
-
-    document.getElementById('searchBtn').addEventListener('click', function() {
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('searchPopup').style.display = 'block';
-    });
-
-    document.getElementById('overlay').addEventListener('click', function() {
-      document.getElementById('overlay').style.display = 'none';
-      document.getElementById('searchPopup').style.display = 'none';
-      document.getElementById('profilePopup').style.display = 'none';
-      document.getElementById('settingsPopup').style.display = 'none';
-      document.getElementById('helpPopup').style.display = 'none';
-      document.getElementById('messagePopup').style.display = 'none';
-      document.getElementById('supportPopup').style.display = 'none';
-      document.getElementById('aboutPopup').style.display = 'none';
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
+      window.location.href = 'index.html';
     });
 
     document.getElementById('darkModeBtn').addEventListener('click', function() {
@@ -626,6 +456,7 @@
       }, 300);
     });
 
+    // Sidebar button interactions
     document.getElementById('profileBtn').addEventListener('click', function(e) {
       e.preventDefault();
       document.getElementById('overlay').style.display = 'block';
@@ -674,21 +505,19 @@
       document.getElementById('sidebar').style.display = 'none';
     });
 
-    function searchItems() {
-      const query = document.getElementById('popupSearchInput').value.toLowerCase();
-      const buttons = document.querySelectorAll('.btn');
-      buttons.forEach(button => {
-        const text = button.textContent.toLowerCase();
-        if (text.includes(query)) {
-          button.style.display = 'flex';
-        } else {
-          button.style.display = 'none';
-        }
-      });
+    document.getElementById('overlay').addEventListener('click', function() {
       document.getElementById('overlay').style.display = 'none';
-      document.getElementById('searchPopup').style.display = 'none';
-    }
+      document.getElementById('profilePopup').style.display = 'none';
+      document.getElementById('settingsPopup').style.display = 'none';
+      document.getElementById('helpPopup').style.display = 'none';
+      document.getElementById('messagePopup').style.display = 'none';
+      document.getElementById('supportPopup').style.display = 'none';
+      document.getElementById('aboutPopup').style.display = 'none';
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
 
+    // Profile functions
     function saveProfile() {
       const profile = {
         name: document.getElementById('profileName').value,
@@ -729,7 +558,7 @@
       const name = document.getElementById(nameId).value;
       const message = document.getElementById(messageId).value;
       if (name && message) {
-        // ملاحظة: لا تعرض رمز الوصول للبوت في كود العميل. استخدم خادمًا وسيطًا (proxy server) في التطبيقات الحقيقية.
+        // ملاحظة: لا تعرض رمز الوصول للبوت في كود العميل. استخدم خادمًا وسيطًا في التطبيقات الحقيقية.
         const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
         const chatId = '7327464581';
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -784,10 +613,12 @@
 
     function changeLanguage() {
       const lang = document.getElementById('languageSelect').value;
+      localStorage.setItem('language', lang);
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr';
       updateUIText(lang);
       closePopup('settingsPopup');
+      displayVisitCount();
     }
 
     function updateUIText(lang) {
@@ -803,8 +634,6 @@
       document.getElementById('shareAppText').textContent = t.shareAppText;
       document.getElementById('aboutText').textContent = t.aboutText;
       document.getElementById('whatsappText').textContent = t.whatsappText;
-      document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-      document.getElementById('popupSearchInput').placeholder = t.searchPlaceholder;
       document.getElementById('profileName').placeholder = t.profileName;
       document.getElementById('profileAddress').placeholder = t.profileAddress;
       document.getElementById('profilePhone').placeholder = t.profilePhone;
@@ -825,23 +654,8 @@
       document.getElementById('aboutContent').textContent = t.aboutContent;
       document.querySelector('#supportPopup button').textContent = t.closeButton;
       document.querySelector('#aboutPopup button').textContent = t.closeButton;
-
-      const buttons = document.querySelectorAll('.btn');
-      const buttonTexts = [
-        'الصحة', 'الأعشاب', 'الصيانة', 'التوصيل', 'الأعمال', 'المأكولات', 'المتاجر',
-        'العقارات', 'قاعة الأفراح', 'الكوافير', 'الألبسة', 'العطور'
-      ];
-      const buttonTranslations = {
-        ar: buttonTexts,
-        en: ['Health', 'Herbs', 'Maintenance', 'Delivery', 'Business', 'Food', 'Shops', 'Real Estate', 'Wedding Hall', 'Hairdresser', 'Clothing', 'Perfumes'],
-        ku: ['Tenduristî', 'Gîha', 'Lênihêrîn', 'Radestkirin', 'Karsazî', 'Xwarin', 'Dikan', 'Sermaye', 'Salona Dawetê', 'Kuafor', 'Cil', 'Bêhn'],
-        fr: ['Santé', 'Herbes', 'Maintenance', 'Livraison', 'Affaires', 'Nourriture', 'Magasins', 'Immobilier', 'Salle de mariage', 'Coiffeur', 'Vêtements', 'Parfums']
-      };
-      buttons.forEach((btn, i) => {
-        if (i < buttonTranslations[lang].length) {
-          btn.childNodes[2].textContent = buttonTranslations[lang][i];
-        }
-      });
+      document.getElementById('historyTitle').textContent = t.historyTitle;
+      document.getElementById('backButton').textContent = t.backButton;
     }
 
     function closePopup(popupId) {
@@ -849,18 +663,11 @@
       document.getElementById('overlay').style.display = 'none';
     }
 
-    // Track visits
-    function trackVisit() {
-      let visitCount = parseInt(localStorage.getItem('visitCount') || '0');
-      visitCount += 1;
-      localStorage.setItem('visitCount', visitCount.toString());
-    }
-    trackVisit();
-
-    // Initialize language
+    // Initialize language and UI
     const savedLang = localStorage.getItem('language') || 'ar';
     document.getElementById('languageSelect').value = savedLang;
     changeLanguage();
+    displayVisitCount();
   </script>
 </body>
 </html>
