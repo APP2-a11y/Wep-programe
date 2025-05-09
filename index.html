@@ -134,10 +134,6 @@
   </style>
 </head>
 <body>
-  <div class="loader-container" id="loader">
-    <div class="loader"></div>
-    <div class="loader-text">جارٍ التحميل...</div>
-  </div>
   <div class="container" id="mainContent">
     <div class="logo">𝑬</div>
     <div class="title">𝐸𝓋𝑒𝓇𝓎   𝒪𝓃𝑒</div>
@@ -145,12 +141,10 @@
 
   <script>
     window.onload = function() {
-      const loader = document.getElementById('loader');
       const mainContent = document.getElementById('mainContent');
 
       // Show loading screen for 2 seconds
       setTimeout(() => {
-        loader.classList.add('hidden');
         mainContent.classList.add('visible');
         
         // After main content animations (3 seconds), redirect
