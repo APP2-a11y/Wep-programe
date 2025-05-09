@@ -15,8 +15,47 @@
       font-family: Arial, sans-serif;
       overflow: hidden;
     }
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #2c6cb5, #a3bffa);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    .loader-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader {
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .loader-text {
+      color: #fff;
+      font-size: 24px;
+      margin-top: 20px;
+      opacity: 0.8;
+      animation: textFade 1.5s ease-in-out infinite;
+    }
     .container {
       text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .container.visible {
+      opacity: 1;
     }
     .logo {
       font-size: 100px;
@@ -58,6 +97,31 @@
       opacity: 0;
       animation: fadeIn 1s forwards 1.2s;
     }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    @keyframes textFade {
+      0% {
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        opacity: 0.8;
+      }
+    }
     @keyframes fadeIn {
       to { opacity: 1; }
     }
@@ -70,15 +134,31 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="loader-container" id="loader">
+    <div class="loader"></div>
+    <div class="loader-text">جارٍ التحميل...</div>
+  </div>
+  <div class="container" id="mainContent">
     <div class="logo">𝑬</div>
     <div class="title">𝐸𝓋𝑒𝓇𝓎   𝒪𝓃𝑒</div>
   </div>
 
   <script>
-    setTimeout(function() {
-      window.location.href = "start.html";
-    }, 3000); // 2000 ميلي ثانية = 2 ثانية
+    window.onload = function() {
+      const loader = document.getElementById('loader');
+      const mainContent = document.getElementById('mainContent');
+
+      // Show loading screen for 2 seconds
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        mainContent.classList.add('visible');
+        
+        // After main content animations (3 seconds), redirect
+        setTimeout(() => {
+          window.location.href = "start.html";
+        }, 3000);
+      }, 2000);
+    };
   </script>
 </body>
 </html>
