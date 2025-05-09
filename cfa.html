@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة خدمات</title>
+    <!-- إضافة مكتبة Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #4a90e2, #ffffff);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(to bottom, #1a1a1a, #333);
+            color: #fff;
+        }
+
+        body.dark-mode .search-bar input {
+            background-color: #444;
+            color: #fff;
+        }
+
+        body.dark-mode .service-item {
+            background-color: #2a2a2a;
+        }
+
+        body.dark-mode .navbar {
+            background-color: #222;
+        }
+
+        body.dark-mode .navbar i {
+            color: #4a90e2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: #e6f0fa;
+            font-size: 16px;
+            color: #333;
+            outline: none;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .service-item {
+            background: linear-gradient(to right, #1a70cc, #2344a0);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .service-item:hover {
+            transform: scale(1.05);
+        }
+
+        .service-item .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .service-item p {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+
+        .navbar i {
+            font-size: 24px;
+            color: #4a90e2;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup .results {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .popup .results p {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .popup .results p:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="ابحث...">
+        </div>
+        <div class="services-grid">
+            <div class="service-item">
+                <i class="fas fa-building icon"></i>
+                <p> فروع البنوك</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-user-tie icon"></i>
+                <p>مقاول</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-saw icon"></i> <!-- إضافة أيقونة جديدة للنجار -->
+                <i class="fas fa-tools icon"></i> <!-- إضافة أيقونة جديدة للنجار -->
+                <i class="fas fa-scogs icon"></i>
+                <p>نجار</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-hard-hat icon"></i>
+                <p>باني</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-tools icon" style="color: #1a1a1a;"></i>
+                <p>سمكري</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-hammer icon"></i>
+                <p>حداد</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-paint-brush icon"></i>
+                <p>طلاء سيراميك</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-car icon"></i> <!-- إضافة أيقونة جديدة للبليط -->
+                <p>بليط</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-door-open icon"></i>
+                <p>نجم</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-window-maximize icon"></i>
+                <p>مصنع درايش</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-paint-brush icon" style="color: red;"></i>
+                <p>فواصل ديكور</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-code icon"></i>
+                <p>مطور</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-hospital icon"></i>
+                <p>صحي</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-leaf icon" style="color: green;"></i>
+                <p>تنسيق حدائق</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-user icon"></i>
+                <p>مهندس</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-user icon"></i>
+                <p> مبلط</p> 
+            </div>
+        </div>
+    </div>
+    <div class="navbar">
+        <i class="fas fa-home" onclick="window.location.href='home.html'"></i>
+        <i class="fas fa-search" onclick="togglePopup()"></i>
+        <i class="fas fa-exchange-alt" onclick="toggleDarkMode()"></i>
+        <i class="fas fa-user"></i>
+    </div>
+    <div class="popup" id="searchPopup">
+        <input type="text" id="searchInput" placeholder="ابحث هنا..." oninput="searchItems()">
+        <div class="results" id="searchResults"></div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        function togglePopup() {
+            const popup = document.getElementById('searchPopup');
+            popup.classList.toggle('active');
+        }
+
+        function searchItems() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const results = document.getElementById('searchResults');
+            const items = document.querySelectorAll('.service-item p');
+            results.innerHTML = '';
+
+            items.forEach(item => {
+                if (item.textContent.toLowerCase().includes(input)) {
+                    const p = document.createElement('p');
+                    p.textContent = item.textContent;
+                    p.onclick = () => alert(`تم اختيار: ${item.textContent}`);
+                    results.appendChild(p);
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

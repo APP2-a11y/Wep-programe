@@ -51,7 +51,7 @@
       margin: 20px;
       overflow: hidden;
       position: relative;
-      height: 150px; /* الارتفاع الأصلي */
+      height: 150px;
       border: 2px solid #3498db;
       border-radius: 10px;
     }
@@ -59,32 +59,41 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.5s ease;
-      height: 2000px; /* ارتفاع كافٍ لجميع الصور */
+      height: 2000px;
     }
     .carousel-item {
-      min-height: 150px; /* الارتفاع الأصلي */
+      min-height: 150px;
       box-sizing: border-box;
       text-align: center;
       flex-shrink: 0;
     }
     .carousel-item img {
       width: 100%;
-      height: 150px; /* الارتفاع الأصلي */
+      height: 150px;
       object-fit: cover;
       display: block;
     }
     .phone-icon {
-      text-align:  left;
-      margin-left: 12px;
-      margin-top: 10px; /* إنزال الأيقونة قليلاً */
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 12px;
     }
     .phone-icon i {
-      font-size: 30px; /* حجم أكبر للأيقونة لتبرز */
-      color: #ff0000; /* لون أحمر */
+      font-size: 30px;
+      color: #ff0000;
     }
     .phone-icon i:hover {
-      color: #ff6666; /* لون أحمر فاتح عند التمرير */
+      color: #ff6666;
+    }
+    .phone-icon p {
+      margin: 0;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+    .phone-icon p:hover {
+      color: #db3434;
+      cursor: pointer;
     }
     .buttons {
       display: grid;
@@ -114,7 +123,6 @@
     }
     .btn:hover {
       transform: rotate(1deg);
-
     }
     .navbar {
       position: fixed;
@@ -207,7 +215,10 @@
       border: 2px solid #ecf0f1;
     }
     body.dark-mode .phone-icon i {
-      color: #ff6666; /* لون أحمر فاتح في الوضع الداكن للتباين */
+      color: #ff6666;
+    }
+    body.dark-mode .phone-icon p {
+      color: #ecf0f1;
     }
     .mor p:hover {
       color: #3498db;
@@ -257,23 +268,23 @@
       </div>
     </div>
   </div>
-  <div class="phone-icon" onclick="window.location.href='danger.html'">
-    <i class="fas fa-phone"> </i>
-    
+  <div class="phone-icon">
+    <p class="mor" onclick="window.location.href='more.html'">المزيد</p>
+    <i class="fas fa-phone" onclick="window.location.href='danger.html'"></i>
   </div>
   <div class="buttons">
     <button class="btn" onclick="window.location.href='doctor.html'"><i class="fas fa-user-md" onclick="window.location.href='doctor.html'"></i> الصحه</button>
     <button class="btn" onclick="window.location.href='doc.html'" style="color: #06ff44;"><i class="fas fa-wheat-awn" onclick="window.location.href='doc.html'"></i> الأعشاب</button>
-    <button class="btn"><i class="fas fa-cogs"></i> الصيانة</button>
-    <button class="btn"><i class="fas fa-truck"></i> التوصيل</button>
-    <button class="btn"><i class="fas fa-tools"></i> الاعمال</button>
-    <button class="btn"><i class="fas fa-hard-hat"></i> المأكولات</button>
-    <button class="btn"><i class="fas fa-store"></i> المتاجر</button>
-    <button class="btn"><i class="fas fa-home"></i> العقارات</button>
-    <button class="btn"><i class="fas fa-ring"></i> قاعة الافراح</button>
-    <button class="btn"><i class="fas fa-paint-brush" style="color: #ff0000;"></i> الكوافير</button>
-    <button class="btn"><i class="fas fa-female"></i> الألبسه</button>
-    <button class="btn"><i class="fas fa-tint"></i> العطور</button>
+    <button class="btn" onclick="window.location.href='cc.html'"><i class="fas fa-cogs" style="color: #5a5120;"></i> الصيانة</button>
+    <button class="btn" onclick="window.location.href='hhp.html'"><i class="fas fa-truck" style="color: #ca23ae;"></i> التوصيل</button>
+    <button class="btn"  onclick="window.location.href='cfa.html'"><i class="fas fa-tools"></i> الاعمال</button>
+    <button class="btn" onclick="window.location.href='ple.html'"><i class="fas fa-hard-hat" style="color: #f7d61b;"></i> المأكولات</button>
+    <button class="btn"><i class="fas fa-store" style="color: #90ff29;"></i> المتاجر</button>
+    <button class="btn" onclick="window.location.href='pph.html'"><i class="fas fa-home"></i> العقارات</button>
+    <button class="btn" onclick="window.location.href='cpc.html'"><i class="fas fa-ring"></i> قاعة الافراح</button>
+    <button class="btn" onclick="window.location.href='ph.html'"><i class="fas fa-paint-brush" style="color: #ff0000;"></i> الكوافير</button>
+    <button class="btn" onclick="window.location.href='sps.html'"><i class="fas fa-female"></i> الألبسه</button>
+    <button class="btn" onclick="window.location.href='cpp.html'"><i class="fas fa-tint" style="color: #2a9600;"></i> العطور</button>
   </div>
   <div class="navbar">
     <i class="fas fa-exchange-alt" id="darkModeBtn"></i>
@@ -301,18 +312,17 @@
       "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     ];
 
-    // تحميل الصور مسبقًا
     images.forEach(src => {
       const img = new Image();
       img.src = src;
     });
 
-    const slideInterval = setInterval(nextSlide, 2000); // ثانيتين
+    const slideInterval = setInterval(nextSlide, 2000);
 
     function nextSlide() {
       const carouselInner = document.getElementById('carouselInner');
-      slideIndex = (slideIndex + 1) % 10; // 10 صور
-      carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`; // الارتفاع الأصلي
+      slideIndex = (slideIndex + 1) % 10;
+      carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`;
     }
 
     document.getElementById('homeBtn').addEventListener('click', function() {

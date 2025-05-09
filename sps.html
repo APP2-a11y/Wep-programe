@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>واجهة خدمات</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fcfcfc, #e6f0fa);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      width: 100%;
+      text-align: center;
+      padding: 20px 0;
+      background: linear-gradient(to bottom right, #223ee0, #9422b1);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      position: relative;
+    }
+    .header i {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .search-bar {
+      width: 90%;
+      max-width: 400px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 40px 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+    .search-bar i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 90%;
+      max-width: 400px;
+      padding: 20px 0;
+    }
+    .card {
+      background: linear-gradient(to bottom right, #223ee0, #9422b1);
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      font-size: 18px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card i {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    .footer {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      background: #e6f0fa;
+    }
+    .footer i {
+      color: #ff4500;
+      font-size: 24px;
+    }
+    .header i:hover {
+        color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="header" onclick="window.location.href='home.html'"> 
+    <i class="fas fa-arrow-right"></i>
+    الالبسه
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search...">
+    <i class="fas fa-search"></i>
+  </div>
+  <div class="grid">
+    <div class="card" onclick="window.location.href='ca.html'">
+      <i class="fas fa-shoe-prints"></i>
+      <span>احذيه</span>
+    </div>
+    <div class="card" onclick="window.location.href='fa.html'">
+      <i class="fas fa-tshirt"></i>
+      <span>البسة   </span>
+    </div>
+    <div class="card" onclick="window.location.href='fa.html'">
+        <i class="fas fa-box-open"></i>
+        <span> باله </span>
+      </div>
+  </div>
+  <div class="footer" onclick="window.location.href='home.html'">
+    <i class="fas fa-home"></i>
+  </div>
+</body>
+</html>
