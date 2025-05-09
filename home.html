@@ -684,14 +684,39 @@
       document.getElementById('helpPopup').style.display = 'block';
     }
 
-    function sendHelpMessage() {
+    async function sendHelpMessage() {
       const name = document.getElementById('helpName').value;
       const message = document.getElementById('helpMessage').value;
       if (name && message) {
-        // Simulate sending to Telegram bot (replace with actual API call)
-        console.log(`Sending to Telegram: Name: ${name}, Message: ${message}`);
-        alert('تم إرسال الرسالة بنجاح');
-        closePopup('helpPopup');
+        // ملاحظة: لا تعرض رمز الوصول للبوت في كود العميل. استخدم خادمًا وسيطًا (proxy server) في التطبيقات الحقيقية.
+        const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU'; // استبدل برمز وصول البوت
+        const chatId = '7327464581'; // استبدل بمعرف الدردشة
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const text = `Name: ${name}\nMessage: ${message}`; // تنسيق الرسالة
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: text,
+            }),
+          });
+
+          const data = await response.json();
+          if (data.ok) {
+            alert('تم إرسال الرسالة بنجاح');
+            closePopup('helpPopup');
+          } else {
+            alert('فشل إرسال الرسالة: ' + data.description);
+          }
+        } catch (error) {
+          console.error('خطأ:', error);
+          alert('حدث خطأ أثناء إرسال الرسالة');
+        }
       } else {
         alert('يرجى إدخال الاسم والرسالة');
       }
