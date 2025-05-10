@@ -1,0 +1,177 @@
+> Mahmoud:
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every One Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            direction: rtl;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px; /* زيادة الهامش السفلي لخفض الشعار */
+        }
+        .logo {
+            font-size: 10vw;
+            color: #007bff;
+            font-weight: bold;
+            margin-top: 150px;
+        }
+        .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15vw;
+            height: 15vw;
+            border-radius: 50%;
+            border: 2px dashed #007bff;
+            margin-top: 80px;
+        }
+        .dot {
+            position: absolute;
+            width: 1vw;
+            height: 1vw;
+            background-color: #007bff;
+            border-radius: 50%;
+        }
+        .dot:nth-child(1) { transform: translate(6.5vw, 0); }
+        .dot:nth-child(2) { transform: translate(-6.5vw, 0); }
+        .dot:nth-child(3) { transform: translate(0, 6.5vw); }
+        .dot:nth-child(4) { transform: translate(0, -6.5vw); }
+        .dot:nth-child(5) { transform: translate(4.5vw, 4.5vw); }
+        .dot:nth-child(6) { transform: translate(-4.5vw, -4.5vw); }
+        .dot:nth-child(7) { transform: translate(4.5vw, -4.5vw); }
+        .dot:nth-child(8) { transform: translate(-4.5vw, 4.5vw); }
+        .title {
+            font-size: 4vw;
+            color: #007bff;
+            margin-bottom: 3vh;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 90vw;
+            max-width: 600px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh;
+            width: 45%;
+        }
+        .button {
+            width: 100%;
+            height: 8vh;
+            background: linear-gradient(45deg, #00c4ff, #007bff);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 2.5vw;
+            transition: opacity 0.3s;
+        }
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        /* استجابة للشاشات الصغيرة */
+        @media (max-width: 600px) {
+            .buttons {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                width: 80vw;
+            }
+            .column {
+                display: contents;
+            }
+            .button {
+                width: 48%;
+                margin-bottom: 1.5vh;
+                font-size: 3.5vw;
+            }
+            .logo {
+                font-size: 15vw;
+            }
+            .circle {
+                width: 25vw;
+                height: 25vw;
+            }
+            .dot {
+                width: 1.5vw;
+                height: 1.5vw;
+            }
+            .dot:nth-child(1) { transform: translate(11vw, 0); }
+            .dot:nth-child(2) { transform: translate(-11vw, 0); }
+            .dot:nth-child(3) { transform: translate(0, 11vw); }
+            .dot:nth-child(4) { transform: translate(0, -11vw); }
+            .dot:nth-child(5) { transform: translate(7.5vw, 7.5vw); }
+            .dot:nth-child(6) { transform: translate(-7.5vw, -7.5vw); }
+            .dot:nth-child(7) { transform: translate(7.5vw, -7.5vw); }
+            .dot:nth-child(8) { transform: translate(-7.5vw, 7.5vw); }
+            .logo-container {
+                margin-bottom: 8vh; /* زيادة الهامش السفلي أكثر على الشاشات الصغيرة */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">eo</div>
+            <div class="circle">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        <div class="title">Every One</div>
+        <div class="buttons">
+            <div class="column">
+                <button class="button">رجوع</button>
+                <button class="button">سجل يومي</button>
+                <button class="button">موضوع</button>
+                <button class="button">فكرة</button>
+                <button class="button">مستقبل</button>
+                <button class="button">النفس</button>
+                <button class="button">كل</button>
+                <button class="button">بالي</button>
+                <button class="button">الأحباب</button>
+                <button class="button">الأمل</button>
+            </div>
+            <div class="column">
+                <button class="button">دورة</button>
+                <button class="button">أريد</button>
+                <button class="button">حقيقة</button>
+                <button class="button">سعادة</button>
+                <button class="button">واقع</button>
+                <button class="button">قرار</button>
+                <button class="button">بداية</button>
+                <button class="button">النجاح</button>
+                <button class="button">كفى</button>
+                <button class="button">سلام</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
