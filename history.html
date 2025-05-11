@@ -1,673 +1,135 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every One - السجل</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      color: #2c3e50;
-      transition: all 0.3s ease;
-      overflow-x: hidden;
-    }
-    .header {
-      background: linear-gradient(to right, #2990ff, #2ac5e0);
-      padding: 10px 20px;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      color: white;
-    }
-    .header h2 {
-      margin: 0;
-      font-size: 18px;
-    }
-    .header .bell {
-      position: absolute;
-      left: 20px;
-      font-size: 20px;
-    }
-    .content {
-      margin: 80px 20px 100px;
-      text-align: center;
-    }
-    .content h3 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .content p {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-    .content button {
-      background: linear-gradient(to right, #1a70cc, #2344a0);
-      border: none;
-      border-radius: 25px;
-      padding: 10px 20px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .content button:hover {
-      transform: scale(1.05);
-    }
-    .navbar {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #3498db;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      z-index: 1000;
-      transition: background 0.3s;
-    }
-    .navbar i {
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-    }
-    .navbar i:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-5px);
-    }
-    .navbar i.active {
-      background: rgba(255, 255, 255, 0.3);
-      color: #ffd700;
-      transform: translateY(-5px);
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: linear-gradient(to bottom, #3498db, #2c3e50);
-      z-index: 2000;
-      transition: left 0.3s ease;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-      display: none;
-    }
-    .sidebar.active {
-      left: 0;
-      display: block;
-    }
-    .sidebar .close-btn {
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-    .sidebar h3 {
-      color: white;
-      text-align: center;
-      margin: 20px 0;
-      font-size: 20px;
-    }
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-    .sidebar ul li {
-      margin: 15px 0;
-    }
-    .sidebar ul li a {
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    .sidebar ul li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .sidebar ul li a i {
-      margin-right: 10px;
-      font-size: 20px;
-    }
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      z-index: 2000;
-      width: 80%;
-      max-width: 400px;
-    }
-    .popup input, .popup textarea, .popup select {
-      width: 95%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #3498db;
-      border-radius: 25px;
-      font-size: 16px;
-      text-align: center;
-    }
-    .popup button {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 25px;
-      background: #3498db;
-      color: white;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1500;
-    }
-    body.dark-mode {
-      background-color: #2c3e50;
-      color: #ecf0f1;
-    }
-    body.dark-mode .header {
-      background: linear-gradient(to right, #34495e, #2c3e50);
-    }
-    body.dark-mode .navbar {
-      background: #34495e;
-    }
-    body.dark-mode .sidebar {
-      background: linear-gradient(to bottom, #34495e, #2c3e50);
-    }
-    body.dark-mode .popup {
-      background: #34495e;
-      color: #ecf0f1;
-    }
-    body.dark-mode .popup input, body.dark-mode .popup textarea, body.dark-mode .popup select {
-      background: #2c3e50;
-      color: #ecf0f1;
-      border-color: #ecf0f1;
-    }
-    body.dark-mode .content button {
-      background: #34495e;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every One Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background-color: #e6f0fa;
+            border-radius: 50%;
+            border: 2px solid #a3cffa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px dashed #a3cffa;
+        }
+
+        .logo-text {
+            font-size: 40px;
+            color: #1e90ff;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #1e90ff;
+            margin-top: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            width: 150px;
+            padding: 15px;
+      background: linear-gradient( #315377, #26ceda);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #00c4cc, #1e90ff);
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <i class="fas fa-bell bell"></i>
-    <h2 id="headerTitle">السجل</h2>
-  </div>
-  <div class="content">
-    <h3 id="historyTitle">سجل الزيارات</h3>
-    <p id="visitCountText">لقد قمت بزيارة التطبيق <span id="visitCount">0</span> مرة</p>
-    <button onclick="window.location.href='index.html'" id="backButton">العودة إلى الرئيسية</button>
-  </div>
-  <div class="navbar">
-    <i class="fas fa-exchange-alt" id="darkModeBtn"></i>
-    <i class="fas fa-home" id="homeBtn"></i>
-    <i class="fas fa-list" id="menuBtn"></i>
-  </div>
-  <div class="sidebar" id="sidebar">
-    <i class="fas fa-times close-btn" id="closeSidebar"></i>
-    <h3 id="sidebarTitle">القائمة</h3>
-    <ul>
-      <li><a href="#" id="profileBtn"><i class="fas fa-user"></i> <span id="profileText">الملف الشخصي</span></a></li>
-      <li><a href="#" id="settingsBtn"><i class="fas fa-cog"></i> <span id="settingsText">الإعدادات</span></a></li>
-      <li><a href="favorites.html"><i class="fas fa-heart"></i> <span id="favoritesText">المفضلة</span></a></li>
-      <li><a href="history.html"><i class="fas fa-history"></i> <span id="historyText">السجل</span></a></li>
-      <li><a href="#" id="supportBtn"><i class="fas fa-headset"></i> <span id="supportText">الدعم</span></a></li>
-      <li><a href="#" id="sendMessageBtn"><i class="fas fa-envelope"></i> <span id="sendMessageText">إرسال رسالة</span></a></li>
-      <li><a href="#" id="shareAppBtn"><i class="fas fa-share-alt"></i> <span id="shareAppText">مشاركة التطبيق</span></a></li>
-      <li><a href="#" id="aboutBtn"><i class="fas fa-info-circle"></i> <span id="aboutText">حول التطبيق</span></a></li>
-      <li><a href="https://wa.me/+9647806636644"><i class="fab fa-whatsapp"></i> <span id="whatsappText">تواصل معنا</span></a></li>
-    </ul>
-  </div>
-  <div class="overlay" id="overlay"></div>
-  <div class="popup" id="profilePopup">
-    <input type="text" id="profileName" placeholder="الاسم">
-    <input type="text" id="profileAddress" placeholder="العنوان">
-    <input type="text" id="profilePhone" placeholder="رقم الهاتف">
-    <input type="text" id="profileFacebook" placeholder="رابط الفيسبوك">
-    <button onclick="saveProfile()">حفظ</button>
-  </div>
-  <div class="popup" id="settingsPopup">
-    <button ondblclick="window.location.href='start.html'" onclick="logout()">تسجيل الخروج</button>
-    <button onclick="toggleDarkMode()">تبديل الوضع (داكن/فاتح)</button>
-    <select id="languageSelect" onchange="changeLanguage()">
-      <option value="ar">العربية</option>
-      <option value="en">English</option>
-      <option value="ku">كوردي</option>
-      <option value="fr">Français</option>
-    </select>
-    <button onclick="openHelpPopup()">إرسال رسالة مساعدة</button>
-  </div>
-  <div class="popup" id="helpPopup">
-    <input type="text" id="helpName" placeholder="الاسم">
-    <textarea id="helpMessage" placeholder="الرسالة"></textarea>
-    <button onclick="sendMessageToTelegram('helpPopup', 'helpName', 'helpMessage')">إرسال</button>
-    <button onclick="closePopup('helpPopup')">إغلاق</button>
-  </div>
-  <div class="popup" id="messagePopup">
-    <input type="text" id="messageName" placeholder="الاسم">
-    <textarea id="messageText" placeholder="الرسالة"></textarea>
-    <button onclick="sendMessageToTelegram('messagePopup', 'messageName', 'messageText')">إرسال</button>
-    <button onclick="closePopup('messagePopup')">إغلاق</button>
-  </div>
-  <div class="popup" id="supportPopup">
-    <p id="supportContent">للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.</p>
-    <button onclick="closePopup('supportPopup')">إغلاق</button>
-  </div>
-  <div class="popup" id="aboutPopup">
-    <p id="aboutContent">تطبيق Everyone يوفر خدمات متنوعة بسهولة وسرعة.</p>
-    <button onclick="closePopup('aboutPopup')">إغلاق</button>
-  </div>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <span class="logo-text">𝑬</span>
+            </div>
+            <h1>𝐸𝓋𝑒𝓇𝓎   𝒪𝓃𝑒</h1>
+        </div>
+        <div class="buttons">
+            <div class="column">
+                <button onclick="window.location.href='moor.html'">دهوك</button>
+                <button onclick="window.location.href='moor.html'">زاخو</button>
+                <button onclick="window.location.href='moor.html'">أربيل</button>
+                <button onclick="window.location.href='moor.html'">سليمانه</button>
+                <button onclick="window.location.href='moor.html'">حلبجه</button>
+                <button onclick="window.location.href='moor.html'">موصل</button>
+                <button onclick="window.location.href='moor.html'">سنجار</button>
+                <button onclick="window.location.href='moor.html'">تلعفر</button>
+                <button onclick="window.location.href='moor.html'">واسط</button>
+                                <button onclick="window.location.href='moor.html'">كركوك</button>
+                <button onclick="window.location.href='moor.html'">الانبار</button>
 
-  <script>
-    const translations = {
-      ar: {
-        headerTitle: "السجل",
-        sidebarTitle: "القائمة",
-        profileText: "الملف الشخصي",
-        settingsText: "الإعدادات",
-        favoritesText: "المفضلة",
-        historyText: "السجل",
-        supportText: "الدعم",
-        sendMessageText: "إرسال رسالة",
-        shareAppText: "مشاركة التطبيق",
-        aboutText: "حول التطبيق",
-        whatsappText: "تواصل معنا",
-        profileName: "الاسم",
-        profileAddress: "العنوان",
-        profilePhone: "رقم الهاتف",
-        profileFacebook: "رابط الفيسبوك",
-        saveButton: "حفظ",
-        logoutButton: "تسجيل الخروج",
-        toggleMode: "تبديل الوضع (داكن/فاتح)",
-        helpButton: "إرسال رسالة مساعدة",
-        helpName: "الاسم",
-        helpMessage: "الرسالة",
-        messageName: "الاسم",
-        messageText: "الرسالة",
-        sendButton: "إرسال",
-        supportContent: "للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.",
-        aboutContent: "تطبيق Everyone يوفر خدمات متنوعة بسهولة وسرعة.",
-        closeButton: "إغلاق",
-        historyTitle: "سجل الزيارات",
-        visitCountText: "لقد قمت بزيارة التطبيق {count} مرة",
-        backButton: "العودة إلى الرئيسية"
-      },
-      en: {
-        headerTitle: "History",
-        sidebarTitle: "Menu",
-        profileText: "Profile",
-        settingsText: "Settings",
-        favoritesText: "Favorites",
-        historyText: "History",
-        supportText: "Support",
-        sendMessageText: "Send Message",
-        shareAppText: "Share App",
-        aboutText: "About the App",
-        whatsappText: "Contact Us",
-        profileName: "Name",
-        profileAddress: "Address",
-        profilePhone: "Phone Number",
-        profileFacebook: "Facebook Link",
-        saveButton: "Save",
-        logoutButton: "Logout",
-        toggleMode: "Toggle Mode (Dark/Light)",
-        helpButton: "Send Help Message",
-        helpName: "Name",
-        helpMessage: "Message",
-        messageName: "Name",
-        messageText: "Message",
-        sendButton: "Send",
-        supportContent: "For support, please contact us via WhatsApp or send a help message.",
-        aboutContent: "The Everyone app provides various services easily and quickly.",
-        closeButton: "Close",
-        historyTitle: "Visit History",
-        visitCountText: "You have visited the app {count} times",
-        backButton: "Back to Home"
-      },
-      ku: {
-        headerTitle: "Dîrok",
-        sidebarTitle: "Pêşek",
-        profileText: "Profil",
-        settingsText: "Mîhengan",
-        favoritesText: "Favorites",
-        historyText: "Dîrok",
-        supportText: "Piştgirî",
-        sendMessageText: "Peyamê bişîne",
-        shareAppText: "Sepanê parve bike",
-        aboutText: "Derbarê Sepanê",
-        whatsappText: "Peywendî bi me re bike",
-        profileName: "Nav",
-        profileAddress: "Navnîşan",
-        profilePhone: "Hejmara Telefonê",
-        profileFacebook: "Girêdana Facebookê",
-        saveButton: "Tomar bike",
-        logoutButton: "Derkeve",
-        toggleMode: "Modê biguherîne (Tarî/Ronî)",
-        helpButton: "Peyama Alîkariyê bişîne",
-        helpName: "Nav",
-        helpMessage: "Peyam",
-        messageName: "Nav",
-        messageText: "Peyam",
-        sendButton: "Bişîne",
-        supportContent: "Ji bo piştgiriyê, ji kerema xwe bi WhatsAppê re têkilî daynin an peyamek alîkariyê bişînin.",
-        aboutContent: "Sepana Everyone xizmetên cûrbecûr bi hêsanî û zû peyda dike.",
-        closeButton: "Girtin",
-        historyTitle: "Dîroka Serdanê",
-        visitCountText: "Te {count} caran sepan ziyaret kir",
-        backButton: "Vegere Malperê"
-      },
-      fr: {
-        headerTitle: "Historique",
-        sidebarTitle: "Menu",
-        profileText: "Profil",
-        settingsText: "Paramètres",
-        favoritesText: "Favoris",
-        historyText: "Historique",
-        supportText: "Support",
-        sendMessageText: "Envoyer un message",
-        shareAppText: "Partager l'application",
-        aboutText: "À propos de l'application",
-        whatsappText: "Contactez-nous",
-        profileName: "Nom",
-        profileAddress: "Adresse",
-        profilePhone: "Numéro de téléphone",
-        profileFacebook: "Lien Facebook",
-        saveButton: "Enregistrer",
-        logoutButton: "Déconnexion",
-        toggleMode: "Basculer le mode (Sombre/Clair)",
-        helpButton: "Envoyer un message d'aide",
-        helpName: "Nom",
-        helpMessage: "Message",
-        messageName: "Nom",
-        messageText: "Message",
-        sendButton: "Envoyer",
-        supportContent: "Pour le support, veuillez nous contacter via WhatsApp ou envoyer un message d'aide.",
-        aboutContent: "L'application Everyone offre divers services facilement et rapidement.",
-        closeButton: "Fermer",
-        historyTitle: "Historique des visites",
-        visitCountText: "Vous avez visité l'application {count} fois",
-        backButton: "Retour à l'accueil"
-      }
-    };
+            </div>
+            <div class="column">
+                <button oncliick="window.location.href='moor.html">ميسان</button>
+                <button oncliick="window.location.href='moor.html">دي قار</button>
+                <button oncliick="window.location.href='moor.html">المثني</button>
+                <button oncliick="window.location.href='moor.html">بغداد</button>
+                <button oncliick="window.location.href='moor.html">كربلاء</button>
+                <button oncliick="window.location.href='moor.html">النجف </button>
+                <button oncliick="window.location.href='moor.html">بابل</button>
+                               <button onclick="window.location.href='moor.html'">صلاح الدين</button>
+                <button onclick="window.location.href='moor.html'">البصره</button>
 
-    // Display visit count
-    function displayVisitCount() {
-      const visitCount = parseInt(localStorage.getItem('visitCount') || '0');
-      const lang = document.getElementById('languageSelect').value || 'ar';
-      const text = translations[lang].visitCountText.replace('{count}', visitCount);
-      document.getElementById('visitCountText').innerHTML = text.replace(/\d+/, `<span id="visitCount">${visitCount}</span>`);
-    }
-
-    // Navbar interactions
-    const navbarIcons = document.querySelectorAll('.navbar i');
-    navbarIcons.forEach(icon => {
-      icon.addEventListener('click', function() {
-        navbarIcons.forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    document.getElementById('homeBtn').addEventListener('click', function() {
-      window.location.href = 'index.html';
-    });
-
-    document.getElementById('darkModeBtn').addEventListener('click', function() {
-      toggleDarkMode();
-    });
-
-    document.getElementById('menuBtn').addEventListener('click', function() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.style.display = 'block';
-      setTimeout(() => {
-        sidebar.classList.toggle('active');
-      }, 10);
-      document.getElementById('overlay').style.display = 'block';
-    });
-
-    document.getElementById('closeSidebar').addEventListener('click', function() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.remove('active');
-      document.getElementById('overlay').style.display = 'none';
-      setTimeout(() => {
-        sidebar.style.display = 'none';
-      }, 300);
-    });
-
-    // Sidebar button interactions
-    document.getElementById('profileBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('profilePopup').style.display = 'block';
-      loadProfile();
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    document.getElementById('settingsBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('settingsPopup').style.display = 'block';
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    document.getElementById('supportBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('supportPopup').style.display = 'block';
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    document.getElementById('sendMessageBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('messagePopup').style.display = 'block';
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    document.getElementById('shareAppBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      shareApp();
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    document.getElementById('aboutBtn').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('aboutPopup').style.display = 'block';
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    document.getElementById('overlay').addEventListener('click', function() {
-      document.getElementById('overlay').style.display = 'none';
-      document.getElementById('profilePopup').style.display = 'none';
-      document.getElementById('settingsPopup').style.display = 'none';
-      document.getElementById('helpPopup').style.display = 'none';
-      document.getElementById('messagePopup').style.display = 'none';
-      document.getElementById('supportPopup').style.display = 'none';
-      document.getElementById('aboutPopup').style.display = 'none';
-      document.getElementById('sidebar').classList.remove('active');
-      document.getElementById('sidebar').style.display = 'none';
-    });
-
-    // Profile functions
-    function saveProfile() {
-      const profile = {
-        name: document.getElementById('profileName').value,
-        address: document.getElementById('profileAddress').value,
-        phone: document.getElementById('profilePhone').value,
-        facebook: document.getElementById('profileFacebook').value
-      };
-      localStorage.setItem('userProfile', JSON.stringify(profile));
-      alert('تم حفظ المعلومات بنجاح');
-      closePopup('profilePopup');
-    }
-
-    function loadProfile() {
-      const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
-      document.getElementById('profileName').value = profile.name || '';
-      document.getElementById('profileAddress').value = profile.address || '';
-      document.getElementById('profilePhone').value = profile.phone || '';
-      document.getElementById('profileFacebook').value = profile.facebook || '';
-    }
-
-    function logout() {
-      localStorage.removeItem('userProfile');
-      alert('تم تسجيل الخروج');
-      closePopup('settingsPopup');
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-      closePopup('settingsPopup');
-    }
-
-    function openHelpPopup() {
-      document.getElementById('settingsPopup').style.display = 'none';
-      document.getElementById('helpPopup').style.display = 'block';
-    }
-
-    async function sendMessageToTelegram(popupId, nameId, messageId) {
-      const name = document.getElementById(nameId).value;
-      const message = document.getElementById(messageId).value;
-      if (name && message) {
-        // ملاحظة: لا تعرض رمز الوصول للبوت في كود العميل. استخدم خادمًا وسيطًا في التطبيقات الحقيقية.
-        const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
-        const chatId = '7327464581';
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        const text = `Name: ${name}\nMessage: ${message}`;
-
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              chat_id: chatId,
-              text: text,
-            }),
-          });
-
-          const data = await response.json();
-          if (data.ok) {
-            alert('تم إرسال الرسالة بنجاح');
-            closePopup(popupId);
-          } else {
-            alert('فشل إرسال الرسالة: ' + data.description);
-          }
-        } catch (error) {
-          console.error('خطأ:', error);
-          alert('حدث خطأ أثناء إرسال الرسالة');
-        }
-      } else {
-        alert('يرجى إدخال الاسم والرسالة');
-      }
-    }
-
-    function shareApp() {
-      const shareData = {
-        title: 'تطبيق Everyone',
-        text: 'جرب تطبيق Everyone للحصول على خدمات متنوعة بسهولة وسرعة!',
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log('تمت المشاركة بنجاح'))
-          .catch((error) => console.error('خطأ أثناء المشاركة:', error));
-      } else {
-        const shareText = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
-        navigator.clipboard.writeText(shareText)
-          .then(() => alert('تم نسخ رابط المشاركة إلى الحافظة!'))
-          .catch(() => alert('فشل نسخ الرابط. الرجاء مشاركته يدويًا: ' + shareText));
-      }
-    }
-
-    function changeLanguage() {
-      const lang = document.getElementById('languageSelect').value;
-      localStorage.setItem('language', lang);
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr';
-      updateUIText(lang);
-      closePopup('settingsPopup');
-      displayVisitCount();
-    }
-
-    function updateUIText(lang) {
-      const t = translations[lang];
-      document.getElementById('headerTitle').textContent = t.headerTitle;
-      document.getElementById('sidebarTitle').textContent = t.sidebarTitle;
-      document.getElementById('profileText').textContent = t.profileText;
-      document.getElementById('settingsText').textContent = t.settingsText;
-      document.getElementById('favoritesText').textContent = t.favoritesText;
-      document.getElementById('historyText').textContent = t.historyText;
-      document.getElementById('supportText').textContent = t.supportText;
-      document.getElementById('sendMessageText').textContent = t.sendMessageText;
-      document.getElementById('shareAppText').textContent = t.shareAppText;
-      document.getElementById('aboutText').textContent = t.aboutText;
-      document.getElementById('whatsappText').textContent = t.whatsappText;
-      document.getElementById('profileName').placeholder = t.profileName;
-      document.getElementById('profileAddress').placeholder = t.profileAddress;
-      document.getElementById('profilePhone').placeholder = t.profilePhone;
-      document.getElementById('profileFacebook').placeholder = t.profileFacebook;
-      document.querySelector('#profilePopup button').textContent = t.saveButton;
-      document.querySelector('#settingsPopup button:nth-child(1)').textContent = t.logoutButton;
-      document.querySelector('#settingsPopup button:nth-child(2)').textContent = t.toggleMode;
-      document.querySelector('#settingsPopup button:nth-child(4)').textContent = t.helpButton;
-      document.getElementById('helpName').placeholder = t.helpName;
-      document.getElementById('helpMessage').placeholder = t.helpMessage;
-      document.querySelector('#helpPopup button:nth-child(1)').textContent = t.sendButton;
-      document.querySelector('#helpPopup button:nth-child(2)').textContent = t.closeButton;
-      document.getElementById('messageName').placeholder = t.messageName;
-      document.getElementById('messageText').placeholder = t.messageText;
-      document.querySelector('#messagePopup button:nth-child(1)').textContent = t.sendButton;
-      document.querySelector('#messagePopup button:nth-child(2)').textContent = t.closeButton;
-      document.getElementById('supportContent').textContent = t.supportContent;
-      document.getElementById('aboutContent').textContent = t.aboutContent;
-      document.querySelector('#supportPopup button').textContent = t.closeButton;
-      document.querySelector('#aboutPopup button').textContent = t.closeButton;
-      document.getElementById('historyTitle').textContent = t.historyTitle;
-      document.getElementById('backButton').textContent = t.backButton;
-    }
-
-    function closePopup(popupId) {
-      document.getElementById(popupId).style.display = 'none';
-      document.getElementById('overlay').style.display = 'none';
-    }
-
-    // Initialize language and UI
-    const savedLang = localStorage.getItem('language') || 'ar';
-    document.getElementById('languageSelect').value = savedLang;
-    changeLanguage();
-    displayVisitCount();
-  </script>
+                 <button oncliick="window.location.href='moor.html">ديالي</button>
+                <button oncliick="window.location.href='moor.html"> الديوانيه</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
