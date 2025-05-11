@@ -12,47 +12,49 @@
       color: #2c3e50;
       transition: all 0.3s ease;
       overflow-x: hidden;
-      padding: 10px;
+      padding: 1rem;
     }
     .header {
-      background: linear-gradient( #315377, #26ceda);
-      padding: 10px 20px;
+      background: linear-gradient(#315377, #26ceda);
+      padding: 1rem 2rem;
       text-align: center;
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 1000;
       color: white;
+      box-sizing: border-box;
     }
     .header h2 {
       margin: 0;
-      font-size: 18px;
+      font-size: clamp(1rem, 4vw, 1.2rem);
     }
     .header .bell {
       position: absolute;
-      left: 20px;
-      width: 20px;
-      height: 20px;
+      left: 1rem;
+      width: clamp(1rem, 5vw, 1.2rem);
+      height: clamp(1rem, 5vw, 1.2rem);
     }
     .search-bar {
-      margin: 60px 20px 20px;
+      margin: clamp(4rem, 10vw, 5rem) 1rem 1rem;
       position: relative;
     }
     .search-bar input {
-      width: 95%;
-      padding: 10px;
+      width: 100%;
+      padding: 0.8rem;
       border: 1px solid #3498db;
       border-radius: 25px;
-      font-size: 16px;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       text-align: center;
       background: #fff;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
     }
     .carousel {
-      margin: 20px;
+      margin: 1rem;
       overflow: hidden;
       position: relative;
-      height: 220px;
+      height: clamp(150px, 40vw, 220px);
       border: 2px solid #3498db;
       border-radius: 10px;
     }
@@ -63,14 +65,14 @@
       height: 2000px;
     }
     .carousel-item {
-      min-height: 150px;
+      min-height: clamp(120px, 30vw, 150px);
       box-sizing: border-box;
       text-align: center;
       flex-shrink: 0;
     }
     .carousel-item img {
       width: 100%;
-      height: 150px;
+      height: clamp(120px, 30vw, 150px);
       object-fit: cover;
       display: block;
     }
@@ -78,11 +80,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 10px 12px;
+      margin: 0.5rem 0.75rem;
     }
     .phone-icon img {
-      width: 40px;
-      height: 40px;
+      width: clamp(2rem, 10vw, 2.5rem);
+      height: clamp(2rem, 10vw, 2.5rem);
       color: #ff0000;
     }
     .phone-icon img:hover {
@@ -90,7 +92,7 @@
     }
     .phone-icon p {
       margin: 0;
-      font-size: 16px;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       color: #2c3e50;
     }
     .phone-icon p:hover {
@@ -99,32 +101,32 @@
     }
     .buttons {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 20px;
-      margin-top: 0px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.5rem;
+      padding: 1rem;
+      margin-top: 0;
     }
     .btn {
-      margin: 5px;
-      background: linear-gradient( #315377, #26ceda);
+      background: linear-gradient(#315377, #26ceda);
       border: none;
       border-radius: 30px;
-      padding: 40px;
+      padding: 1rem;
       text-align: center;
       color: white;
-        width: 170px;
-        height: 120px;
-      font-size: 17px;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: transform 0.2s;
+      width: 90%;
+      height: clamp(100px, 30vw, 120px);
+      box-sizing: border-box;
     }
     .btn img {
-      width: 50px;
-      margin-bottom: 5px;
+      width: clamp(2rem, 10vw, 3rem);
+      margin-bottom: 0.3rem;
     }
     .btn:hover {
       transform: rotate(1deg);
@@ -136,15 +138,16 @@
       background: #e5e7e9;
       display: flex;
       justify-content: space-around;
-      padding: 10px 0;
+      padding: 0.5rem 0;
       z-index: 1000;
       transition: background 0.3s;
+      box-sizing: border-box;
     }
     .navbar img {
-      width: 24px;
-      height: 24px;
+      width: clamp(1.2rem, 5vw, 1.5rem);
+      height: clamp(1.2rem, 5vw, 1.5rem);
       cursor: pointer;
-      padding: 10px;
+      padding: 0.5rem;
       border-radius: 50%;
       transition: all 0.3s ease;
     }
@@ -159,48 +162,49 @@
     .sidebar {
       position: fixed;
       top: 0;
-      left: -250px;
-      width: 250px;
+      left: -100%;
+      width: clamp(200px, 70vw, 250px);
       height: 100%;
       background: linear-gradient(to bottom, #39a9f5, #2c3e50);
       z-index: 2000;
       transition: left 0.3s ease;
-      padding: 20px;
+      padding: 1rem;
       box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
       display: none;
+      box-sizing: border-box;
     }
     .sidebar.active {
       left: 0;
       display: block;
     }
     .sidebar .close-btn {
-      width: 24px;
-      height: 24px;
+      width: clamp(1.2rem, 5vw, 1.5rem);
+      height: clamp(1.2rem, 5vw, 1.5rem);
       cursor: pointer;
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 1rem;
+      right: 1rem;
     }
     .sidebar h3 {
       color: white;
       text-align: center;
-      margin: 20px 0;
-      font-size: 20px;
+      margin: 1rem 0;
+      font-size: clamp(1.2rem, 4vw, 1.4rem);
     }
     .sidebar ul {
       list-style: none;
       padding: 0;
     }
     .sidebar ul li {
-      margin: 15px 0;
+      margin: 0.75rem 0;
     }
     .sidebar ul li a {
       color: white;
       text-decoration: none;
-      font-size: 16px;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       display: flex;
       align-items: center;
-      padding: 10px;
+      padding: 0.5rem;
       border-radius: 5px;
       transition: background 0.3s;
     }
@@ -208,9 +212,9 @@
       background: rgba(255, 255, 255, 0.2);
     }
     .sidebar ul li a img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
+      width: clamp(1rem, 4vw, 1.2rem);
+      height: clamp(1rem, 4vw, 1.2rem);
+      margin-right: 0.5rem;
     }
     .popup {
       display: none;
@@ -219,31 +223,33 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 20px;
+      padding: 1rem;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       z-index: 2000;
-      width: 80%;
-      max-width: 400px;
+      width: clamp(250px, 80vw, 400px);
+      box-sizing: border-box;
     }
     .popup input, .popup textarea, .popup select {
-      width: 95%;
-      padding: 10px;
-      margin-bottom: 10px;
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 0.5rem;
       border: 1px solid #3498db;
       border-radius: 25px;
-      font-size: 16px;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       text-align: center;
+      box-sizing: border-box;
     }
     .popup button {
       width: 100%;
-      padding: 10px;
+      padding: 0.8rem;
       border: none;
       border-radius: 25px;
       background: #3498db;
       color: white;
       cursor: pointer;
-      margin-bottom: 10px;
+      margin-bottom: 0.5rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
     }
     .overlay {
       display: none;
@@ -303,6 +309,77 @@
     .mor p:hover {
       color: #3498db;
       cursor: pointer;
+    }
+
+    /* Media Queries for Additional Responsiveness */
+    @media (max-width: 768px) {
+      .buttons {
+        grid-template-columns: repeat(2, 1fr); /* Exactly 2 buttons per row */
+      }
+      .btn {
+        padding: 0.8rem;
+        height: clamp(80px, 25vw, 100px);
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      }
+      .btn img {
+        width: clamp(1.8rem, 8vw, 2.5rem);
+      }
+      .search-bar {
+        margin: clamp(3.5rem, 8vw, 4rem) 0.5rem 0.5rem;
+      }
+      .carousel {
+        height: clamp(120px, 35vw, 180px);
+      }
+      .carousel-item img {
+        height: clamp(100px, 25vw, 120px);
+      }
+    }
+
+    @media (max-width: 40px) {
+      body {
+        padding: 0.5rem;
+      }
+      .header {
+        padding: 0.8rem 1rem;
+      }
+      .header h2 {
+        font-size: clamp(0.9rem, 3.5vw, 1rem);
+      }
+      .header .bell {
+        width: clamp(0.9rem, 4vw, 1rem);
+        height: clamp(0.9rem, 4vw, 1rem);
+      }
+      .search-bar input {
+        padding: 0.6rem;
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      }
+      .buttons {
+        grid-template-columns: 1fr; /* Single column for very small screens */
+      }
+      .btn {
+        padding: 0.6rem;
+        height: clamp(70px, 20vw, 90px);
+        font-size: clamp(0.7rem, 2vw, 0.8rem);
+      }
+      .btn img {
+        width: clamp(1.5rem, 7vw, 2rem);
+      }
+      .navbar img {
+        width: clamp(1rem, 4vw, 1.2rem);
+        height: clamp(1rem, 4vw, 1.2rem);
+        padding: 0.4rem;
+      }
+      .sidebar {
+        width: clamp(180px, 80vw, 220px);
+      }
+      .popup {
+        width: clamp(200px, 90vw, 300px);
+        padding: 0.8rem;
+      }
+      .popup input, .popup textarea, .popup select, .popup button {
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        padding: 0.6rem;
+      }
     }
   </style>
 </head>
@@ -670,8 +747,9 @@
 
     function nextSlide() {
       const carouselInner = document.getElementById('carouselInner');
+      const itemHeight = document.querySelector('.carousel-item').offsetHeight;
       slideIndex = (slideIndex + 1) % 10;
-      carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`;
+      carouselInner.style.transform = `translateY(-${slideIndex * itemHeight}px)`;
     }
 
     const navbarIcons = document.querySelectorAll('.navbar img');
