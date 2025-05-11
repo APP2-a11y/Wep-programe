@@ -112,7 +112,9 @@
       padding: 40px;
       text-align: center;
       color: white;
-      font-size: 21px;
+        width: 170px;
+        height: 130px;
+      font-size: 17px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -295,7 +297,7 @@
     body.dark-mode .phone-icon p {
       color: #ecf0f1;
     }
-    .mor p{
+    .mor p {
       color: #000;
     }
     .mor p:hover {
@@ -307,10 +309,10 @@
 <body>
   <div class="header">
     <img src="https://cdn-icons-png.flaticon.com/512/1828/1828736.png" class="bell" alt="Bell">
-    <h2 id="headerTitle">أبحث هنا</h2>
+    <h2 id="headerTitle" data-translate="headerTitle">أبحث هنا</h2>
   </div>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="ابحث...">
+    <input type="text" id="searchInput" placeholder="ابحث..." data-translate-placeholder="searchPlaceholder">
   </div>
   <div class="carousel">
     <div class="carousel-inner" id="carouselInner">
@@ -347,22 +349,58 @@
     </div>
   </div>
   <div class="phone-icon">
-    <p class="mor" onclick="window.location.href='more.html'">اختيار محافظات</p>
+    <p class="mor" onclick="window.location.href='more.html'" data-translate="selectGovernorates">اختيار محافظات</p>
     <img src="https://cdn-icons-png.freepik.com/256/17071/17071787.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" onclick="window.location.href='danger.html'" alt="Emergency">
   </div>
   <div class="buttons">
-    <button class="btn" onclick="window.location.href='doctor.html'"><img src="https://cdn-icons-png.freepik.com/256/2785/2785460.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Health"> الصحة</button>
-    <button class="btn" onclick="window.location.href='doc.html'"><img src="https://cdn-icons-png.freepik.com/256/9457/9457545.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Herbs"> الأعشاب</button>
-    <button class="btn" onclick="window.location.href='cc.html'"><img src="https://cdn-icons-png.freepik.com/256/18797/18797408.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Maintenance"> الصيانة</button>
-    <button class="btn" onclick="window.location.href='hhp.html'"><img src="https://cdn-icons-png.freepik.com/256/316/316567.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Delivery"> التوصيل</button>
-    <button class="btn" onclick="window.location.href='cfa.html'"><img src="https://cdn-icons-png.freepik.com/256/11705/11705124.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Business"> الأعمال</button>
-    <button class="btn" onclick="window.location.href='ple.html'"><img src="https://cdn-icons-png.freepik.com/256/513/513606.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Food"> المأكولات</button>
-    <button class="btn" onclick="window.location.href='cpp.html'"><img src="https://cdn-icons-png.freepik.com/256/5207/5207979.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Shops"> الصناعه</button>
-    <button class="btn" onclick="window.location.href='pph.html'"><img src="https://cdn-icons-png.freepik.com/256/5055/5055604.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Real Estate"> العقارات</button>
-    <button class="btn" onclick="window.location.href='cpc.html'"><img src="https://cdn-icons-png.freepik.com/256/6135/6135937.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Wedding Hall"> قاعة الأفراح</button>
-    <button class="btn" onclick="window.location.href='ph.html'"><img src="https://cdn-icons-png.freepik.com/256/4416/4416202.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Hairdresser"> الكوافير</button>
-    <button class="btn" onclick="window.location.href='sps.html'"><img src="https://cdn-icons-png.freepik.com/256/3771/3771880.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Clothing"> الألبسة</button>
-    <button class="btn" onclick="window.location.href='cpp.html'"><img src="https://cdn-icons-png.freepik.com/256/473/473323.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Perfumes"> العطور</button>
+    <button class="btn" onclick="window.location.href='doctor.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/2785/2785460.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Health">
+      <span data-translate="health">الصحة</span>
+    </button>
+    <button class="btn" onclick="window.location.href='doc.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/9457/9457545.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Herbs">
+      <span data-translate="herbs">الأعشاب</span>
+    </button>
+    <button class="btn" onclick="window.location.href='cc.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/18797/18797408.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Maintenance">
+      <span data-translate="maintenance">الصيانة</span>
+    </button>
+    <button class="btn" onclick="window.location.href='hhp.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/316/316567.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Delivery">
+      <span data-translate="delivery">التوصيل</span>
+    </button>
+    <button class="btn" onclick="window.location.href='cfa.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/11705/11705124.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Business">
+      <span data-translate="business">الأعمال</span>
+    </button>
+    <button class="btn" onclick="window.location.href='ple.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/513/513606.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Food">
+      <span data-translate="food">المأكولات</span>
+    </button>
+    <button class="btn" onclick="window.location.href='cpp.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/5207/5207979.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Shops">
+      <span data-translate="industry">الصناعه</span>
+    </button>
+    <button class="btn" onclick="window.location.href='pph.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/5055/5055604.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Real Estate">
+      <span data-translate="realEstate">العقارات</span>
+    </button>
+    <button class="btn" onclick="window.location.href='cpc.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/6135/6135937.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Wedding Hall">
+      <span data-translate="weddingHall">قاعة الأفراح</span>
+    </button>
+    <button class="btn" onclick="window.location.href='ph.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/4416/4416202.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Hairdresser">
+      <span data-translate="hairdresser">الكوافير</span>
+    </button>
+    <button class="btn" onclick="window.location.href='sps.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/3771/3771880.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Clothing">
+      <span data-translate="clothing">الألبسة</span>
+    </button>
+    <button class="btn" onclick="window.location.href='cpp.html'">
+      <img src="https://cdn-icons-png.freepik.com/256/473/473323.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Perfumes">
+      <span data-translate="perfumes">العطور</span>
+    </button>
   </div>
   <div class="navbar">
     <img src="https://cdn-icons-png.freepik.com/256/6353/6353377.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="darkModeBtn" alt="Dark Mode">
@@ -372,61 +410,61 @@
   </div>
   <div class="sidebar" id="sidebar">
     <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" class="close-btn" id="closeSidebar" alt="Close">
-    <h3 id="sidebarTitle">القائمة</h3>
+    <h3 id="sidebarTitle" data-translate="sidebarTitle">القائمة</h3>
     <ul>
-      <li><a href="#" id="profileBtn"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile"> <span id="profileText">الملف الشخصي</span></a></li>
-      <li><a href="#" id="settingsBtn"><img src="https://cdn-icons-png.flaticon.com/512/2920/2920348.png" alt="Settings"> <span id="settingsText">الإعدادات</span></a></li>
-      <li><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Favorites"> <span id="favoritesText">المفضلة</span></a></li>
-      <li><a href="history.html"><img src="https://cdn-icons-png.flaticon.com/512/2919/2919573.png" alt="History"> <span id="historyText">السجل</span></a></li>
-      <li><a href="#" id="supportBtn"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Support"> <span id="supportText">الدعم</span></a></li>
-      <li><a href="#" id="sendMessageBtn"><img src="https://cdn-icons-png.flaticon.com/512/3178/3178298.png" alt="Send Message"> <span id="sendMessageText">إرسال رسالة</span></a></li>
-      <li><a href="#" id="shareAppBtn"><img src="https://cdn-icons-png.flaticon.com/512/2958/2958783.png" alt="Share App"> <span id="shareAppText">مشاركة التطبيق</span></a></li>
-      <li><a href="#" id="aboutBtn"><img src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png" alt="About"> <span id="aboutText">حول التطبيق</span></a></li>
-      <li><a href="https://wa.me/+9647806636644"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> <span id="whatsappText">تواصل معنا</span></a></li>
+      <li><a href="#" id="profileBtn"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile"> <span id="profileText" data-translate="profileText">الملف الشخصي</span></a></li>
+      <li><a href="#" id="settingsBtn"><img src="https://cdn-icons-png.flaticon.com/512/2920/2920348.png" alt="Settings"> <span id="settingsText" data-translate="settingsText">الإعدادات</span></a></li>
+      <li><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Favorites"> <span id="favoritesText" data-translate="favoritesText">المفضلة</span></a></li>
+      <li><a href="history.html"><img src="https://cdn-icons-png.flaticon.com/512/2919/2919573.png" alt="History"> <span id="historyText" data-translate="historyText">السجل</span></a></li>
+      <li><a href="#" id="supportBtn"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Support"> <span id="supportText" data-translate="supportText">الدعم</span></a></li>
+      <li><a href="#" id="sendMessageBtn"><img src="https://cdn-icons-png.flaticon.com/512/3178/3178298.png" alt="Send Message"> <span id="sendMessageText" data-translate="sendMessageText">إرسال رسالة</span></a></li>
+      <li><a href="#" id="shareAppBtn"><img src="https://cdn-icons-png.flaticon.com/512/2958/2958783.png" alt="Share App"> <span id="shareAppText" data-translate="shareAppText">مشاركة التطبيق</span></a></li>
+      <li><a href="#" id="aboutBtn"><img src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png" alt="About"> <span id="aboutText" data-translate="aboutText">حول التطبيق</span></a></li>
+      <li><a href="https://wa.me/+9647806636644"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> <span id="whatsappText" data-translate="whatsappText">تواصل معنا</span></a></li>
     </ul>
   </div>
   <div class="overlay" id="overlay"></div>
   <div class="popup" id="searchPopup">
-    <input type="text" id="popupSearchInput" placeholder="ابحث هنا...">
-    <button onclick="searchItems()">ابحث</button>
+    <input type="text" id="popupSearchInput" placeholder="ابحث هنا..." data-translate-placeholder="searchPlaceholder">
+    <button onclick="searchItems()" data-translate="searchButton">ابحث</button>
   </div>
   <div class="popup" id="profilePopup">
-    <input type="text" id="profileName" placeholder="الاسم">
-    <input type="text" id="profileAddress" placeholder="العنوان">
-    <input type="text" id="profilePhone" placeholder="رقم الهاتف">
-    <input type="text" id="profileFacebook" placeholder="رابط الفيسبوك">
-    <button onclick="saveProfile()">حفظ</button>
+    <input type="text" id="profileName" placeholder="الاسم" data-translate-placeholder="profileName">
+    <input type="text" id="profileAddress" placeholder="العنوان" data-translate-placeholder="profileAddress">
+    <input type="text" id="profilePhone" placeholder="رقم الهاتف" data-translate-placeholder="profilePhone">
+    <input type="text" id="profileFacebook" placeholder="رابط الفيسبوك" data-translate-placeholder="profileFacebook">
+    <button onclick="saveProfile()" data-translate="saveButton">حفظ</button>
   </div>
   <div class="popup" id="settingsPopup">
-    <button ondblclick="window.location.href='start.html'" onclick="logout()">تسجيل الخروج</button>
-    <button onclick="toggleDarkMode()">تبديل الوضع (داكن/فاتح)</button>
+    <button ondblclick="window.location.href='start.html'" onclick="logout()" data-translate="logoutButton">تسجيل الخروج</button>
+    <button onclick="toggleDarkMode()" data-translate="toggleMode">تبديل الوضع (داكن/فاتح)</button>
     <select id="languageSelect" onchange="changeLanguage()">
       <option value="ar">العربية</option>
       <option value="en">English</option>
       <option value="ku">كوردي</option>
       <option value="fr">Français</option>
     </select>
-    <button onclick="openHelpPopup()">إرسال رسالة مساعدة</button>
+    <button onclick="openHelpPopup()" data-translate="helpButton">إرسال رسالة مساعدة</button>
   </div>
   <div class="popup" id="helpPopup">
-    <input type="text" id="helpName" placeholder="الاسم">
-    <textarea id="helpMessage" placeholder="الرسالة"></textarea>
-    <button onclick="sendMessageToTelegram('helpPopup', 'helpName', 'helpMessage')">إرسال</button>
-    <button onclick="closePopup('helpPopup')">إغلاق</button>
+    <input type="text" id="helpName" placeholder="الاسم" data-translate-placeholder="helpName">
+    <textarea id="helpMessage" placeholder="الرسالة" data-translate-placeholder="helpMessage"></textarea>
+    <button onclick="sendMessageToTelegram('helpPopup', 'helpName', 'helpMessage')" data-translate="sendButton">إرسال</button>
+    <button onclick="closePopup('helpPopup')" data-translate="closeButton">إغلاق</button>
   </div>
   <div class="popup" id="messagePopup">
-    <input type="text" id="messageName" placeholder="الاسم">
-    <textarea id="messageText" placeholder="الرسالة"></textarea>
-    <button onclick="sendMessageToTelegram('messagePopup', 'messageName', 'messageText')">إرسال</button>
-    <button onclick="closePopup('messagePopup')">إغلاق</button>
+    <input type="text" id="messageName" placeholder="الاسم" data-translate-placeholder="messageName">
+    <textarea id="messageText" placeholder="الرسالة" data-translate-placeholder="messageText"></textarea>
+    <button onclick="sendMessageToTelegram('messagePopup', 'messageName', 'messageText')" data-translate="sendButton">إرسال</button>
+    <button onclick="closePopup('messagePopup')" data-translate="closeButton">إغلاق</button>
   </div>
   <div class="popup" id="supportPopup">
-    <p id="supportContent">للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.</p>
-    <button onclick="closePopup('supportPopup')">إغلاق</button>
+    <p id="supportContent" data-translate="supportContent">للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.</p>
+    <button onclick="closePopup('supportPopup')" data-translate="closeButton">إغلاق</button>
   </div>
   <div class="popup" id="aboutPopup">
-    <p id="aboutContent">تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.</p>
-    <button onclick="closePopup('aboutPopup')">إغلاق</button>
+    <p id="aboutContent" data-translate="aboutContent">تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.</p>
+    <button onclick="closePopup('aboutPopup')" data-translate="closeButton">إغلاق</button>
   </div>
 
   <script>
@@ -457,9 +495,23 @@
         messageName: "الاسم",
         messageText: "الرسالة",
         sendButton: "إرسال",
+        searchButton: "ابحث",
         supportContent: "للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.",
         aboutContent: "تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.",
-        closeButton: "إغلاق"
+        closeButton: "إغلاق",
+        selectGovernorates: "اختيار محافظات",
+        health: "الصحة",
+        herbs: "الأعشاب",
+        maintenance: "الصيانة",
+        delivery: "التوصيل",
+        business: "الأعمال",
+        food: "المأكولات",
+        industry: "الصناعه",
+        realEstate: "العقارات",
+        weddingHall: "قاعة الأفراح",
+        hairdresser: "الكوافير",
+        clothing: "الألبسة",
+        perfumes: "العطور"
       },
       en: {
         headerTitle: "Search Here",
@@ -487,9 +539,23 @@
         messageName: "Name",
         messageText: "Message",
         sendButton: "Send",
+        searchButton: "Search",
         supportContent: "For support, please contact us via WhatsApp or send a help message.",
         aboutContent: "Every One is a comprehensive application designed to provide all the services users need in one convenient platform. It offers a wide range of services, including healthcare, delivery, maintenance, real estate, business, and food, through an intuitive, multilingual interface. Every One aims to meet users' daily needs efficiently, delivering a seamless and reliable experience, making it the ideal choice for anyone seeking integrated solutions in a single app.",
-        closeButton: "Close"
+        closeButton: "Close",
+        selectGovernorates: "Select Governorates",
+        health: "Health",
+        herbs: "Herbs",
+        maintenance: "Maintenance",
+        delivery: "Delivery",
+        business: "Business",
+        food: "Food",
+        industry: "Industry",
+        realEstate: "Real Estate",
+        weddingHall: "Wedding Hall",
+        hairdresser: "Hairdresser",
+        clothing: "Clothing",
+        perfumes: "Perfumes"
       },
       ku: {
         headerTitle: "Lê bigere",
@@ -517,9 +583,23 @@
         messageName: "Nav",
         messageText: "Peyam",
         sendButton: "Bişîne",
+        searchButton: "Lê bigere",
         supportContent: "Ji bo piştgiriyê, ji kerema xwe bi WhatsAppê re têkilî daynin an peyamek alîkariyê bişînin.",
         aboutContent: "Every One sepana berfireh e ku ji bo peydakirina hemî xizmetên ku bikarhêner hewce dikin di yek platformê de hatî çêkirin. Ew gelek xizmetên cûrbecûr pêşkêş dike, wek tenduristî, radestkirin, lênihêrîn, sermaye, karsazî, û xwarin, bi navgîniyek pirzimanî ya hêsan. Every One armanc dike ku hewcedariyên rojane yên bikarhêneran bi bandor peyda bike, ezmûnek bêkêmasî û pêbawer peyda dike, û ew ji bo her kesê ku li çareseriyên yekgirtî di yek sepanê de digere bijareya îdeal e.",
-        closeButton: "Girtin"
+        closeButton: "Girtin",
+        selectGovernorates: "Parêzgehan Hilbijêre",
+        health: "Tenduristî",
+        herbs: "Gîha",
+        maintenance: "Lênihêrîn",
+        delivery: "Radestkirin",
+        business: "Karsazî",
+        food: "Xwarin",
+        industry: "Pîşesazî",
+        realEstate: "Sermaye",
+        weddingHall: "Salona Dawetê",
+        hairdresser: "Kuafor",
+        clothing: "Cil",
+        perfumes: "Bêhn"
       },
       fr: {
         headerTitle: "Rechercher ici",
@@ -547,9 +627,23 @@
         messageName: "Nom",
         messageText: "Message",
         sendButton: "Envoyer",
+        searchButton: "Rechercher",
         supportContent: "Pour le support, veuillez nous contacter via WhatsApp ou envoyer un message d'aide.",
         aboutContent: "Every One est une application complète conçue pour offrir tous les services dont les utilisateurs ont besoin sur une seule plateforme pratique. Elle propose une large gamme de services, tels que la santé, la livraison, l'entretien, l'immobilier, les affaires et l'alimentation, via une interface intuitive et multilingue. Every One vise à répondre efficacement aux besoins quotidiens des utilisateurs, en offrant une expérience fluide et fiable, ce qui en fait le choix idéal pour toute personne recherchant des solutions intégrées dans une seule application.",
-        closeButton: "Fermer"
+        closeButton: "Fermer",
+        selectGovernorates: "Sélectionner les gouvernorats",
+        health: "Santé",
+        herbs: "Herbes",
+        maintenance: "Maintenance",
+        delivery: "Livraison",
+        business: "Affaires",
+        food: "Nourriture",
+        industry: "Industrie",
+        realEstate: "Immobilier",
+        weddingHall: "Salle de mariage",
+        hairdresser: "Coiffeur",
+        clothing: "Vêtements",
+        perfumes: "Parfums"
       }
     };
 
@@ -684,7 +778,7 @@
       const query = document.getElementById('popupSearchInput').value.toLowerCase();
       const buttons = document.querySelectorAll('.btn');
       buttons.forEach(button => {
-        const text = button.textContent.toLowerCase();
+        const text = button.querySelector('span').textContent.toLowerCase();
         if (text.includes(query)) {
           button.style.display = 'flex';
         } else {
@@ -770,8 +864,8 @@
 
     function shareApp() {
       const shareData = {
-        title: 'تطبيق Everyone',
-        text: 'جرب تطبيق Everyone للحصول على خدمات متنوعة بسهولة وسرعة!',
+        title: translations[document.getElementById('languageSelect').value].shareAppText,
+        text: translations[document.getElementById('languageSelect').value].aboutContent.substring(0, 100) + '...',
         url: window.location.href
       };
 
@@ -789,6 +883,7 @@
 
     function changeLanguage() {
       const lang = document.getElementById('languageSelect').value;
+      localStorage.setItem('language', lang);
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr';
       updateUIText(lang);
@@ -797,6 +892,24 @@
 
     function updateUIText(lang) {
       const t = translations[lang];
+
+      // Update elements with data-translate attribute
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (t[key]) {
+          element.textContent = t[key];
+        }
+      });
+
+      // Update placeholder attributes
+      document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        if (t[key]) {
+          element.placeholder = t[key];
+        }
+      });
+
+      // Update specific UI elements
       document.getElementById('headerTitle').textContent = t.headerTitle;
       document.getElementById('sidebarTitle').textContent = t.sidebarTitle;
       document.getElementById('profileText').textContent = t.profileText;
@@ -808,45 +921,8 @@
       document.getElementById('shareAppText').textContent = t.shareAppText;
       document.getElementById('aboutText').textContent = t.aboutText;
       document.getElementById('whatsappText').textContent = t.whatsappText;
-      document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-      document.getElementById('popupSearchInput').placeholder = t.searchPlaceholder;
-      document.getElementById('profileName').placeholder = t.profileName;
-      document.getElementById('profileAddress').placeholder = t.profileAddress;
-      document.getElementById('profilePhone').placeholder = t.profilePhone;
-      document.getElementById('profileFacebook').placeholder = t.profileFacebook;
-      document.querySelector('#profilePopup button').textContent = t.saveButton;
-      document.querySelector('#settingsPopup button:nth-child(1)').textContent = t.logoutButton;
-      document.querySelector('#settingsPopup button:nth-child(2)').textContent = t.toggleMode;
-      document.querySelector('#settingsPopup button:nth-child(4)').textContent = t.helpButton;
-      document.getElementById('helpName').placeholder = t.helpName;
-      document.getElementById('helpMessage').placeholder = t.helpMessage;
-      document.querySelector('#helpPopup button:nth-child(1)').textContent = t.sendButton;
-      document.querySelector('#helpPopup button:nth-child(2)').textContent = t.closeButton;
-      document.getElementById('messageName').placeholder = t.messageName;
-      document.getElementById('messageText').placeholder = t.messageText;
-      document.querySelector('#messagePopup button:nth-child(1)').textContent = t.sendButton;
-      document.querySelector('#messagePopup button:nth-child(2)').textContent = t.closeButton;
       document.getElementById('supportContent').textContent = t.supportContent;
       document.getElementById('aboutContent').textContent = t.aboutContent;
-      document.querySelector('#supportPopup button').textContent = t.closeButton;
-      document.querySelector('#aboutPopup button').textContent = t.closeButton;
-
-      const buttons = document.querySelectorAll('.btn');
-      const buttonTexts = [
-        'الصحة', 'الأعشاب', 'الصيانة', 'التوصيل', 'الأعمال', 'المأكولات', 'المتاجر',
-        'العقارات', 'قاعة الأفراح', 'الكوافير', 'الألبسة', 'العطور'
-      ];
-      const buttonTranslations = {
-        ar: buttonTexts,
-        en: ['Health', 'Herbs', 'Maintenance', 'Delivery', 'Business', 'Food', 'Shops', 'Real Estate', 'Wedding Hall', 'Hairdresser', 'Clothing', 'Perfumes'],
-        ku: ['Tenduristî', 'Gîha', 'Lênihêrîn', 'Radestkirin', 'Karsazî', 'Xwarin', 'Dikan', 'Sermaye', 'Salona Dawetê', 'Kuafor', 'Cil', 'Bêhn'],
-        fr: ['Santé', 'Herbes', 'Maintenance', 'Livraison', 'Affaires', 'Nourriture', 'Magasins', 'Immobilier', 'Salle de mariage', 'Coiffeur', 'Vêtements', 'Parfums']
-      };
-      buttons.forEach((btn, i) => {
-        if (i < buttonTranslations[lang].length) {
-          btn.childNodes[2].textContent = buttonTranslations[lang][i];
-        }
-      });
     }
 
     function closePopup(popupId) {
