@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Every One - الرئيسية</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #2c3e50;
+      transition: all 0.3s ease;
+      overflow-x: hidden;
+      padding: 10px;
+    }
+    .header {
+      background: linear-gradient( #315377, #26ceda);
+      padding: 10px 20px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      color: white;
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .header .bell {
+      position: absolute;
+      left: 20px;
+      width: 20px;
+      height: 20px;
+    }
+    .search-bar {
+      margin: 60px 20px 20px;
+      position: relative;
+    }
+    .search-bar input {
+      width: 95%;
+      padding: 10px;
+      border: 1px solid #3498db;
+      border-radius: 25px;
+      font-size: 16px;
+      text-align: center;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .carousel {
+      margin: 20px;
+      overflow: hidden;
+      position: relative;
+      height: 220px;
+      border: 2px solid #3498db;
+      border-radius: 10px;
+    }
+    .carousel-inner {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.5s ease;
+      height: 2000px;
+    }
+    .carousel-item {
+      min-height: 150px;
+      box-sizing: border-box;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+    .phone-icon {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 12px;
+    }
+    .phone-icon img {
+      width: 40px;
+      height: 40px;
+      color: #ff0000;
+    }
+    .phone-icon img:hover {
+      filter: brightness(1.2);
+    }
+    .phone-icon p {
+      margin: 0;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+    .phone-icon p:hover {
+      color: #db3434;
+      cursor: pointer;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 20px;
+      margin-top: 0px;
+    }
+    .btn {
+      margin: 5px;
+      background: linear-gradient( #315377, #26ceda);
+      border: none;
+      border-radius: 30px;
+      padding: 40px;
+      text-align: center;
+      color: white;
+      font-size: 21px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .btn img {
+      width: 50px;
+      margin-bottom: 5px;
+    }
+    .btn:hover {
+      transform: rotate(1deg);
+    }
+    .navbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #e5e7e9;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+    .navbar img {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .navbar img:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
+    .navbar img.active {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-5px);
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: linear-gradient(to bottom, #39a9f5, #2c3e50);
+      z-index: 2000;
+      transition: left 0.3s ease;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+    .sidebar.active {
+      left: 0;
+      display: block;
+    }
+    .sidebar .close-btn {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    .sidebar h3 {
+      color: white;
+      text-align: center;
+      margin: 20px 0;
+      font-size: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .sidebar ul li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .sidebar ul li a img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      width: 80%;
+      max-width: 400px;
+    }
+    .popup input, .popup textarea, .popup select {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #3498db;
+      border-radius: 25px;
+      font-size: 16px;
+      text-align: center;
+    }
+    .popup button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 25px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1500;
+    }
+    body.dark-mode {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+    }
+    body.dark-mode .header {
+      background: linear-gradient(to right, #34495e, #2c3e50);
+    }
+    body.dark-mode .btn {
+      background: #34495e;
+    }
+    body.dark-mode .navbar {
+      background: #34495e;
+    }
+    body.dark-mode .sidebar {
+      background: linear-gradient(to bottom, #34495e, #2c3e50);
+    }
+    body.dark-mode .search-bar input {
+      background: #34495e;
+      color: #ecf0f1;
+      border-color: #ecf0f1;
+    }
+    body.dark-mode .popup {
+      background: #34495e;
+      color: #ecf0f1;
+    }
+    body.dark-mode .popup input, body.dark-mode .popup textarea, body.dark-mode .popup select {
+      background: #2c3e50;
+      color: #ecf0f1;
+      border-color: #ecf0f1;
+    }
+    body.dark-mode .carousel {
+      border-color: #ecf0f1;
+    }
+    body.dark-mode .carousel-item img {
+      border: 2px solid #ecf0f1;
+    }
+    body.dark-mode .phone-icon img {
+      filter: brightness(1.2);
+    }
+    body.dark-mode .phone-icon p {
+      color: #ecf0f1;
+    }
+    .mor p{
+      color: #000;
+    }
+    .mor p:hover {
+      color: #3498db;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828736.png" class="bell" alt="Bell">
+    <h2 id="headerTitle">أبحث هنا</h2>
+  </div>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="ابحث...">
+  </div>
+  <div class="carousel">
+    <div class="carousel-inner" id="carouselInner">
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Snowy Mountains" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Cultural Festival" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Lake Reflection" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Urban Night" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Mountain Landscape" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="City Skyline" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Beach Sunset" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Forest Path" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Desert Dunes" loading="eager">
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Autumn Leaves" loading="eager">
+      </div>
+    </div>
+  </div>
+  <div class="phone-icon">
+    <p class="mor" onclick="window.location.href='more.html'">اختيار محافظات</p>
+    <img src="https://cdn-icons-png.freepik.com/256/17071/17071787.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" onclick="window.location.href='danger.html'" alt="Emergency">
+  </div>
+  <div class="buttons">
+    <button class="btn" onclick="window.location.href='doctor.html'"><img src="https://cdn-icons-png.freepik.com/256/2785/2785460.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Health"> الصحة</button>
+    <button class="btn" onclick="window.location.href='doc.html'"><img src="https://cdn-icons-png.freepik.com/256/9457/9457545.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Herbs"> الأعشاب</button>
+    <button class="btn" onclick="window.location.href='cc.html'"><img src="https://cdn-icons-png.freepik.com/256/18797/18797408.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Maintenance"> الصيانة</button>
+    <button class="btn" onclick="window.location.href='hhp.html'"><img src="https://cdn-icons-png.freepik.com/256/316/316567.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Delivery"> التوصيل</button>
+    <button class="btn" onclick="window.location.href='cfa.html'"><img src="https://cdn-icons-png.freepik.com/256/11705/11705124.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Business"> الأعمال</button>
+    <button class="btn" onclick="window.location.href='ple.html'"><img src="https://cdn-icons-png.freepik.com/256/513/513606.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Food"> المأكولات</button>
+    <button class="btn" onclick="window.location.href='cpp.html'"><img src="https://cdn-icons-png.freepik.com/256/5207/5207979.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Shops"> الصناعه</button>
+    <button class="btn" onclick="window.location.href='pph.html'"><img src="https://cdn-icons-png.freepik.com/256/5055/5055604.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Real Estate"> العقارات</button>
+    <button class="btn" onclick="window.location.href='cpc.html'"><img src="https://cdn-icons-png.freepik.com/256/6135/6135937.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Wedding Hall"> قاعة الأفراح</button>
+    <button class="btn" onclick="window.location.href='ph.html'"><img src="https://cdn-icons-png.freepik.com/256/4416/4416202.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Hairdresser"> الكوافير</button>
+    <button class="btn" onclick="window.location.href='sps.html'"><img src="https://cdn-icons-png.freepik.com/256/3771/3771880.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Clothing"> الألبسة</button>
+    <button class="btn" onclick="window.location.href='cpp.html'"><img src="https://cdn-icons-png.freepik.com/256/473/473323.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Perfumes"> العطور</button>
+  </div>
+  <div class="navbar">
+    <img src="https://cdn-icons-png.freepik.com/256/6353/6353377.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="darkModeBtn" alt="Dark Mode">
+    <img src="https://cdn-icons-png.freepik.com/256/8872/8872289.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="searchBtn" alt="Search">
+    <img src="https://cdn-icons-png.freepik.com/256/9046/9046092.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="homeBtn" alt="Home">
+    <img src="https://cdn-icons-png.freepik.com/256/11809/11809172.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="menuBtn" alt="Menu">
+  </div>
+  <div class="sidebar" id="sidebar">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" class="close-btn" id="closeSidebar" alt="Close">
+    <h3 id="sidebarTitle">القائمة</h3>
+    <ul>
+      <li><a href="#" id="profileBtn"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile"> <span id="profileText">الملف الشخصي</span></a></li>
+      <li><a href="#" id="settingsBtn"><img src="https://cdn-icons-png.flaticon.com/512/2920/2920348.png" alt="Settings"> <span id="settingsText">الإعدادات</span></a></li>
+      <li><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Favorites"> <span id="favoritesText">المفضلة</span></a></li>
+      <li><a href="history.html"><img src="https://cdn-icons-png.flaticon.com/512/2919/2919573.png" alt="History"> <span id="historyText">السجل</span></a></li>
+      <li><a href="#" id="supportBtn"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Support"> <span id="supportText">الدعم</span></a></li>
+      <li><a href="#" id="sendMessageBtn"><img src="https://cdn-icons-png.flaticon.com/512/3178/3178298.png" alt="Send Message"> <span id="sendMessageText">إرسال رسالة</span></a></li>
+      <li><a href="#" id="shareAppBtn"><img src="https://cdn-icons-png.flaticon.com/512/2958/2958783.png" alt="Share App"> <span id="shareAppText">مشاركة التطبيق</span></a></li>
+      <li><a href="#" id="aboutBtn"><img src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png" alt="About"> <span id="aboutText">حول التطبيق</span></a></li>
+      <li><a href="https://wa.me/+9647806636644"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> <span id="whatsappText">تواصل معنا</span></a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="searchPopup">
+    <input type="text" id="popupSearchInput" placeholder="ابحث هنا...">
+    <button onclick="searchItems()">ابحث</button>
+  </div>
+  <div class="popup" id="profilePopup">
+    <input type="text" id="profileName" placeholder="الاسم">
+    <input type="text" id="profileAddress" placeholder="العنوان">
+    <input type="text" id="profilePhone" placeholder="رقم الهاتف">
+    <input type="text" id="profileFacebook" placeholder="رابط الفيسبوك">
+    <button onclick="saveProfile()">حفظ</button>
+  </div>
+  <div class="popup" id="settingsPopup">
+    <button ondblclick="window.location.href='start.html'" onclick="logout()">تسجيل الخروج</button>
+    <button onclick="toggleDarkMode()">تبديل الوضع (داكن/فاتح)</button>
+    <select id="languageSelect" onchange="changeLanguage()">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+      <option value="ku">كوردي</option>
+      <option value="fr">Français</option>
+    </select>
+    <button onclick="openHelpPopup()">إرسال رسالة مساعدة</button>
+  </div>
+  <div class="popup" id="helpPopup">
+    <input type="text" id="helpName" placeholder="الاسم">
+    <textarea id="helpMessage" placeholder="الرسالة"></textarea>
+    <button onclick="sendMessageToTelegram('helpPopup', 'helpName', 'helpMessage')">إرسال</button>
+    <button onclick="closePopup('helpPopup')">إغلاق</button>
+  </div>
+  <div class="popup" id="messagePopup">
+    <input type="text" id="messageName" placeholder="الاسم">
+    <textarea id="messageText" placeholder="الرسالة"></textarea>
+    <button onclick="sendMessageToTelegram('messagePopup', 'messageName', 'messageText')">إرسال</button>
+    <button onclick="closePopup('messagePopup')">إغلاق</button>
+  </div>
+  <div class="popup" id="supportPopup">
+    <p id="supportContent">للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.</p>
+    <button onclick="closePopup('supportPopup')">إغلاق</button>
+  </div>
+  <div class="popup" id="aboutPopup">
+    <p id="aboutContent">تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.</p>
+    <button onclick="closePopup('aboutPopup')">إغلاق</button>
+  </div>
+
+  <script>
+    const translations = {
+      ar: {
+        headerTitle: "أبحث هنا",
+        sidebarTitle: "القائمة",
+        profileText: "الملف الشخصي",
+        settingsText: "الإعدادات",
+        favoritesText: "المفضلة",
+        historyText: "السجل",
+        supportText: "الدعم",
+        sendMessageText: "إرسال رسالة",
+        shareAppText: "مشاركة التطبيق",
+        aboutText: "حول التطبيق",
+        whatsappText: "تواصل معنا",
+        searchPlaceholder: "ابحث...",
+        profileName: "الاسم",
+        profileAddress: "العنوان",
+        profilePhone: "رقم الهاتف",
+        profileFacebook: "رابط الفيسبوك",
+        saveButton: "حفظ",
+        logoutButton: "تسجيل الخروج",
+        toggleMode: "تبديل الوضع (داكن/فاتح)",
+        helpButton: "إرسال رسالة مساعدة",
+        helpName: "الاسم",
+        helpMessage: "الرسالة",
+        messageName: "الاسم",
+        messageText: "الرسالة",
+        sendButton: "إرسال",
+        supportContent: "للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.",
+        aboutContent: "تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.",
+        closeButton: "إغلاق"
+      },
+      en: {
+        headerTitle: "Search Here",
+        sidebarTitle: "Menu",
+        profileText: "Profile",
+        settingsText: "Settings",
+        favoritesText: "Favorites",
+        historyText: "History",
+        supportText: "Support",
+        sendMessageText: "Send Message",
+        shareAppText: "Share App",
+        aboutText: "About the App",
+        whatsappText: "Contact Us",
+        searchPlaceholder: "Search...",
+        profileName: "Name",
+        profileAddress: "Address",
+        profilePhone: "Phone Number",
+        profileFacebook: "Facebook Link",
+        saveButton: "Save",
+        logoutButton: "Logout",
+        toggleMode: "Toggle Mode (Dark/Light)",
+        helpButton: "Send Help Message",
+        helpName: "Name",
+        helpMessage: "Message",
+        messageName: "Name",
+        messageText: "Message",
+        sendButton: "Send",
+        supportContent: "For support, please contact us via WhatsApp or send a help message.",
+        aboutContent: "Every One is a comprehensive application designed to provide all the services users need in one convenient platform. It offers a wide range of services, including healthcare, delivery, maintenance, real estate, business, and food, through an intuitive, multilingual interface. Every One aims to meet users' daily needs efficiently, delivering a seamless and reliable experience, making it the ideal choice for anyone seeking integrated solutions in a single app.",
+        closeButton: "Close"
+      },
+      ku: {
+        headerTitle: "Lê bigere",
+        sidebarTitle: "Pêşek",
+        profileText: "Profil",
+        settingsText: "Mîhengan",
+        favoritesText: "Favorites",
+        historyText: "Dîrok",
+        supportText: "Piştgirî",
+        sendMessageText: "Peyamê bişîne",
+        shareAppText: "Sepanê parve bike",
+        aboutText: "Derbarê Sepanê",
+        whatsappText: "Peywendî bi me re bike",
+        searchPlaceholder: "Lê bigere...",
+        profileName: "Nav",
+        profileAddress: "Navnîşan",
+        profilePhone: "Hejmara Telefonê",
+        profileFacebook: "Girêdana Facebookê",
+        saveButton: "Tomar bike",
+        logoutButton: "Derkeve",
+        toggleMode: "Modê biguherîne (Tarî/Ronî)",
+        helpButton: "Peyama Alîkariyê bişîne",
+        helpName: "Nav",
+        helpMessage: "Peyam",
+        messageName: "Nav",
+        messageText: "Peyam",
+        sendButton: "Bişîne",
+        supportContent: "Ji bo piştgiriyê, ji kerema xwe bi WhatsAppê re têkilî daynin an peyamek alîkariyê bişînin.",
+        aboutContent: "Every One sepana berfireh e ku ji bo peydakirina hemî xizmetên ku bikarhêner hewce dikin di yek platformê de hatî çêkirin. Ew gelek xizmetên cûrbecûr pêşkêş dike, wek tenduristî, radestkirin, lênihêrîn, sermaye, karsazî, û xwarin, bi navgîniyek pirzimanî ya hêsan. Every One armanc dike ku hewcedariyên rojane yên bikarhêneran bi bandor peyda bike, ezmûnek bêkêmasî û pêbawer peyda dike, û ew ji bo her kesê ku li çareseriyên yekgirtî di yek sepanê de digere bijareya îdeal e.",
+        closeButton: "Girtin"
+      },
+      fr: {
+        headerTitle: "Rechercher ici",
+        sidebarTitle: "Menu",
+        profileText: "Profil",
+        settingsText: "Paramètres",
+        favoritesText: "Favoris",
+        historyText: "Historique",
+        supportText: "Support",
+        sendMessageText: "Envoyer un message",
+        shareAppText: "Partager l'application",
+        aboutText: "À propos de l'application",
+        whatsappText: "Contactez-nous",
+        searchPlaceholder: "Rechercher...",
+        profileName: "Nom",
+        profileAddress: "Adresse",
+        profilePhone: "Numéro de téléphone",
+        profileFacebook: "Lien Facebook",
+        saveButton: "Enregistrer",
+        logoutButton: "Déconnexion",
+        toggleMode: "Basculer le mode (Sombre/Clair)",
+        helpButton: "Envoyer un message d'aide",
+        helpName: "Nom",
+        helpMessage: "Message",
+        messageName: "Nom",
+        messageText: "Message",
+        sendButton: "Envoyer",
+        supportContent: "Pour le support, veuillez nous contacter via WhatsApp ou envoyer un message d'aide.",
+        aboutContent: "Every One est une application complète conçue pour offrir tous les services dont les utilisateurs ont besoin sur une seule plateforme pratique. Elle propose une large gamme de services, tels que la santé, la livraison, l'entretien, l'immobilier, les affaires et l'alimentation, via une interface intuitive et multilingue. Every One vise à répondre efficacement aux besoins quotidiens des utilisateurs, en offrant une expérience fluide et fiable, ce qui en fait le choix idéal pour toute personne recherchant des solutions intégrées dans une seule application.",
+        closeButton: "Fermer"
+      }
+    };
+
+    let slideIndex = 0;
+    const images = [
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+      "https://images.pexels.com/photos/1450361/pexels-photo-1450361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+      "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+      "https://images.pexels.com/photos/531321/pexels-photo-531321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+      "https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
+      "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ];
+
+    images.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    const slideInterval = setInterval(nextSlide, 2000);
+
+    function nextSlide() {
+      const carouselInner = document.getElementById('carouselInner');
+      slideIndex = (slideIndex + 1) % 10;
+      carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`;
+    }
+
+    const navbarIcons = document.querySelectorAll('.navbar img');
+    navbarIcons.forEach(icon => {
+      icon.addEventListener('click', function() {
+        navbarIcons.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    document.getElementById('homeBtn').addEventListener('click', function() {
+      window.location.href = 'start.html';
+    });
+
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('searchPopup').style.display = 'block';
+    });
+
+    document.getElementById('overlay').addEventListener('click', function() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('searchPopup').style.display = 'none';
+      document.getElementById('profilePopup').style.display = 'none';
+      document.getElementById('settingsPopup').style.display = 'none';
+      document.getElementById('helpPopup').style.display = 'none';
+      document.getElementById('messagePopup').style.display = 'none';
+      document.getElementById('supportPopup').style.display = 'none';
+      document.getElementById('aboutPopup').style.display = 'none';
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    document.getElementById('darkModeBtn').addEventListener('click', function() {
+      toggleDarkMode();
+    });
+
+    document.getElementById('menuBtn').addEventListener('click', function() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.style.display = 'block';
+      setTimeout(() => {
+        sidebar.classList.toggle('active');
+      }, 10);
+      document.getElementById('overlay').style.display = 'block';
+    });
+
+    document.getElementById('closeSidebar').addEventListener('click', function() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.remove('active');
+      document.getElementById('overlay').style.display = 'none';
+      setTimeout(() => {
+        sidebar.style.display = 'none';
+      }, 300);
+    });
+
+    document.getElementById('profileBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('profilePopup').style.display = 'block';
+      loadProfile();
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    document.getElementById('settingsBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('settingsPopup').style.display = 'block';
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    document.getElementById('supportBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('supportPopup').style.display = 'block';
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    document.getElementById('sendMessageBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('messagePopup').style.display = 'block';
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    document.getElementById('shareAppBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      shareApp();
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    document.getElementById('aboutBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('aboutPopup').style.display = 'block';
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebar').style.display = 'none';
+    });
+
+    function searchItems() {
+      const query = document.getElementById('popupSearchInput').value.toLowerCase();
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(button => {
+        const text = button.textContent.toLowerCase();
+        if (text.includes(query)) {
+          button.style.display = 'flex';
+        } else {
+          button.style.display = 'none';
+        }
+      });
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('searchPopup').style.display = 'none';
+    }
+
+    function saveProfile() {
+      const profile = {
+        name: document.getElementById('profileName').value,
+        address: document.getElementById('profileAddress').value,
+        phone: document.getElementById('profilePhone').value,
+        facebook: document.getElementById('profileFacebook').value
+      };
+      localStorage.setItem('userProfile', JSON.stringify(profile));
+      alert('تم حفظ المعلومات بنجاح');
+      closePopup('profilePopup');
+    }
+
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+      document.getElementById('profileName').value = profile.name || '';
+      document.getElementById('profileAddress').value = profile.address || '';
+      document.getElementById('profilePhone').value = profile.phone || '';
+      document.getElementById('profileFacebook').value = profile.facebook || '';
+    }
+
+    function logout() {
+      localStorage.removeItem('userProfile');
+      alert('تم تسجيل الخروج');
+      closePopup('settingsPopup');
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      closePopup('settingsPopup');
+    }
+
+    function openHelpPopup() {
+      document.getElementById('settingsPopup').style.display = 'none';
+      document.getElementById('helpPopup').style.display = 'block';
+    }
+
+    async function sendMessageToTelegram(popupId, nameId, messageId) {
+      const name = document.getElementById(nameId).value;
+      const message = document.getElementById(messageId).value;
+      if (name && message) {
+        const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
+        const chatId = '7327464581';
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const text = `Name: ${name}\nMessage: ${message}`;
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: text,
+            }),
+          });
+
+          const data = await response.json();
+          if (data.ok) {
+            alert('تم إرسال الرسالة بنجاح');
+            closePopup(popupId);
+          } else {
+            alert('فشل إرسال الرسالة: ' + data.description);
+          }
+        } catch (error) {
+          console.error('خطأ:', error);
+          alert('حدث خطأ أثناء إرسال الرسالة');
+        }
+      } else {
+        alert('يرجى إدخال الاسم والرسالة');
+      }
+    }
+
+    function shareApp() {
+      const shareData = {
+        title: 'تطبيق Everyone',
+        text: 'جرب تطبيق Everyone للحصول على خدمات متنوعة بسهولة وسرعة!',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData)
+          .then(() => console.log('تمت المشاركة بنجاح'))
+          .catch((error) => console.error('خطأ أثناء المشاركة:', error));
+      } else {
+        const shareText = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+        navigator.clipboard.writeText(shareText)
+          .then(() => alert('تم نسخ رابط المشاركة إلى الحافظة!'))
+          .catch(() => alert('فشل نسخ الرابط. الرجاء مشاركته يدويًا: ' + shareText));
+      }
+    }
+
+    function changeLanguage() {
+      const lang = document.getElementById('languageSelect').value;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' || lang === 'ku' ? 'rtl' : 'ltr';
+      updateUIText(lang);
+      closePopup('settingsPopup');
+    }
+
+    function updateUIText(lang) {
+      const t = translations[lang];
+      document.getElementById('headerTitle').textContent = t.headerTitle;
+      document.getElementById('sidebarTitle').textContent = t.sidebarTitle;
+      document.getElementById('profileText').textContent = t.profileText;
+      document.getElementById('settingsText').textContent = t.settingsText;
+      document.getElementById('favoritesText').textContent = t.favoritesText;
+      document.getElementById('historyText').textContent = t.historyText;
+      document.getElementById('supportText').textContent = t.supportText;
+      document.getElementById('sendMessageText').textContent = t.sendMessageText;
+      document.getElementById('shareAppText').textContent = t.shareAppText;
+      document.getElementById('aboutText').textContent = t.aboutText;
+      document.getElementById('whatsappText').textContent = t.whatsappText;
+      document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+      document.getElementById('popupSearchInput').placeholder = t.searchPlaceholder;
+      document.getElementById('profileName').placeholder = t.profileName;
+      document.getElementById('profileAddress').placeholder = t.profileAddress;
+      document.getElementById('profilePhone').placeholder = t.profilePhone;
+      document.getElementById('profileFacebook').placeholder = t.profileFacebook;
+      document.querySelector('#profilePopup button').textContent = t.saveButton;
+      document.querySelector('#settingsPopup button:nth-child(1)').textContent = t.logoutButton;
+      document.querySelector('#settingsPopup button:nth-child(2)').textContent = t.toggleMode;
+      document.querySelector('#settingsPopup button:nth-child(4)').textContent = t.helpButton;
+      document.getElementById('helpName').placeholder = t.helpName;
+      document.getElementById('helpMessage').placeholder = t.helpMessage;
+      document.querySelector('#helpPopup button:nth-child(1)').textContent = t.sendButton;
+      document.querySelector('#helpPopup button:nth-child(2)').textContent = t.closeButton;
+      document.getElementById('messageName').placeholder = t.messageName;
+      document.getElementById('messageText').placeholder = t.messageText;
+      document.querySelector('#messagePopup button:nth-child(1)').textContent = t.sendButton;
+      document.querySelector('#messagePopup button:nth-child(2)').textContent = t.closeButton;
+      document.getElementById('supportContent').textContent = t.supportContent;
+      document.getElementById('aboutContent').textContent = t.aboutContent;
+      document.querySelector('#supportPopup button').textContent = t.closeButton;
+      document.querySelector('#aboutPopup button').textContent = t.closeButton;
+
+      const buttons = document.querySelectorAll('.btn');
+      const buttonTexts = [
+        'الصحة', 'الأعشاب', 'الصيانة', 'التوصيل', 'الأعمال', 'المأكولات', 'المتاجر',
+        'العقارات', 'قاعة الأفراح', 'الكوافير', 'الألبسة', 'العطور'
+      ];
+      const buttonTranslations = {
+        ar: buttonTexts,
+        en: ['Health', 'Herbs', 'Maintenance', 'Delivery', 'Business', 'Food', 'Shops', 'Real Estate', 'Wedding Hall', 'Hairdresser', 'Clothing', 'Perfumes'],
+        ku: ['Tenduristî', 'Gîha', 'Lênihêrîn', 'Radestkirin', 'Karsazî', 'Xwarin', 'Dikan', 'Sermaye', 'Salona Dawetê', 'Kuafor', 'Cil', 'Bêhn'],
+        fr: ['Santé', 'Herbes', 'Maintenance', 'Livraison', 'Affaires', 'Nourriture', 'Magasins', 'Immobilier', 'Salle de mariage', 'Coiffeur', 'Vêtements', 'Parfums']
+      };
+      buttons.forEach((btn, i) => {
+        if (i < buttonTranslations[lang].length) {
+          btn.childNodes[2].textContent = buttonTranslations[lang][i];
+        }
+      });
+    }
+
+    function closePopup(popupId) {
+      document.getElementById(popupId).style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Track visits
+    function trackVisit() {
+      let visitCount = parseInt(localStorage.getItem('visitCount') || '0');
+      visitCount += 1;
+      localStorage.setItem('visitCount', visitCount.toString());
+    }
+    trackVisit();
+
+    // Initialize language
+    const savedLang = localStorage.getItem('language') || 'ar';
+    document.getElementById('languageSelect').value = savedLang;
+    changeLanguage();
+  </script>
+</body>
+</html>
