@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Every One - الرئيسية</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body {
       margin: 0;
@@ -32,7 +31,8 @@
     .header .bell {
       position: absolute;
       left: 20px;
-      font-size: 20px;
+      width: 20px;
+      height: 20px;
     }
     .search-bar {
       margin: 60px 20px 20px;
@@ -80,12 +80,13 @@
       justify-content: space-between;
       margin: 10px 12px;
     }
-    .phone-icon i {
-      font-size: 20px;
+    .phone-icon img {
+      width: 40px;
+      height: 40px;
       color: #ff0000;
     }
-    .phone-icon i:hover {
-      color: #ff6666;
+    .phone-icon img:hover {
+      filter: brightness(1.2);
     }
     .phone-icon p {
       margin: 0;
@@ -111,7 +112,7 @@
       padding: 40px;
       text-align: center;
       color: white;
-      font-size: 14px;
+      font-size: 21px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -119,8 +120,8 @@
       justify-content: center;
       transition: transform 0.2s;
     }
-    .btn i {
-      font-size: 24px;
+    .btn img {
+      width: 50px;
       margin-bottom: 5px;
     }
     .btn:hover {
@@ -137,21 +138,20 @@
       z-index: 1000;
       transition: background 0.3s;
     }
-    .navbar i {
-      color: linear-gradient( #315377, #26ceda);
-      font-size: 24px;
+    .navbar img {
+      width: 24px;
+      height: 24px;
       cursor: pointer;
       padding: 10px;
       border-radius: 50%;
       transition: all 0.3s ease;
     }
-    .navbar i:hover {
+    .navbar img:hover {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-5px);
     }
-    .navbar i.active {
+    .navbar img.active {
       background: rgba(255, 255, 255, 0.3);
-      color: #ffd700;
       transform: translateY(-5px);
     }
     .sidebar {
@@ -172,8 +172,8 @@
       display: block;
     }
     .sidebar .close-btn {
-      color: white;
-      font-size: 24px;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
       position: absolute;
       top: 20px;
@@ -205,9 +205,10 @@
     .sidebar ul li a:hover {
       background: rgba(255, 255, 255, 0.2);
     }
-    .sidebar ul li a i {
+    .sidebar ul li a img {
+      width: 20px;
+      height: 20px;
       margin-right: 10px;
-      font-size: 20px;
     }
     .popup {
       display: none;
@@ -288,8 +289,8 @@
     body.dark-mode .carousel-item img {
       border: 2px solid #ecf0f1;
     }
-    body.dark-mode .phone-icon i {
-      color: #ff6666;
+    body.dark-mode .phone-icon img {
+      filter: brightness(1.2);
     }
     body.dark-mode .phone-icon p {
       color: #ecf0f1;
@@ -305,7 +306,7 @@
 </head>
 <body>
   <div class="header">
-    <i class="fas fa-bell bell"></i>
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828736.png" class="bell" alt="Bell">
     <h2 id="headerTitle">أبحث هنا</h2>
   </div>
   <div class="search-bar">
@@ -346,42 +347,42 @@
     </div>
   </div>
   <div class="phone-icon">
-    <p class="mor" onclick="window.location.href='more.html'">المزيد</p>
-    <i class="fas fa-phone" onclick="window.location.href='danger.html'"> الطوارء</i>
+    <p class="mor" onclick="window.location.href='more.html'">اختيار محافظات</p>
+    <img src="https://cdn-icons-png.freepik.com/256/17071/17071787.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" onclick="window.location.href='danger.html'" alt="Emergency">
   </div>
   <div class="buttons">
-    <button class="btn" onclick="window.location.href='doctor.html'"><i class="fas fa-user-md"></i> الصحة</button>
-    <button class="btn" onclick="window.location.href='doc.html'"><i class="fas fa-wheat-awn"></i> الأعشاب</button>
-    <button class="btn" onclick="window.location.href='cc.html'"><i class="fas fa-cogs"></i> الصيانة</button>
-    <button class="btn" onclick="window.location.href='hhp.html'"><i class="fas fa-truck"></i> التوصيل</button>
-    <button class="btn" onclick="window.location.href='cfa.html'"><i class="fas fa-tools"></i> الأعمال</button>
-    <button class="btn" onclick="window.location.href='ple.html'"><i class="fas fa-hard-hat"></i> المأكولات</button>
-    <button class="btn" onclick="window.location.href='cpp.html'"><i class="fas fa-store"></i> المتاجر</button>
-    <button class="btn" onclick="window.location.href='pph.html'"><i class="fas fa-home"></i> العقارات</button>
-    <button class="btn" onclick="window.location.href='cpc.html'"><i class="fas fa-ring"></i> قاعة الأفراح</button>
-    <button class="btn" onclick="window.location.href='ph.html'"><i class="fas fa-scissors"></i> الكوافير</button>
-    <button class="btn" onclick="window.location.href='sps.html'"><i class="fas fa-female"></i> الألبسة</button>
-    <button class="btn" onclick="window.location.href='cpp.html'"><i class="fas fa-tint"></i> العطور</button>
+    <button class="btn" onclick="window.location.href='doctor.html'"><img src="https://cdn-icons-png.freepik.com/256/2785/2785460.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Health"> الصحة</button>
+    <button class="btn" onclick="window.location.href='doc.html'"><img src="https://cdn-icons-png.freepik.com/256/9457/9457545.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Herbs"> الأعشاب</button>
+    <button class="btn" onclick="window.location.href='cc.html'"><img src="https://cdn-icons-png.freepik.com/256/18797/18797408.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Maintenance"> الصيانة</button>
+    <button class="btn" onclick="window.location.href='hhp.html'"><img src="https://cdn-icons-png.freepik.com/256/316/316567.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Delivery"> التوصيل</button>
+    <button class="btn" onclick="window.location.href='cfa.html'"><img src="https://cdn-icons-png.freepik.com/256/11705/11705124.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Business"> الأعمال</button>
+    <button class="btn" onclick="window.location.href='ple.html'"><img src="https://cdn-icons-png.freepik.com/256/513/513606.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Food"> المأكولات</button>
+    <button class="btn" onclick="window.location.href='cpp.html'"><img src="https://cdn-icons-png.freepik.com/256/5207/5207979.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Shops"> الصناعه</button>
+    <button class="btn" onclick="window.location.href='pph.html'"><img src="https://cdn-icons-png.freepik.com/256/5055/5055604.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Real Estate"> العقارات</button>
+    <button class="btn" onclick="window.location.href='cpc.html'"><img src="https://cdn-icons-png.freepik.com/256/6135/6135937.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Wedding Hall"> قاعة الأفراح</button>
+    <button class="btn" onclick="window.location.href='ph.html'"><img src="https://cdn-icons-png.freepik.com/256/4416/4416202.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Hairdresser"> الكوافير</button>
+    <button class="btn" onclick="window.location.href='sps.html'"><img src="https://cdn-icons-png.freepik.com/256/3771/3771880.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Clothing"> الألبسة</button>
+    <button class="btn" onclick="window.location.href='cpp.html'"><img src="https://cdn-icons-png.freepik.com/256/473/473323.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Perfumes"> العطور</button>
   </div>
   <div class="navbar">
-    <i class="fas fa-exchange-alt" id="darkModeBtn"></i>
-    <i class="fas fa-search" id="searchBtn"></i>
-    <i class="fas fa-home" id="homeBtn"></i>
-    <i class="fas fa-list" id="menuBtn"></i>
+    <img src="https://cdn-icons-png.freepik.com/256/6353/6353377.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="darkModeBtn" alt="Dark Mode">
+    <img src="https://cdn-icons-png.freepik.com/256/8872/8872289.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="searchBtn" alt="Search">
+    <img src="https://cdn-icons-png.freepik.com/256/9046/9046092.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="homeBtn" alt="Home">
+    <img src="https://cdn-icons-png.freepik.com/256/11809/11809172.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="menuBtn" alt="Menu">
   </div>
   <div class="sidebar" id="sidebar">
-    <i class="fas fa-times close-btn" id="closeSidebar"></i>
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" class="close-btn" id="closeSidebar" alt="Close">
     <h3 id="sidebarTitle">القائمة</h3>
     <ul>
-      <li><a href="#" id="profileBtn"><i class="fas fa-user"></i> <span id="profileText">الملف الشخصي</span></a></li>
-      <li><a href="#" id="settingsBtn"><i class="fas fa-cog"></i> <span id="settingsText">الإعدادات</span></a></li>
-      <li><a href="#"><i class="fas fa-heart"></i> <span id="favoritesText">المفضلة</span></a></li>
-      <li><a href="history.html"><i class="fas fa-history"></i> <span id="historyText">السجل</span></a></li>
-      <li><a href="#" id="supportBtn"><i class="fas fa-headset"></i> <span id="supportText">الدعم</span></a></li>
-      <li><a href="#" id="sendMessageBtn"><i class="fas fa-envelope"></i> <span id="sendMessageText">إرسال رسالة</span></a></li>
-      <li><a href="#" id="shareAppBtn"><i class="fas fa-share-alt"></i> <span id="shareAppText">مشاركة التطبيق</span></a></li>
-      <li><a href="#" id="aboutBtn"><i class="fas fa-info-circle"></i> <span id="aboutText">حول التطبيق</span></a></li>
-      <li><a href="https://wa.me/+9647806636644"><i class="fab fa-whatsapp"></i> <span id="whatsappText">تواصل معنا</span></a></li>
+      <li><a href="#" id="profileBtn"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile"> <span id="profileText">الملف الشخصي</span></a></li>
+      <li><a href="#" id="settingsBtn"><img src="https://cdn-icons-png.flaticon.com/512/2920/2920348.png" alt="Settings"> <span id="settingsText">الإعدادات</span></a></li>
+      <li><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Favorites"> <span id="favoritesText">المفضلة</span></a></li>
+      <li><a href="history.html"><img src="https://cdn-icons-png.flaticon.com/512/2919/2919573.png" alt="History"> <span id="historyText">السجل</span></a></li>
+      <li><a href="#" id="supportBtn"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Support"> <span id="supportText">الدعم</span></a></li>
+      <li><a href="#" id="sendMessageBtn"><img src="https://cdn-icons-png.flaticon.com/512/3178/3178298.png" alt="Send Message"> <span id="sendMessageText">إرسال رسالة</span></a></li>
+      <li><a href="#" id="shareAppBtn"><img src="https://cdn-icons-png.flaticon.com/512/2958/2958783.png" alt="Share App"> <span id="shareAppText">مشاركة التطبيق</span></a></li>
+      <li><a href="#" id="aboutBtn"><img src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png" alt="About"> <span id="aboutText">حول التطبيق</span></a></li>
+      <li><a href="https://wa.me/+9647806636644"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> <span id="whatsappText">تواصل معنا</span></a></li>
     </ul>
   </div>
   <div class="overlay" id="overlay"></div>
@@ -456,8 +457,8 @@
         messageName: "الاسم",
         messageText: "الرسالة",
         sendButton: "إرسال",
-        supportContent: "تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.       .",
-        aboutContent: "تطبيق Everyone يوفر خدمات متنوعة بسهولة وسرعة.",
+        supportContent: "للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.",
+        aboutContent: "تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.",
         closeButton: "إغلاق"
       },
       en: {
@@ -487,7 +488,7 @@
         messageText: "Message",
         sendButton: "Send",
         supportContent: "For support, please contact us via WhatsApp or send a help message.",
-        aboutContent: "The Everyone app provides various services easily and quicklyEvery One is a comprehensive application designed to provide all the services users need in one convenient platform. It offers a wide range of services, including healthcare, delivery, maintenance, real estate, business, and food, through an intuitive, multilingual interface. Every One aims to meet users' daily needs efficiently, delivering a seamless and reliable experience, making it the ideal choice for anyone seeking integrated solutions in a single app..",
+        aboutContent: "Every One is a comprehensive application designed to provide all the services users need in one convenient platform. It offers a wide range of services, including healthcare, delivery, maintenance, real estate, business, and food, through an intuitive, multilingual interface. Every One aims to meet users' daily needs efficiently, delivering a seamless and reliable experience, making it the ideal choice for anyone seeking integrated solutions in a single app.",
         closeButton: "Close"
       },
       ku: {
@@ -547,7 +548,7 @@
         messageText: "Message",
         sendButton: "Envoyer",
         supportContent: "Pour le support, veuillez nous contacter via WhatsApp ou envoyer un message d'aide.",
-        aboutContent: "Every One est une application complète conçue pour offrir tous les services dont les utilisateurs ont besoin sur une seule plateforme pratique. Elle propose une large gamme de services, tels que la santé, la livraison, l'entretien, l'immobilier, les affaires et l'alimentation, via une interface intuitive et multilingue. Every One vise à répondre efficacement aux besoins quotidiens des utilisateurs, en offrant une expérience fluide et fiable, ce qui en fait le choix idéal pour toute personne recherchant des solutions intégrées dans une seule application..",
+        aboutContent: "Every One est une application complète conçue pour offrir tous les services dont les utilisateurs ont besoin sur une seule plateforme pratique. Elle propose une large gamme de services, tels que la santé, la livraison, l'entretien, l'immobilier, les affaires et l'alimentation, via une interface intuitive et multilingue. Every One vise à répondre efficacement aux besoins quotidiens des utilisateurs, en offrant une expérience fluide et fiable, ce qui en fait le choix idéal pour toute personne recherchant des solutions intégrées dans une seule application.",
         closeButton: "Fermer"
       }
     };
@@ -579,7 +580,7 @@
       carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`;
     }
 
-    const navbarIcons = document.querySelectorAll('.navbar i');
+    const navbarIcons = document.querySelectorAll('.navbar img');
     navbarIcons.forEach(icon => {
       icon.addEventListener('click', function() {
         navbarIcons.forEach(i => i.classList.remove('active'));
@@ -734,7 +735,6 @@
       const name = document.getElementById(nameId).value;
       const message = document.getElementById(messageId).value;
       if (name && message) {
-        // ملاحظة: لا تعرض رمز الوصول للبوت في كود العميل. استخدم خادمًا وسيطًا (proxy server) في التطبيقات الحقيقية.
         const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
         const chatId = '7327464581';
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
