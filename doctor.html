@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Every One - الرئيسية</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body {
       margin: 0;
@@ -18,7 +15,7 @@
       padding: 10px;
     }
     .header {
-      background: linear-gradient( #315377, #26ceda);
+      background: linear-gradient(#315377, #26ceda);
       padding: 10px 20px;
       text-align: center;
       position: fixed;
@@ -34,7 +31,8 @@
     .header .bell {
       position: absolute;
       left: 20px;
-      font-size: 20px;
+      width: 20px;
+      height: 20px;
     }
     .search-bar {
       margin: 60px 20px 20px;
@@ -82,12 +80,13 @@
       justify-content: space-between;
       margin: 10px 12px;
     }
-    .phone-icon i {
-      font-size: 20px;
+    .phone-icon img {
+      width: 20px;
+      height: 20px;
       color: #ff0000;
     }
-    .phone-icon i:hover {
-      color: #ff6666;
+    .phone-icon img:hover {
+      filter: brightness(1.2);
     }
     .phone-icon p {
       margin: 0;
@@ -107,13 +106,13 @@
     }
     .btn {
       margin: 5px;
-      background: linear-gradient( #315377, #26ceda);
+      background: linear-gradient(#315377, #26ceda);
       border: none;
       border-radius: 30px;
       padding: 40px;
       text-align: center;
       color: white;
-      font-size: 14px;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -121,8 +120,8 @@
       justify-content: center;
       transition: transform 0.2s;
     }
-    .btn i {
-      font-size: 24px;
+    .btn img {
+      width: 40px;
       margin-bottom: 5px;
     }
     .btn:hover {
@@ -139,21 +138,20 @@
       z-index: 1000;
       transition: background 0.3s;
     }
-    .navbar i {
-      color: linear-gradient( #315377, #26ceda);
-      font-size: 24px;
+    .navbar img {
+      width: 24px;
+      height: 24px;
       cursor: pointer;
       padding: 10px;
       border-radius: 50%;
       transition: all 0.3s ease;
     }
-    .navbar i:hover {
+    .navbar img:hover {
       background: rgba(255, 255, 255, 0.2);
       transform: translateY(-5px);
     }
-    .navbar i.active {
+    .navbar img.active {
       background: rgba(255, 255, 255, 0.3);
-      color: #ffd700;
       transform: translateY(-5px);
     }
     .sidebar {
@@ -174,8 +172,8 @@
       display: block;
     }
     .sidebar .close-btn {
-      color: white;
-      font-size: 24px;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
       position: absolute;
       top: 20px;
@@ -207,9 +205,10 @@
     .sidebar ul li a:hover {
       background: rgba(255, 255, 255, 0.2);
     }
-    .sidebar ul li a i {
+    .sidebar ul li a img {
+      width: 20px;
+      height: 20px;
       margin-right: 10px;
-      font-size: 20px;
     }
     .popup {
       display: none;
@@ -290,13 +289,13 @@
     body.dark-mode .carousel-item img {
       border: 2px solid #ecf0f1;
     }
-    body.dark-mode .phone-icon i {
-      color: #ff6666;
+    body.dark-mode .phone-icon img {
+      filter: brightness(1.2);
     }
     body.dark-mode .phone-icon p {
       color: #ecf0f1;
     }
-    .mor p{
+    .mor p {
       color: #000;
     }
     .mor p:hover {
@@ -307,7 +306,7 @@
 </head>
 <body>
   <div class="header">
-    <i class="fas fa-bell bell"></i>
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828736.png" class="bell" alt="Bell">
     <h2 id="headerTitle">أبحث هنا</h2>
   </div>
   <div class="search-bar">
@@ -343,51 +342,54 @@
         <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Desert Dunes" loading="eager">
       </div>
       <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Autumn Leaves" loading="eager">
+        <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=pies/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Autumn Leaves" loading="eager">
       </div>
     </div>
   </div>
   <div class="phone-icon">
     <p class="mor" onclick="window.location.href='more.html'">المزيد</p>
-    <i class="fas fa-phone" onclick="window.location.href='danger.html'"> الطوارء</i>
+    <img src="https://cdn-icons-png.flaticon.com/512/724/724715.png" onclick="window.location.href='danger.html'" alt="Emergency">
   </div>
   <div class="buttons">
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-scissors"></i> مركز التجميل</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-leaf"></i> زراعة الشعر</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-glasses"></i> أطباء العيون</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-bone"></i> المفاصل و العظام</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-dna"></i> أمراض الأورام</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-baby"></i> الأمراض التناسلية</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-hand-holding-water"></i> حجامه</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-baby"></i> أطفال الانابيب</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-filter"></i> الكلي </button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-brain"></i> الجمله المصبيه</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fa fa-prescription-bottle-alt"></i> صيدله</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-microscope"></i> مختبر</button>
-        <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-first-aid"></i> مضمد</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-crutch"></i> محبر الكسور</button>
-    <button class="btn" onclick="window.location.href='hab.html'"><i class="fas fa-stethoscope"></i> الأشعه</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/2459/2459974.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Beauty Center"> مركز التجميل</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/14241/14241540.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Hair Transplant"> زراعة الشعر</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/4937/4937500.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Eye Doctors"> أطباء العيون</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/10192/10192197.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Joints and Bones"> المفاصل و العظام</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/13556/13556591.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Oncology"> أمراض الأورام</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/17280/17280936.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Reproductive Diseases"> الأمراض التناسلية</button>
+        <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/1225/1225421.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Reproductive Diseases"> أطباء الاسنان</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/2363/2363953.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Cupping"> حجامه</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/4416/4416815.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="IVF"> اطباء اصفال </button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/2629/2629382.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Kidney"> الكلي</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/8046/8046105.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Nervous System"> الجمله المصبيه</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/1404/1404513.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Pharmacy"> صيدله</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/2821/2821525.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Laboratory"> مختبر</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/883/883407.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Paramedic"> مضمد</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/5341/5341052.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Fracture Specialist"> محبر الكسور</button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/9263/9263289.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Radiology"> الباطنه</button>
+        <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/13293/13293419.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Radiology"> امراض القلب </button>
+    <button class="btn" onclick="window.location.href='hab.html'"><img src="https://cdn-icons-png.freepik.com/256/6926/6926946.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" alt="Radiology"> الانف و الاذن</button>
 
   </div>
   <div class="navbar">
-    <i class="fas fa-exchange-alt" id="darkModeBtn"></i>
-    <i class="fas fa-search" id="searchBtn"></i>
-    <i class="fas fa-home" id="homeBtn"></i>
-    <i class="fas fa-list" id="menuBtn"></i>
+   <img src="https://cdn-icons-png.freepik.com/256/6353/6353377.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="darkModeBtn" alt="Dark Mode">
+    <img src="https://cdn-icons-png.freepik.com/256/8872/8872289.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="searchBtn" alt="Search">
+    <img src="https://cdn-icons-png.freepik.com/256/9046/9046092.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="homeBtn" alt="Home">
+    <img src="https://cdn-icons-png.freepik.com/256/11809/11809172.png?ga=GA1.1.1047169759.1746923348&semt=ais_hybrid" id="menuBtn" alt="Menu">
   </div>
   <div class="sidebar" id="sidebar">
-    <i class="fas fa-times close-btn" id="closeSidebar"></i>
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" class="close-btn" id="closeSidebar" alt="Close">
     <h3 id="sidebarTitle">القائمة</h3>
     <ul>
-      <li><a href="#" id="profileBtn"><i class="fas fa-user"></i> <span id="profileText">الملف الشخصي</span></a></li>
-      <li><a href="#" id="settingsBtn"><i class="fas fa-cog"></i> <span id="settingsText">الإعدادات</span></a></li>
-      <li><a href="#"><i class="fas fa-heart"></i> <span id="favoritesText">المفضلة</span></a></li>
-      <li><a href="history.html"><i class="fas fa-history"></i> <span id="historyText">السجل</span></a></li>
-      <li><a href="#" id="supportBtn"><i class="fas fa-headset"></i> <span id="supportText">الدعم</span></a></li>
-      <li><a href="#" id="sendMessageBtn"><i class="fas fa-envelope"></i> <span id="sendMessageText">إرسال رسالة</span></a></li>
-      <li><a href="#" id="shareAppBtn"><i class="fas fa-share-alt"></i> <span id="shareAppText">مشاركة التطبيق</span></a></li>
-      <li><a href="#" id="aboutBtn"><i class="fas fa-info-circle"></i> <span id="aboutText">حول التطبيق</span></a></li>
-      <li><a href="https://wa.me/+9647806636644"><i class="fab fa-whatsapp"></i> <span id="whatsappText">تواصل معنا</span></a></li>
+      <li><a href="#" id="profileBtn"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile"> <span id="profileText">الملف الشخصي</span></a></li>
+      <li><a href="#" id="settingsBtn"><img src="https://cdn-icons-png.flaticon.com/512/2920/2920348.png" alt="Settings"> <span id="settingsText">الإعدادات</span></a></li>
+      <li><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Favorites"> <span id="favoritesText">المفضلة</span></a></li>
+      <li><a href="history.html"><img src="https://cdn-icons-png.flaticon.com/512/2919/2919573.png" alt="History"> <span id="historyText">السجل</span></a></li>
+      <li><a href="#" id="supportBtn"><img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Support"> <span id="supportText">الدعم</span></a></li>
+      <li><a href="#" id="sendMessageBtn"><img src="https://cdn-icons-png.flaticon.com/512/3178/3178298.png" alt="Send Message"> <span id="sendMessageText">إرسال رسالة</span></a></li>
+      <li><a href="#" id="shareAppBtn"><img src="https://cdn-icons-png.flaticon.com/512/2958/2958783.png" alt="Share App"> <span id="shareAppText">مشاركة التطبيق</span></a></li>
+      <li><a href="#" id="aboutBtn"><img src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png" alt="About"> <span id="aboutText">حول التطبيق</span></a></li>
+      <li><a href="https://wa.me/+9647806636644"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> <span id="whatsappText">تواصل معنا</span></a></li>
     </ul>
   </div>
   <div class="overlay" id="overlay"></div>
@@ -462,8 +464,8 @@
         messageName: "الاسم",
         messageText: "الرسالة",
         sendButton: "إرسال",
-        supportContent: "تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.       .",
-        aboutContent: "تطبيق Everyone يوفر خدمات متنوعة بسهولة وسرعة.",
+        supportContent: "للحصول على الدعم، يرجى التواصل عبر الواتساب أو إرسال رسالة مساعدة.",
+        aboutContent: "تطبيق Every One هو منصة شاملة مصممة لتوفير كافة الخدمات التي يحتاجها المستخدم بسهولة وسرعة في مكان واحد. يقدم التطبيق مجموعة واسعة من الخدمات مثل الصحة، التوصيل، الصيانة، العقارات، الأعمال، والمأكولات، بالإضافة إلى خدمات التسوق والمناسبات، مع واجهة سهلة الاستخدام تدعم لغات متعددة. يهدف Every One إلى تلبية احتياجات المستخدمين اليومية بكفاءة، مع توفير تجربة مريحة وموثوقة، مما يجعله الخيار الأمثل لكل من يبحث عن حلول متكاملة في تطبيق واحد.",
         closeButton: "إغلاق"
       },
       en: {
@@ -493,7 +495,7 @@
         messageText: "Message",
         sendButton: "Send",
         supportContent: "For support, please contact us via WhatsApp or send a help message.",
-        aboutContent: "The Everyone app provides various services easily and quicklyEvery One is a comprehensive application designed to provide all the services users need in one convenient platform. It offers a wide range of services, including healthcare, delivery, maintenance, real estate, business, and food, through an intuitive, multilingual interface. Every One aims to meet users' daily needs efficiently, delivering a seamless and reliable experience, making it the ideal choice for anyone seeking integrated solutions in a single app..",
+        aboutContent: "Every One is a comprehensive application designed to provide all the services users need in one convenient platform. It offers a wide range of services, including healthcare, delivery, maintenance, real estate, business, and food, through an intuitive, multilingual interface. Every One aims to meet users' daily needs efficiently, delivering a seamless and reliable experience, making it the ideal choice for anyone seeking integrated solutions in a single app.",
         closeButton: "Close"
       },
       ku: {
@@ -553,7 +555,7 @@
         messageText: "Message",
         sendButton: "Envoyer",
         supportContent: "Pour le support, veuillez nous contacter via WhatsApp ou envoyer un message d'aide.",
-        aboutContent: "Every One est une application complète conçue pour offrir tous les services dont les utilisateurs ont besoin sur une seule plateforme pratique. Elle propose une large gamme de services, tels que la santé, la livraison, l'entretien, l'immobilier, les affaires et l'alimentation, via une interface intuitive et multilingue. Every One vise à répondre efficacement aux besoins quotidiens des utilisateurs, en offrant une expérience fluide et fiable, ce qui en fait le choix idéal pour toute personne recherchant des solutions intégrées dans une seule application..",
+        aboutContent: "Every One est une application complète conçue pour offrir tous les services dont les utilisateurs ont besoin sur une seule plateforme pratique. Elle propose une large gamme de services, tels que la santé, la livraison, l'entretien, l'immobilier, les affaires et l'alimentation, via une interface intuitive et multilingue. Every One vise à répondre efficacement aux besoins quotidiens des utilisateurs, en offrant une expérience fluide et fiable, ce qui en fait le choix idéal pour toute personne recherchant des solutions intégrées dans une seule application.",
         closeButton: "Fermer"
       }
     };
@@ -585,7 +587,7 @@
       carouselInner.style.transform = `translateY(-${slideIndex * 150}px)`;
     }
 
-    const navbarIcons = document.querySelectorAll('.navbar i');
+    const navbarIcons = document.querySelectorAll('.navbar img');
     navbarIcons.forEach(icon => {
       icon.addEventListener('click', function() {
         navbarIcons.forEach(i => i.classList.remove('active'));
@@ -740,7 +742,6 @@
       const name = document.getElementById(nameId).value;
       const message = document.getElementById(messageId).value;
       if (name && message) {
-        // ملاحظة: لا تعرض رمز الوصول للبوت في كود العميل. استخدم خادمًا وسيطًا (proxy server) في التطبيقات الحقيقية.
         const botToken = '7512390719:AAHuHzUgshfHoqS-kkjzKxYrHFI0gHlWlsU';
         const chatId = '7327464581';
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -837,17 +838,33 @@
       document.querySelector('#supportPopup button').textContent = t.closeButton;
       document.querySelector('#aboutPopup button').textContent = t.closeButton;
 
-      const buttons = document.querySelectorAll('.btn');
-      const sections = [
-            "مرضى السكري", "طب الأسنان", "أمراض القلب", "المناعة والحساسية",
-            "أمراض الغدد", "الأمراض التناسلية", "الحساسية", "أطفال الأنابيب",
-            "الكلى", "الأعصاب", "أنف وأذن وحنجرة", "مختبر", "طبيب", "الأشعة"
-        ];
+      const buttons = document.querySelector wereAll('.btn');
+      const buttonTexts = [
+        "مركز التجميل", "زراعة الشعر", "أطباء العيون", "المفاصل و العظام",
+        "أمراض الأورام", "الأمراض التناسلية", "حجامه", "أطفال الانابيب",
+        "الكلي", "الجمله المصبيه", "صيدله", "مختبر", "مضمد",
+        "محبر الكسور", "الأشعه"
+      ];
       const buttonTranslations = {
         ar: buttonTexts,
-        en: ['Health', 'Herbs', 'Maintenance', 'Delivery', 'Business', 'Food', 'Shops', 'Real Estate', 'Wedding Hall', 'Hairdresser', 'Clothing', 'Perfumes'],
-        ku: ['Tenduristî', 'Gîha', 'Lênihêrîn', 'Radestkirin', 'Karsazî', 'Xwarin', 'Dikan', 'Sermaye', 'Salona Dawetê', 'Kuafor', 'Cil', 'Bêhn'],
-        fr: ['Santé', 'Herbes', 'Maintenance', 'Livraison', 'Affaires', 'Nourriture', 'Magasins', 'Immobilier', 'Salle de mariage', 'Coiffeur', 'Vêtements', 'Parfums']
+        en: [
+          "Beauty Center", "Hair Transplant", "Eye Doctors", "Joints and Bones",
+          "Oncology", "Reproductive Diseases", "Cupping", "IVF",
+          "Kidney", "Nervous System", "Pharmacy", "Laboratory",
+          "Paramedic", "Fracture Specialist", "Radiology"
+        ],
+        ku: [
+          "Navenda Bedewiyê", "Çandina Por", "Doktorên Çav", "Gîha û Hestî",
+          "Nexweşiyên Tumorê", "Nexweşiyên Zayendî", "Hicama", "Zarokên Tûbê",
+          "Gurçik", "Pergala Demarî", "Dermanxane", "Laboratuar",
+          "Paramedîk", "Pisporek Şikestinê", "Radyolojî"
+        ],
+        fr: [
+          "Centre de beauté", "Greffe de cheveux", "Ophtalmologistes", "Articulations et os",
+          "Oncologie", "Maladies reproductives", "Ventouses", "FIV",
+          "Rein", "Système nerveux", "Pharmacie", "Laboratoire",
+          "Paramédical", "Spécialiste des fractures", "Radiologie"
+        ]
       };
       buttons.forEach((btn, i) => {
         if (i < buttonTranslations[lang].length) {
