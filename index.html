@@ -1,158 +1,75 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Every One</title>
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(to bottom, #327eca, #d1d9df);
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
-    .loader-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, #2c6cb5, #a3bffa);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      opacity: 1;
-      transition: opacity 0.5s ease;
-    }
-    .loader-container.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .loader {
-      width: 60px;
-      height: 60px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    .loader-text {
-      color: #fff;
-      font-size: 24px;
-      margin-top: 20px;
-      opacity: 0.8;
-      animation: textFade 1.5s ease-in-out infinite;
-    }
-    .container {
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    .container.visible {
-      opacity: 1;
-    }
-    .logo {
-      font-size: 100px;
-      color: #fff;
-      position: relative;
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.5s;
-    }
-    .logo::before {
-      content: "";
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      border: 2px solid #fff;
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      animation: circleFade 1s forwards 0.7s;
-    }
-    .logo::after {
-      content: "";
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      border: 2px dotted #fff;
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      animation: dottedFade 1s forwards 0.9s;
-    }
-    .title {
-      font-size: 48px;
-      color: #fff;
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeIn 1s forwards 1.2s;
-    }
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.3);
-        opacity: 0.6;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-    @keyframes textFade {
-      0% {
-        opacity: 0.8;
-      }
-      50% {
-        opacity: 0.4;
-      }
-      100% {
-        opacity: 0.8;
-      }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    @keyframes circleFade {
-      to { opacity: 0.7; }
-    }
-    @keyframes dottedFade {
-      to { opacity: 0.5; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع مغلق</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+        h1 {
+            color: #d32f2f;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .contact-btn {
+            padding: 10px 20px;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .contact-btn:hover {
+            background-color: #115293;
+        }
+        .contact-info {
+            display: none;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-  <div class="container" id="mainContent">
-    <div class="logo">𝑬</div>
-    <div class="title">𝐸𝓋𝑒𝓇𝓎   𝒪𝓃𝑒</div>
-  </div>
+    <div class="container">
+        <h1>عذرًا، الموقع مغلق مؤقتًا</h1>
+        <p>يرجى التواصل مع المطور للحصول على مزيد من المعلومات.</p>
+        <button class="contact-btn" onclick="showContact()">تواصل مع المطور</button>
+        <div class="contact-info" id="contactInfo">
+            <p>البريد الإلكتروني: <a href="mailto:mohamed6aslam@gmail.com">developer</a></p>
+            <p>رقم الهاتف: <a href="tel:+000000">+00000</a></p>
+        </div>
+    </div>
 
-  <script>
-    window.onload = function() {
-      const mainContent = document.getElementById('mainContent');
-
-      // Show loading screen for 2 seconds
-      setTimeout(() => {
-        mainContent.classList.add('visible');
-        
-        // After main content animations (3 seconds), redirect
-        setTimeout(() => {
-          window.location.href = "start.html";
-        }, 3000);
-      }, 2000);
-    };
-  </script>
+    <script>
+        function showContact() {
+            const contactInfo = document.getElementById('contactInfo');
+            contactInfo.style.display = contactInfo.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </body>
 </html>
